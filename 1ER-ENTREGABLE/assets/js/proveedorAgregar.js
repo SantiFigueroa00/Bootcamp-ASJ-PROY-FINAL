@@ -29,7 +29,7 @@ formProv.addEventListener("submit",agregarProv)
 function agregarProv() {
   //Creo un nuevo objeto Proveedor
   let nuevoProv = new Proveedor(
-    uuidv4(),
+    uuidv4().slice(0, 10),
     razSoc.value,
     rubro.value,
     uploadedAvatar.src,

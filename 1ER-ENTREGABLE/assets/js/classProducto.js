@@ -1,4 +1,4 @@
-export class Proveedor{
+export class Producto{
     constructor(codigo, nombreProd, categoria, proveedor, precio, descripcion){
         this.codigo = codigo;
         this.nombreProd = nombreProd;

@@ -341,7 +341,7 @@
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <form id="formProd" method="POST" onsubmit="return false">
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="nombreProd" class="form-label">Nombre Producto</label>
@@ -350,7 +350,7 @@
                               type="text"
                               id="nombreProd"
                               name="nombreProd"
-                              value="John"
+                              placeholder="Parlante"
                               autofocus
                             />
                           </div>
@@ -358,9 +358,9 @@
                             <label for="categoria" class="form-label">Categoria</label>
                             <select class="form-select" id="categoria" aria-label="Default select example">
                                 <option selected>Seleccione la categoria</option>
-                                <option value="1">Gaming</option>
-                                <option value="2">Electrodomesticos</option>
-                                <option value="3">Musica</option>
+                                <option value="Gaming">Gaming</option>
+                                <option value="Electrodomesticos">Electrodomesticos</option>
+                                <option value="Musica">Musica</option>
                             </select>
                           </div>
                           <div class="mb-3 col-md-6">
@@ -374,7 +374,7 @@
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="precio" class="form-label">Precio</label>
-                            <input type="number" class="form-control" id="precio" name="precio" placeholder="" />
+                            <input type="number" class="form-control" id="precio" name="precio" placeholder="$200" />
                           </div>
                           <div class="mb-3 col-md-6">
                                 <label for="descripcion" class="form-label">Descripcion</label>
@@ -462,5 +462,7 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="../assets/js/productoAgregar.js" type="module"></script>
   </body>
 </html>
