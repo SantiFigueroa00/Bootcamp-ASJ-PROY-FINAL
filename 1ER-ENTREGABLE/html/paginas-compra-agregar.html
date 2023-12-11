@@ -342,41 +342,24 @@
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <form id="formProd" method="POST" onsubmit="return false">
                         <div class="row">
-                          <div class="mb-3 col-md-6">
-                            <label for="proveedor" class="form-label">Proveedor</label>
-                            <select class="form-select" id="proveedor" aria-label="Default select example">
-                                <option selected>Seleccione el Proveedor</option>
-                                <option value="1">Proveedor 1</option>
-                                <option value="2">Proveedor 2</option>
-                                <option value="3">Proveedor 3</option>
-                            </select>
-                          </div>
                           <div class="mb-3 col-md-6">
                             <label for="producto" class="form-label">Producto</label>
                             <select class="form-select" id="producto" aria-label="Default select example">
                                 <option selected>Seleccione el producto</option>
-                                <option value="1">Notebook</option>
-                                <option value="2">Lavarropas</option>
-                                <option value="3">Parlante</option>
+                                <option value="Notebook">Notebook</option>
+                                <option value="Lavarropas">Lavarropas</option>
+                                <option value="Parlante">Parlante</option>
                             </select>
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="emision" class="form-label">Fecha emision</label>
-                            <input type="date" class="form-control" id="emision" name="emision" placeholder="" />
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="entrega" class="form-label">Fecha entrega esperada</label>
-                            <input type="date" class="form-control" id="entrega" name="entrega" placeholder="" />
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="direccion" class="form-label">Direccion de recepcion</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Av California" />
-                          </div>                    
+                          </div>                   
                           <div class="mb-3 col-md-6">
                             <label for="cantidad" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="" />
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="2" />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precio" name="precio" placeholder="$100" />
                           </div>
                         </div>
                         <div class="mt-2">
@@ -393,122 +376,112 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-
-                    <div class="card">
-                        <div class="card-body">          
-                            <div class="table-responsive text-nowrap m-3">
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Nombre producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Subtotal</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
-                                        <td>Producto 1</td>
-                                        <td>3</td>
-                                        <td>$100</td>
-                                        <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                                            >
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-trash me-1"></i> Eliminar</a
-                                            >
-                                            </div>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
-                                        <td>Producto 1</td>
-                                        <td>3</td>
-                                        <td>$100</td>
-                                        <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                                            >
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-trash me-1"></i> Eliminar</a
-                                            >
-                                            </div>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
-                                        <td>Producto 1</td>
-                                        <td>3</td>
-                                        <td>$100</td>
-                                        <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                                            >
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-trash me-1"></i> Eliminar</a
-                                            >
-                                            </div>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                        <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong>
-                                        </td>
-                                        <td>Producto 1</td>
-                                        <td>3</td>
-                                        <td>$100</td>
-                                        <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                                            >
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                ><i class="bx bx-trash me-1"></i> Eliminar</a
-                                            >
-                                            </div>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                    <tr id="filaTotal">
-                                        <td colspan="3">Total:</td>
-                                        <td id="total">$0</td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="mt-2">
-                                <button type="submit" class="btn btn-primary me-2">Añadir Orden de Compra</button>
-                                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
-                            </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <form id="formCompra" method="POST" onsubmit="return false">
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <label for="proveedor" class="form-label">Proveedor</label>
+                            <select class="form-select" id="proveedor" aria-label="Default select example" required>
+                              <option value="">Seleccione el Proveedor</option>
+                              <option value="Proveedor 1">Proveedor 1</option>
+                              <option value="Proveedor 2">Proveedor 2</option>
+                              <option value="Proveedor 3">Proveedor 3</option>
+                            </select>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="emision" class="form-label">Fecha emision</label>
+                            <input type="date" class="form-control" id="emision" name="emision" placeholder="" />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="entrega" class="form-label">Fecha entrega esperada</label>
+                            <input type="date" class="form-control" id="entrega" name="entrega" placeholder="" />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="direccion" class="form-label">Direccion de recepcion</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Av California" />
+                          </div>
                         </div>
-                    
+                        <div class="table-responsive text-nowrap m-3">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Codigo</th>
+                                <th>Nombre producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0" id="grillaProd">
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2">Añadir Orden de Compra</button>
+                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                      </form>
+                      <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="modalCenterTitle">¿Desea eliminar el Producto?</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                      
+                            <div class="modal-body">
+                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Cerrar
+                              </button>
+                              <button type="button" class="btn btn-danger" id="btnBorrado">Confirmar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="modalEditar">¿Desea editar el Producto?</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="formModal" method="POST" onsubmit="return false">
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="mb-3 col-md-6">
+                                    <label for="producto" class="form-label">Producto</label>
+                                    <select class="form-select" id="productoModal" aria-label="Default select example">
+                                        <option selected>Seleccione el producto</option>
+                                        <option value="Notebook">Notebook</option>
+                                        <option value="Lavarropas">Lavarropas</option>
+                                        <option value="Parlante">Parlante</option>
+                                    </select>
+                                  </div>                   
+                                  <div class="mb-3 col-md-6">
+                                    <label for="cantidad" class="form-label">Cantidad</label>
+                                    <input type="number" class="form-control" id="cantidadModal" name="cantidad" placeholder="2" />
+                                  </div>
+                                  <div class="mb-3 col-md-6">
+                                    <label for="precio" class="form-label">Precio</label>
+                                    <input type="number" class="form-control" id="precioModal" name="precio" placeholder="$100" />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  Cerrar
+                                </button>
+                                <button type="submit" class="btn btn-warning">Confirmar</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -580,5 +553,7 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="../assets/js/compraAgregar.js" type="module"></script>
   </body>
 </html>

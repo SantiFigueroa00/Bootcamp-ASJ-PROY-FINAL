@@ -104,3 +104,8 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+.img-prov{
+  max-height: 19rem; /* Establece una altura máxima en porcentaje para que se ajuste a la altura de la columna contigua */
+  object-fit: cover;
+}

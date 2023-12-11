@@ -48,7 +48,7 @@ function crearFila(proveedor) {
   <div class="card mb-3">
     <div class="row g-0 ">
       <div class="col-md-4">
-        <img class="card-img card-img-left" src="${proveedor.imagen}" alt="Card image" />
+        <img class="card-img card-img-left img-prov" src="${proveedor.imagen}" alt="Card image" />
       </div>
       <div class="col-md-8">
         <div class="card-body ">
