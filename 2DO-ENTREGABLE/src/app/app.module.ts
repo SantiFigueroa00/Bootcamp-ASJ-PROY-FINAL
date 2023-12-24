@@ -12,6 +12,8 @@ import { OrdersListComponent } from './purchase-orders/components/orders-list/or
 import { OrdersAddComponent } from './purchase-orders/components/orders-add/orders-add.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './dashboard/components/home/home.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { HomeComponent } from './dashboard/components/home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

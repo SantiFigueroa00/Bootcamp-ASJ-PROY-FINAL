@@ -1,5 +1,5 @@
 <h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">Proveedores /</span> Agregar Proveedor
+    <span class="text-muted fw-light">Providers /</span> Add provider
 </h4>
 
 <div class="row">
@@ -7,48 +7,49 @@
         <ul class="nav nav-pills flex-column flex-md-row mb-3">
             <li class="nav-item">
                 <a class="nav-link " href="paginas-proveedor-listado.html"><i class="bx bx-user me-1"></i> Listado de
-                    Proveedores</a>
+                    Providers</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-plus me-1"></i> Agregar
-                    Proveedor</a>
+                    Provider</a>
             </li>
         </ul>
         <div class="card mb-4">
-            <h5 class="card-header">Detalle de Proveedor</h5>
+            <h5 class="card-header">Provider Detail</h5>
             <!-- Account -->
-            <div class="card-body">
-                <div class="d-flex align-items-start align-items-sm-center gap-4">
-                    <img src="../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100"
-                        width="100" id="uploadedAvatar" />
-                    <div class="button-wrapper">
-                        <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                            <span class="d-none d-sm-block">Añadir una foto</span>
-                            <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input type="file" id="upload" class="account-file-input" hidden
-                                accept="image/png, image/jpeg" />
-                        </label>
-                        <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                            <i class="bx bx-reset d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Reset</span>
-                        </button>
+            <form id="formProv" (ngSubmit)="onSubmit()">
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="{{newProvider.logo? newProvider.logo :'../assets/img/avatars/1.png'}}" alt="user-avatar" class="d-block rounded" height="100"
+                            width="100" id="uploadedAvatar" />
+                        <input class="form-control" type="url" id="logo" name="logo" placeholder="https://www.logo.jpg"
+                            autofocus />
+                        <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">Add logo</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" id="upload" class="account-file-input" hidden
+                                    accept="image/png, image/jpeg" />
+                            </label>
+                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Reset</span>
+                            </button>
 
-                        <p class="text-muted mb-0">Permitido JPG, GIF or PNG. Max size of 800K</p>
+                            <p class="text-muted mb-0">URL of JPG, GIF or PNG.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr class="my-0" />
-            <div class="card-body">
-                <form id="formProv" method="POST" onsubmit="return false">
+                <hr class="my-0" />
+                <div class="card-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="razSoc" class="form-label">Razon Social</label>
-                            <input class="form-control" type="text" id="razSoc" name="razSoc" placeholder="John"
-                                autofocus />
+                            <label for="compName" class="form-label">Company Name</label>
+                            <input class="form-control" type="text" id="compName" name="compName" placeholder="John" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="rubro" class="form-label">Rubro</label>
-                            <input class="form-control" type="text" name="rubro" id="rubro" placeholder="Electronica" />
+                            <label for="item" class="form-label">Item / Rubric</label>
+                            <input class="form-control" type="text" name="item" id="item" placeholder="Electronica" />
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">E-mail</label>
@@ -56,30 +57,35 @@
                                 placeholder="john.doe@example.com" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="web" class="form-label">Sitio Web</label>
+                            <label for="web" class="form-label">Web Site</label>
                             <input type="url" class="form-control" id="web" name="web" placeholder="www.tuSitio.com" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="telefono">Telefono</label>
+                            <label class="form-label" for="phone">Phone</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">AR (+54)</span>
-                                <input type="text" id="telefono" name="telefono" class="form-control"
+                                <input type="text" id="phone" name="phone" class="form-control"
                                     placeholder="3817654321" />
                             </div>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="direccion" class="form-label">Direccion</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion"
+                            <label for="street" class="form-label">Street</label>
+                            <input type="text" class="form-control" id="street" name="street"
                                 placeholder="Av California" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="codPos" class="form-label">Codigo Postal</label>
-                            <input type="text" class="form-control" id="codPos" name="codPos" placeholder="4000"
+                            <label for="number" class="form-label">Number</label>
+                            <input type="text" class="form-control" id="number" name="number"
+                                placeholder="Av California" />
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="zip" class="form-label">Zip Code</label>
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="4000"
                                 maxlength="6" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="pais">Pais</label>
-                            <select id="pais" class="select2 form-select">
+                            <label class="form-label" for="country">Country</label>
+                            <select id="country" class="select2 form-select">
                                 <option value="">Seleccionar</option>
                                 <option value="Argentina">Argentina</option>
                                 <option value="Australia">Australia</option>
@@ -109,13 +115,13 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="provincia" class="form-label">Provincia</label>
-                            <input class="form-control" type="text" id="provincia" name="provincia"
+                            <label for="province" class="form-label">Province</label>
+                            <input class="form-control" type="text" id="province" name="province"
                                 placeholder="Cordoba" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="localidad" class="form-label">Localidad</label>
-                            <input class="form-control" type="text" id="localidad" name="localidad"
+                            <label for="locality" class="form-label">Locality</label>
+                            <input class="form-control" type="text" id="locality" name="locality"
                                 placeholder="Yerba Buena" />
                         </div>
                         <div class="mb-3 col-md-6">
@@ -133,8 +139,8 @@
                             </select>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="nombre" class="form-label">Nombre y Apellido</label>
-                            <input class="form-control" type="text" id="nombre" name="nombre" placeholder="John" />
+                            <label for="name" class="form-label">First and Last Name</label>
+                            <input class="form-control" type="text" id="name" name="name" placeholder="John" />
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="emailProv" class="form-label">E-mail</label>
@@ -142,7 +148,7 @@
                                 placeholder="john.doe@example.com" />
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="telProv">Telefono Proveedor</label>
+                            <label class="form-label" for="telProv">Provider phone number</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">AR (+54)</span>
                                 <input type="text" id="telProv" name="telProv" class="form-control"
@@ -150,16 +156,16 @@
                             </div>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="rol" class="form-label">Rol</label>
-                            <input class="form-control" type="text" id="rol" name="rol" placeholder="Gerente" />
+                            <label for="role" class="form-label">Role</label>
+                            <input class="form-control" type="text" id="rol" name="role" placeholder="Gerente" />
                         </div>
                     </div>
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary me-2">Añadir Proveedor</button>
-                        <button type="reset" class="btn btn-outline-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary me-2">Add Provider</button>
+                        <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
             <!-- /Account -->
         </div>
 
