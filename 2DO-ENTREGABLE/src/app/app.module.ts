@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
@@ -12,7 +13,9 @@ import { OrdersListComponent } from './purchase-orders/components/orders-list/or
 import { OrdersAddComponent } from './purchase-orders/components/orders-add/orders-add.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './dashboard/components/home/home.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ProvidersAddComponent } from './providers/components/providers-add/providers-add.component';
+import { ProvidersService } from './providers/services/providers.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -25,13 +28,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProvidersListComponent,
     OrdersListComponent,
     OrdersAddComponent,
-    HomeComponent
+    HomeComponent,
+    ProvidersAddComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@ export interface Provider{
     webSite?:string,
     phone?:string,
     email?:string,
-    address?:{
+    address:{
         street?:string,
         number?:number,
         zip?:string,

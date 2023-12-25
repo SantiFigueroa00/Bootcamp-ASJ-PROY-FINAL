@@ -1,0 +1,31 @@
+{
+  "providers": [
+    {
+      "id": "f0b9e",
+      "compName": "Company SRL",
+      "item": "Electronic",
+      "webSite": "https://www.npmjs.com/package/json-server",
+      "phone": "3692515",
+      "email": "company@gmail.com",
+      "address": {
+        "street": "AV libertador",
+        "number": 2015,
+        "zip": "4000",
+        "country": "Argentina",
+        "province": "Tucuman",
+        "locality": "San miguel"
+      },
+      "taxData": {
+        "cuit": "23-44444456-8",
+        "iva": "Responsable Inscripto"
+      },
+      "logo": "https://www.designevo.com/res/templates/thumb_small/green-and-blue-investment-building.webp",
+      "contact": {
+        "name": "Lucass",
+        "phone": "565161",
+        "email": "lucas@hotmail.com",
+        "role": "Gerente"
+      }
+    }
+  ]
+}

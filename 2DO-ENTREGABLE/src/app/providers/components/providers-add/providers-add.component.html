@@ -1,7 +1,6 @@
 <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Providers /</span> Add provider
 </h4>
-
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-pills flex-column flex-md-row mb-3">
@@ -17,13 +16,15 @@
         <div class="card mb-4">
             <h5 class="card-header">Provider Detail</h5>
             <!-- Account -->
-            <form id="formProv" (ngSubmit)="onSubmit()">
+            <form [formGroup]="myFormReactivo" (ngSubmit)="onSubmit()">
                 <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="{{newProvider.logo? newProvider.logo :'../assets/img/avatars/1.png'}}" alt="user-avatar" class="d-block rounded" height="100"
-                            width="100" id="uploadedAvatar" />
+                        <img src="{{myFormReactivo.value.logo? myFormReactivo.value.logo :'../assets/img/avatars/1.png'}}"
+                            alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
                         <input class="form-control" type="url" id="logo" name="logo" placeholder="https://www.logo.jpg"
-                            autofocus />
+                            autofocus formControlName="logo" />
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('logo')?.hasError('pattern')">Invalid URL format.</small>
                         <div class="button-wrapper">
                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                 <span class="d-none d-sm-block">Add logo</span>
@@ -45,47 +46,79 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="compName" class="form-label">Company Name</label>
-                            <input class="form-control" type="text" id="compName" name="compName" placeholder="John" />
+                            <input class="form-control" type="text" id="compName" name="compName" placeholder="John"
+                                formControlName="compName" />
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('compName')?.hasError('required')">Company Name is
+                                required.</small>
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('compName')?.hasError('minlength')">Must be at least 4
+                                characters long.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="item" class="form-label">Item / Rubric</label>
-                            <input class="form-control" type="text" name="item" id="item" placeholder="Electronica" />
+                            <input class="form-control" type="text" name="item" id="item" placeholder="Electronica"
+                                formControlName="item" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('item')?.hasError('required')">Item is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('item')?.hasError('minlength')">Must
+                                be at least 4
+                                characters long.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">E-mail</label>
                             <input class="form-control" type="text" id="email" name="email"
-                                placeholder="john.doe@example.com" />
+                                placeholder="john.doe@example.com" formControlName="email" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('email')?.hasError('required')">E-mail is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('email')?.hasError('email')">Incorrect mail format.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="web" class="form-label">Web Site</label>
-                            <input type="url" class="form-control" id="web" name="web" placeholder="www.tuSitio.com" />
+                            <input type="url" class="form-control" id="web" name="web" placeholder="www.tuSitio.com"
+                                formControlName="web" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('web')?.hasError('required')">Web Site is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('web')?.hasError('pattern')">Incorrect url format.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="phone">Phone</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">AR (+54)</span>
-                                <input type="text" id="phone" name="phone" class="form-control"
-                                    placeholder="3817654321" />
+                                <input type="text" id="phone" name="phone" class="form-control" placeholder="3817654321"
+                                    formControlName="phone" />
                             </div>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('phone')?.hasError('required')">Phone is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('phone')?.hasError('minlength')">Maximum 15 characters allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="street" class="form-label">Street</label>
                             <input type="text" class="form-control" id="street" name="street"
-                                placeholder="Av California" />
+                                placeholder="Av California" formControlName="street" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('street')?.hasError('required')">Street is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('street')?.hasError('minlength')||myFormReactivo.get('street')?.hasError('maxlength')">Between 4 to 50 characters allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="number" class="form-label">Number</label>
-                            <input type="text" class="form-control" id="number" name="number"
-                                placeholder="Av California" />
+                            <input type="number" class="form-control" id="number" name="number"
+                                placeholder="Av California" formControlName="number" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('number')?.hasError('required')">Number is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('number')?.hasError('min')||myFormReactivo.get('number')?.hasError('max')">Must be greater than 1 and less than 10000</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="zip" class="form-label">Zip Code</label>
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="4000"
-                                maxlength="6" />
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="4000" maxlength="6"
+                                formControlName="zip" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('zip')?.hasError('required')">Zip Code is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('zip')?.hasError('pattern')">Between 1 to 5 characters allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Country</label>
-                            <select id="country" class="select2 form-select">
+                            <select id="country" class="select2 form-select" formControlName="country">
                                 <option value="">Seleccionar</option>
                                 <option value="Argentina">Argentina</option>
                                 <option value="Australia">Australia</option>
@@ -113,51 +146,81 @@
                                 <option value="Reino Unido">Reino Unido</option>
                                 <option value="Estados Unidos">Estados Unidos</option>
                             </select>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('country')?.hasError('required')">Country is
+                                required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="province" class="form-label">Province</label>
-                            <input class="form-control" type="text" id="province" name="province"
-                                placeholder="Cordoba" />
+                            <input class="form-control" type="text" id="province" name="province" placeholder="Cordoba"
+                                formControlName="province" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('province')?.hasError('required')">Province is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('province')?.hasError('maxlength')">Maximum 50 characters allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="locality" class="form-label">Locality</label>
                             <input class="form-control" type="text" id="locality" name="locality"
-                                placeholder="Yerba Buena" />
+                                placeholder="Yerba Buena" formControlName="locality" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('locality')?.hasError('required')">Locality is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('locality')?.hasError('maxlength')">Maximum 50 characters allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="cuit" class="form-label">CUIT</label>
-                            <input class="form-control" type="text" id="cuit" name="cuit" placeholder="27-12345678-9" />
+                            <input class="form-control" type="text" id="cuit" name="cuit" placeholder="27-12345678-9"
+                                formControlName="cuit" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('cuit')?.hasError('required')">CUIT is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('cuit')?.hasError('pattern')">Incorrect cuit format.</small>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="ivaCondition" class="form-label">Condición de IVA</label>
-                            <select id="ivaCondition" class="select2 form-select">
-                                <option value="">Seleccionar Condición de IVA</option>
+                            <label for="ivaCondition" class="form-label">IVA Condition</label>
+                            <select id="ivaCondition" class="select2 form-select" formControlName="ivaCondition">
+                                <option value="">Select the IVA condition</option>
                                 <option value="Responsable Inscripto">Responsable Inscripto</option>
                                 <option value="Monotributista">Monotributista</option>
                                 <option value="Exento">Exento</option>
                                 <option value="No Responsable">No Responsable</option>
                             </select>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('ivaCondition')?.hasError('required')">IVA Condition is
+                                required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">First and Last Name</label>
-                            <input class="form-control" type="text" id="name" name="name" placeholder="John" />
+                            <input class="form-control" type="text" id="name" name="name" placeholder="John"
+                                formControlName="name" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('name')?.hasError('required')">First and Last Name is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('name')?.hasError('minlength')">Must
+                                be at least 4
+                                characters long.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="emailProv" class="form-label">E-mail</label>
                             <input class="form-control" type="text" id="emailProv" name="emailProv"
-                                placeholder="john.doe@example.com" />
+                                placeholder="john.doe@example.com" formControlName="emailProv" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('emailProv')?.hasError('required')">E-mail is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('emailProv')?.hasError('minlength')">Incorrect mail format.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="telProv">Provider phone number</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">AR (+54)</span>
                                 <input type="text" id="telProv" name="telProv" class="form-control"
-                                    placeholder="3817654321" />
+                                    placeholder="3817654321" formControlName="telProv" />
                             </div>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('telProv')?.hasError('required')">Provider phone number is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('telProv')?.hasError('minlength')">Maximum 15 characters allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="role" class="form-label">Role</label>
-                            <input class="form-control" type="text" id="rol" name="role" placeholder="Gerente" />
+                            <input class="form-control" type="text" id="role" name="role" placeholder="Gerente"
+                                formControlName="role" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('item')?.hasError('required')">Role is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('item')?.hasError('minlength')">Maximum 20 characters allowed.</small>
                         </div>
                     </div>
                     <div class="mt-2">
