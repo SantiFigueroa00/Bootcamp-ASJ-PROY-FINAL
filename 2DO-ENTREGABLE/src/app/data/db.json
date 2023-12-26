@@ -26,6 +26,67 @@
         "email": "lucas@hotmail.com",
         "role": "Gerente"
       }
+    },
+    {
+      "id": "f559e",
+      "compName": "Enterprise SRL",
+      "item": "Electronic",
+      "webSite": "https://www.npmjs.com/package/json-server",
+      "phone": "3692515",
+      "email": "company@gmail.com",
+      "address": {
+        "street": "AV libertador",
+        "number": 2015,
+        "zip": "4000",
+        "country": "Argentina",
+        "province": "Tucuman",
+        "locality": "San miguel"
+      },
+      "taxData": {
+        "cuit": "23-44444456-8",
+        "iva": "Responsable Inscripto"
+      },
+      "logo": "https://www.designevo.com/res/templates/thumb_small/green-and-blue-investment-building.webp",
+      "contact": {
+        "name": "Lucass",
+        "phone": "565161",
+        "email": "lucas@hotmail.com",
+        "role": "Gerente"
+      }
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "description": "Product 1 description",
+      "price": 100,
+      "category": "electronics",
+      "provider": "Company SRL"
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "description": "Product 2 description",
+      "price": 200,
+      "category": "vehicles",
+      "provider": "Company SRL"
+    },
+    {
+      "id": 3,
+      "name": "Product 3",
+      "description": "Product 3 description",
+      "price": 300,
+      "category": "vehicles",
+      "provider": "Company SRL"
+    },
+    {
+      "id": "007835b0",
+      "name": "JBL charge",
+      "category": "Music",
+      "provider": "Enterprise SRL",
+      "price": 200,
+      "description": "ALto parlante"
     }
   ]
 }
