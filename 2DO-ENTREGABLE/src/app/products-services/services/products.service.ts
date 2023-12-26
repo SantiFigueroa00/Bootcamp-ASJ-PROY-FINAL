@@ -7,7 +7,7 @@ import { Product } from '../../models/Product';
   providedIn: 'root'
 })
 export class ProductsService {
-
+  
   constructor(private http : HttpClient) { }
   
   API_URL = "http://localhost:3000/products"
@@ -24,4 +24,7 @@ export class ProductsService {
     return this.http.put(`${this.API_URL}/${p.id}`,p);
   }
   
+  getProductsByIdProvider(providerIdSelect: string):Observable<any> {
+    return this.http.get(`${this.API_URL}?provider=${providerIdSelect}`);
+  }
 }

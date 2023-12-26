@@ -1,3 +1,5 @@
+import { Order } from "./Order";
+
 export interface Provider{
     id?:string,
     compName?:string,
@@ -23,5 +25,6 @@ export interface Provider{
         phone?:string,
         email?:string,
         role?:string
-    }
+    },
+    orders?: Order[];
 }
