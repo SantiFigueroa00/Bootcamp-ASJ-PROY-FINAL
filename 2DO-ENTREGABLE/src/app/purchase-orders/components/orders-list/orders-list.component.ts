@@ -12,6 +12,8 @@ import { forkJoin } from 'rxjs';
 })
 export class OrdersListComponent implements OnInit {
   
+  noOrders: boolean = true;
+
   constructor(public providerServ :ProvidersService,public orderServ : OrdersService){}
   
   providers:Provider[]=[]
@@ -47,7 +49,15 @@ export class OrdersListComponent implements OnInit {
             return 0;
           }
         });
+        if (provider.orders && provider.orders.length > 0) {
+          this.noOrders = false;
+          return; // Break out of the loop if orders are found for any provider
+        }
       });
+
+      if (this.noOrders) {
+        this.noOrders = true;
+      }
     });
   }
 
