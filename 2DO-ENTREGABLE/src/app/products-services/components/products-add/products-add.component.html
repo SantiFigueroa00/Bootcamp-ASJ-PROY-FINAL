@@ -3,7 +3,7 @@
 </h4>
 <ul class="nav nav-pills flex-column flex-md-row mb-3">
     <li class="nav-item">
-        <a class="nav-link "  routerLink="../list"><i class="bx bx-user me-1"></i> List of
+        <a class="nav-link " routerLink="../list"><i class="bx bx-user me-1"></i> List of
             Products-Services</a>
     </li>
     <li class="nav-item">
@@ -67,7 +67,8 @@
                                 required.</small>
                             <small class="text-primary" *ngIf="myFormReactivo.get('price')?.hasError('min')">Must be at
                                 least 1.</small>
-                            <small class="text-primary" *ngIf="myFormReactivo.get('price')?.hasError('max')">must be less than 10000000.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('price')?.hasError('max')">must be
+                                less than 10000000.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="description" class="form-label">Description</label>
@@ -83,7 +84,7 @@
 
                     </div>
                     <div class="mt-2">
-                        <ngbd-toast-global></ngbd-toast-global>
+                        <button type="submit" class="btn btn-primary me-2">Add Product</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
                 </form>
@@ -93,4 +94,5 @@
     </div>
 </div>
 
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
 <ng-template #successTpl> Product successfully created! </ng-template>

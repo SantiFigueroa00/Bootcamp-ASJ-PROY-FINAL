@@ -9,9 +9,10 @@
                 <a class="nav-link " routerLink="../list"><i class="bx bx-user me-1"></i> List of Purchase Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-plus me-1"></i> Add Purchase Orders</a>
+                <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-plus me-1"></i> Add Purchase
+                    Orders</a>
             </li>
-        </ul>        
+        </ul>
         <div class="card mb-4">
             <h5 class="card-header">Add Purchase Order</h5>
             <!-- Account -->
@@ -27,39 +28,47 @@
                                 <option value="{{prov.id}}" *ngFor="let prov of providers">{{prov.compName}}
                                 </option>
                             </select>
-                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('provider')?.hasError('required')">Provider is
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoOrd.get('provider')?.hasError('required')">Provider is
                                 required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Reception information</label>
                             <input type="text" class="form-control" id="address" name="address"
                                 placeholder="Av California" formControlName="address" />
-                                <small class="text-primary" *ngIf="myFormReactivoOrd.get('address')?.hasError('required')">Info is
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoOrd.get('address')?.hasError('required')">Info is
                                 required.</small>
-                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('address')?.hasError('minlength')">Must
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoOrd.get('address')?.hasError('minlength')">Must
                                 be at least 4
                                 characters long.</small>
-                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('address')?.hasError('maxlength')">Must be less than 100 characters.</small>
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoOrd.get('address')?.hasError('maxlength')">Must be less than 100
+                                characters.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="dateE" class="form-label">Date of issue</label>
                             <input type="date" class="form-control" id="dateE" name="dateE" placeholder=""
                                 formControlName="dateE" [disabled]="true" />
-                                <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateE')?.hasError('required')">Date of issue
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoOrd.get('dateE')?.hasError('required')">Date of issue
                                 required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="dateR" class="form-label">Expected delivery date</label>
                             <input type="date" class="form-control" id="dateR" name="dateR" placeholder=""
                                 formControlName="dateR" />
-                                <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateR')?.hasError('required')">Expected delivery date is
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoOrd.get('dateR')?.hasError('required')">Expected delivery date is
                                 required.</small>
-                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateR')?.hasError('pastDate')">You cannot choose a date before the date of issue.</small>
+                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateR')?.hasError('pastDate')">You
+                                cannot choose a date before the date of issue.</small>
                         </div>
                     </div>
 
                     <div class="mt-2">
-                        <ngbd-toast-global></ngbd-toast-global>
+                        <button type="submit" class="btn btn-primary me-2">Add Order</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
                 </form>
@@ -87,18 +96,22 @@
                                 <option value="{{prod.id}}" *ngFor="let prod of products">{{prod.name}}
                                 </option>
                             </select>
-                            <small class="text-primary" *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
                                 required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="quantity" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="quantity" name="quantity" placeholder="2"
                                 formControlName="quantity" />
-                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('required')">Quantity is
+                            <small class="text-primary"
+                                *ngIf="myFormReactivoProd.get('quantity')?.hasError('required')">Quantity is
                                 required.</small>
-                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('min')">Must be at
-                                    least 1.</small>
-                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('max')">must be less than 1000.</small>
+                            <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('min')">Must
+                                be at
+                                least 1.</small>
+                            <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('max')">must
+                                be less than 1000.</small>
                         </div>
                     </div>
                     <div class="mt-2">
@@ -157,7 +170,8 @@
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                     Cancel
                                 </button>
-                                <button type="button" class="btn btn-danger ms-2" id="btnBorrado" data-bs-dismiss="modal" (click)="deleteProd()">Confirm</button>
+                                <button type="button" class="btn btn-danger ms-2" id="btnBorrado"
+                                    data-bs-dismiss="modal" (click)="deleteProd()">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -166,11 +180,11 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <form id="formModal" [formGroup]="myFormReactivoProd" (ngSubmit)="onSubmitProd()">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalEdit">Do you want to Edit the Product?</h5>
-                                <button type="reset" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalEdit">Do you want to Edit the Product?</h5>
+                                    <button type="reset" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="mb-3 col-md-6">
@@ -181,18 +195,25 @@
                                                 <option value="{{prod.id}}" *ngFor="let prod of products">{{prod.name}}
                                                 </option>
                                             </select>
-                                            <small class="text-primary" *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
+                                            <small class="text-primary"
+                                                *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product
+                                                is
                                                 required.</small>
                                         </div>
                                         <div class="mb-3 col-md-6">
                                             <label for="quantity" class="form-label">Quantity</label>
-                                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="2"
-                                                formControlName="quantity" />
-                                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('required')">Quantity is
+                                            <input type="number" class="form-control" id="quantity" name="quantity"
+                                                placeholder="2" formControlName="quantity" />
+                                            <small class="text-primary"
+                                                *ngIf="myFormReactivoProd.get('quantity')?.hasError('required')">Quantity
+                                                is
                                                 required.</small>
-                                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('min')">Must be at
-                                                    least 1.</small>
-                                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('max')">must be less than 1000.</small>
+                                            <small class="text-primary"
+                                                *ngIf="myFormReactivoProd.get('quantity')?.hasError('min')">Must be at
+                                                least 1.</small>
+                                            <small class="text-primary"
+                                                *ngIf="myFormReactivoProd.get('quantity')?.hasError('max')">must be less
+                                                than 1000.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +221,8 @@
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                         Cancel
                                     </button>
-                                    <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Confirm</button>
+                                    <button type="submit" class="btn btn-warning"
+                                        data-bs-dismiss="modal">Confirm</button>
                                 </div>
                             </form>
                         </div>
@@ -211,4 +233,5 @@
     </div>
 </div>
 
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
 <ng-template #successTpl> Purchase Order successfully created! </ng-template>

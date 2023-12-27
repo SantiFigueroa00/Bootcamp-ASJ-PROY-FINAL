@@ -17,7 +17,6 @@ import { ProvidersAddComponent } from './providers/components/providers-add/prov
 import { ProvidersService } from './providers/services/providers.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastsContainer } from './shared/components/toast/toast-success/toasts-container.component';
-import { NgbdToastGlobal } from './shared/components/toast/toast-success/toast-global.component';
 import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts-container.component';
 
 
@@ -41,7 +40,6 @@ import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts
     ReactiveFormsModule,
     HttpClientModule,
     ToastsContainer,
-    NgbdToastGlobal,
     ToastsContainerEdit
   ],
   providers: [],
