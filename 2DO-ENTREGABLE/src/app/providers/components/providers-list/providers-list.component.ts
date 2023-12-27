@@ -41,23 +41,51 @@ export class ProvidersListComponent implements OnInit{
       role:''
     }
   }
+  providerDel: Provider={
+    id:'',
+    compName:'',
+    item:'',
+    webSite:'',
+    phone:'',
+    email:'',
+    address:{
+      street:'',
+      number:0,
+      zip:'',
+      country:'',
+      province:'',
+      locality:''
+    },
+    taxData:{
+      cuit:'',
+      iva:''
+    },
+    logo:'',
+    contact:{
+      name:'',
+      phone:'',
+      email:'',
+      role:''
+    }
+  }
   
-  idDelete?:string='';
   ngOnInit(): void {
     this.listProviders();
   }
   
   listProviders(){
     this.providerServ.getProviders().subscribe((res)=>{
-      this.providers = res;
+      let auxProviders:Provider[] = res;
+      this.providers = auxProviders.filter(provider => provider.isDeleted === false);
     });
   }
   
-  checkDelete(id?:string){
-    this.idDelete=id;
+  checkDelete(providerDel:Provider){
+    providerDel.isDeleted = true;
+    this.providerDel=providerDel;
   }
   deleteProv() {
-    this.providerServ.deleteProvider(this.idDelete).subscribe((res)=>{
+    this.providerServ.deleteProvider(this.providerDel).subscribe((res)=>{
       console.log(res);
       this.listProviders();
     });

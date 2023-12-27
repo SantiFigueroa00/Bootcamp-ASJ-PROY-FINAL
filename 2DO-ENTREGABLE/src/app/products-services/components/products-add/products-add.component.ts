@@ -29,7 +29,8 @@ export class ProductsAddComponent implements OnInit{
   
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
-      this.providers=res;
+      let auxProviders:Provider[] = res;
+      this.providers = auxProviders.filter(provider => provider.isDeleted === false);
     });
   }
   onSubmit() {

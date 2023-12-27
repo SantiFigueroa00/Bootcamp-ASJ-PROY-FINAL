@@ -16,8 +16,8 @@ export class ProvidersService {
   getProviders() :Observable<any>{
     return this.http.get(this.API_URL);
   }
-  deleteProvider(id?: string) :Observable<any>{
-    return this.http.delete(`${this.API_URL}/${id}`);
+  deleteProvider(p: Provider) :Observable<any>{
+    return this.http.put(`${this.API_URL}/${p.id}`,p);
   }
   putProvider(p:Provider) :Observable<any>{
     return this.http.put(`${this.API_URL}/${p.id}`,p);

@@ -106,6 +106,7 @@ export class ProvidersAddComponent {
     this.newProvider.contact.email = this.myFormReactivo.get('emailProv')?.value || '';
     this.newProvider.contact.role = this.myFormReactivo.get('role')?.value || '';
     this.newProvider.logo = this.myFormReactivo.get('logo')?.value || '';
+    this.newProvider.isDeleted = false;
   }
   
 

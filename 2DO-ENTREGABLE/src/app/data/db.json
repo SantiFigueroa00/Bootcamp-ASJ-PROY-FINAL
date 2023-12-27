@@ -25,7 +25,8 @@
         "phone": "565161",
         "email": "lucas@hotmail.com",
         "role": "Gerente"
-      }
+      },
+      "isDeleted": true
     },
     {
       "id": "f559e",
@@ -52,7 +53,8 @@
         "phone": "565161",
         "email": "lucas@hotmail.com",
         "role": "Gerente"
-      }
+      },
+      "isDeleted": false
     },
     {
       "id": "ffa1c",
@@ -79,7 +81,8 @@
         "phone": "11478852",
         "email": "ceo@hotmail.com",
         "role": "CEO"
-      }
+      },
+      "isDeleted": false
     },
     {
       "id": "62cc6",
@@ -106,7 +109,8 @@
         "phone": "32123458",
         "email": "luciano@html.com",
         "role": "Empleado"
-      }
+      },
+      "isDeleted": false
     }
   ],
   "products": [

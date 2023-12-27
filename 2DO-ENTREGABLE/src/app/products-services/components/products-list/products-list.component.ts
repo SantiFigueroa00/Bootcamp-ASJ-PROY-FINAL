@@ -30,7 +30,8 @@ export class ProductsListComponent {
   idDelete?:string='';
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
-      this.providers=res;
+      let auxProviders:Provider[] = res;
+      this.providers = auxProviders.filter(provider => provider.isDeleted === false);
     });
     this.listProducts();
   }
@@ -43,7 +44,7 @@ export class ProductsListComponent {
 
   listProducts(){
     this.productServ.getProducts().subscribe((res)=>{
-      this.products = res.sort((a:Product, b:Product) => {
+      let auxProviders:Product[] = res.sort((a:Product, b:Product) => {
         const nameA = a.name.toUpperCase(); // convertir a mayúsculas para ordenar de manera no sensible a mayúsculas/minúsculas
         const nameB = b.name.toUpperCase();
   
@@ -55,6 +56,7 @@ export class ProductsListComponent {
         }
         return 0;
       });
+      this.products = auxProviders.filter(prod => this.providers.map(provider => provider.id).includes(prod.provider));
     });
   }
   

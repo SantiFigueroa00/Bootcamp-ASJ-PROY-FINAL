@@ -27,4 +27,5 @@ export interface Provider{
         role?:string
     },
     orders?: Order[];
+    isDeleted?:boolean
 }
