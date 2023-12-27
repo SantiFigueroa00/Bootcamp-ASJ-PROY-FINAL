@@ -27,21 +27,34 @@
                                 <option value="{{prov.id}}" *ngFor="let prov of providers">{{prov.compName}}
                                 </option>
                             </select>
+                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('provider')?.hasError('required')">Provider is
+                                required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Reception information</label>
                             <input type="text" class="form-control" id="address" name="address"
                                 placeholder="Av California" formControlName="address" />
+                                <small class="text-primary" *ngIf="myFormReactivoOrd.get('address')?.hasError('required')">Info is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('address')?.hasError('minlength')">Must
+                                be at least 4
+                                characters long.</small>
+                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('address')?.hasError('maxlength')">Must be less than 100 characters.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="dateE" class="form-label">Date of issue</label>
                             <input type="date" class="form-control" id="dateE" name="dateE" placeholder=""
                                 formControlName="dateE" [disabled]="true" />
+                                <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateE')?.hasError('required')">Date of issue
+                                required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="dateR" class="form-label">Expected delivery date</label>
                             <input type="date" class="form-control" id="dateR" name="dateR" placeholder=""
                                 formControlName="dateR" />
+                                <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateR')?.hasError('required')">Expected delivery date is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivoOrd.get('dateR')?.hasError('pastDate')">You cannot choose a date before the date of issue.</small>
                         </div>
                     </div>
 
@@ -74,11 +87,18 @@
                                 <option value="{{prod.id}}" *ngFor="let prod of products">{{prod.name}}
                                 </option>
                             </select>
+                            <small class="text-primary" *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
+                                required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="quantity" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="quantity" name="quantity" placeholder="2"
                                 formControlName="quantity" />
+                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('required')">Quantity is
+                                required.</small>
+                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('min')">Must be at
+                                    least 1.</small>
+                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('max')">must be less than 1000.</small>
                         </div>
                     </div>
                     <div class="mt-2">
@@ -161,11 +181,18 @@
                                                 <option value="{{prod.id}}" *ngFor="let prod of products">{{prod.name}}
                                                 </option>
                                             </select>
+                                            <small class="text-primary" *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
+                                                required.</small>
                                         </div>
                                         <div class="mb-3 col-md-6">
                                             <label for="quantity" class="form-label">Quantity</label>
                                             <input type="number" class="form-control" id="quantity" name="quantity" placeholder="2"
                                                 formControlName="quantity" />
+                                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('required')">Quantity is
+                                                required.</small>
+                                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('min')">Must be at
+                                                    least 1.</small>
+                                                <small class="text-primary" *ngIf="myFormReactivoProd.get('quantity')?.hasError('max')">must be less than 1000.</small>
                                         </div>
                                     </div>
                                 </div>

@@ -12,7 +12,6 @@ import { ProvidersService } from '../../../providers/services/providers.service'
   styleUrl: './products-list.component.css'
 })
 export class ProductsListComponent {
-  
 
   providers: Provider[]=[];
   products: Product[]=[];
@@ -33,6 +32,12 @@ export class ProductsListComponent {
     this.listProducts();
   }
   
+  setCompName(id:string){
+    const provider = this.providers.find((prov) => prov.id === id);
+    return provider ? provider.compName : '';
+  }
+
+
   listProducts(){
     this.productServ.getProducts().subscribe((res)=>{
       this.products = res.sort((a:Product, b:Product) => {

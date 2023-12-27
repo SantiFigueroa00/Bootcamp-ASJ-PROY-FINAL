@@ -23,4 +23,7 @@ export class ProvidersService {
     return this.http.put(`${this.API_URL}/${p.id}`,p);
   }
   
+  getProviderById(id: string) {
+    return this.http.get(`${this.API_URL}/${id}`);
+  }
 }

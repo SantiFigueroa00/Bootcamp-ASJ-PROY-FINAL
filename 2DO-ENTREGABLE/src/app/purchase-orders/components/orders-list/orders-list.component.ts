@@ -36,7 +36,17 @@ export class OrdersListComponent implements OnInit {
   loadOrdersForProviders() {
     this.providers.forEach((provider) => {
       this.orderServ.getOrdersByProv(provider.id).subscribe((orders) => {
-        provider.orders = orders ||[];
+        provider.orders = orders || [];
+
+        provider.orders?.sort((a, b) => {
+          if (a.state && !b.state) {
+            return -1;
+          } else if (!a.state && b.state) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
       });
     });
   }
@@ -50,6 +60,7 @@ export class OrdersListComponent implements OnInit {
     this.orderServ.putOrder(this.orderCancel).subscribe((res)=>{
       console.log(res);
     });
+    this.loadOrdersForProviders();
   }
 
   setActive(o : Order) {
@@ -57,5 +68,6 @@ export class OrdersListComponent implements OnInit {
     this.orderServ.putOrder(o).subscribe((res)=>{
       console.log(res);
     });
+    this.loadOrdersForProviders();
   }
 }

@@ -136,7 +136,7 @@ export class ProvidersListComponent implements OnInit{
       country: ['', [Validators.required, Validators.maxLength(50)]],
       province: ['', [Validators.required, Validators.maxLength(50)]],
       locality: ['', [Validators.required, Validators.maxLength(50)]],
-      cuit: ['', [Validators.required, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)]],
+      cuit: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)]],
       ivaCondition: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(50)]],
       emailProv: ['', [Validators.required, Validators.email]],

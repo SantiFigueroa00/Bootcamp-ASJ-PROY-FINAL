@@ -86,7 +86,10 @@
                                                 <td>{{o.dateE}}</td>
                                                 <td>{{o.dateR}}</td>
                                                 <td>{{o.info}}</td>
-                                                <td>{{o.state ? 'ACTIVE': 'CANCELED'}}</td>
+                                                <td>
+                                                    <span class="badge bg-label-primary me-1" *ngIf="o.state">ACTIVE</span>
+                                                    <span class="badge bg-label-danger me-1" *ngIf="!o.state">CANCELED</span>
+                                                </td>
                                                 <td>
                                                     <button *ngIf="o.state" class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" (click)="checkCancel(o)">
                                                         <i class='bx bxs-x-circle'></i>

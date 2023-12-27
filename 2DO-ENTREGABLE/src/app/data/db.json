@@ -114,6 +114,14 @@
       "provider": "f559e",
       "price": 200,
       "description": "ALto parlante"
+    },
+    {
+      "id": "a587fac6",
+      "name": "Product Awesome",
+      "category": "Smart Home",
+      "provider": "ffa1c",
+      "price": 125,
+      "description": "This is a description"
     }
   ],
   "orders": [
