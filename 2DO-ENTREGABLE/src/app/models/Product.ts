@@ -5,4 +5,5 @@ export interface Product {
   provider: string;
   price: number;
   description: string;
+  imageP:string;
 }

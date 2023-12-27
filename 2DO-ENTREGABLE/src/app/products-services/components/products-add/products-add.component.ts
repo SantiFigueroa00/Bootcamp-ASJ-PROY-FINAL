@@ -24,6 +24,7 @@ export class ProductsAddComponent implements OnInit{
     provider: '',
     price: 0,
     description: '',
+    imageP:''
   }
   
   ngOnInit(): void {
@@ -59,6 +60,7 @@ export class ProductsAddComponent implements OnInit{
       provider: ['', [Validators.required, Validators.minLength(4)]],
       price: [null, [Validators.required, Validators.max(10000000), Validators.min(1)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
+      imageP: ['', [Validators.required, Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
     });
   }
 
@@ -69,6 +71,7 @@ export class ProductsAddComponent implements OnInit{
     this.newProduct.provider = this.myFormReactivo.get('provider')?.value || '';
     this.newProduct.price = this.myFormReactivo.get('price')?.value || '';
     this.newProduct.description = this.myFormReactivo.get('description')?.value || '';
+    this.newProduct.imageP = this.myFormReactivo.get('imageP')?.value || '';
   }
   
 }

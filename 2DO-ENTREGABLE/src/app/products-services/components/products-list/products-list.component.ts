@@ -24,6 +24,7 @@ export class ProductsListComponent {
     provider: '',
     price: 0,
     description: '',
+    imageP:''
   }
   
   idDelete?:string='';
@@ -73,7 +74,8 @@ export class ProductsListComponent {
       category: p.category,
       provider: p.provider,
       price: p.price,
-      description: p.description
+      description: p.description,
+      imageP: p.imageP
     });
     this.productEdit=p;
   }
@@ -83,9 +85,8 @@ export class ProductsListComponent {
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProduct();
       this.productServ.putProduct(this.productEdit).subscribe((res)=>{
-        console.log(this.editTpl);
+        console.log(res);
         this.showEditToast(this.editTpl);
-        
       });
       this.myFormReactivo.reset();
     
@@ -104,6 +105,7 @@ export class ProductsListComponent {
     this.productEdit.provider = this.myFormReactivo.get('provider')?.value || '';
     this.productEdit.price = this.myFormReactivo.get('price')?.value || '';
     this.productEdit.description = this.myFormReactivo.get('description')?.value || '';
+    this.productEdit.imageP = this.myFormReactivo.get('imageP')?.value || '';
   }
 
   myFormReactivo: FormGroup;
@@ -115,6 +117,7 @@ export class ProductsListComponent {
       provider: ['', [Validators.required, Validators.minLength(4)]],
       price: [null, [Validators.required, Validators.max(10000000), Validators.min(1)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
+      imageP: ['', [Validators.required, Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]]
     });
   }
 }

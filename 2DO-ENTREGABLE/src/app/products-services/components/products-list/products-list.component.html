@@ -36,7 +36,8 @@
                 </thead>
                 <tbody class="table-border-bottom-0" id="grillaProd">
                     <tr *ngFor="let p of products">
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{p.id}}</strong>
+                        <td>
+                            <img src="{{p.imageP}}" alt="Product Image" width="100">
                         </td>
                         <td>{{p.name}}</td>
                         <td>
@@ -167,7 +168,17 @@
                                 *ngIf="myFormReactivo.get('description')?.hasError('maxlength')">Maximum 100 characters
                                 allowed.</small>
                         </div>
-
+                        <div class="mb-3 col-md-6">
+                            <label for="imageP" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="imageP" name="imageP" placeholder="https://exaple.png|jpg|jpeg|gif|webp"
+                                formControlName="imageP" />
+                            <img src="{{myFormReactivo.value.imageP? myFormReactivo.value.imageP :'../../../../assets/img/elements/4.jpg'}}"
+                            alt="user-avatar" class="d-block rounded mt-2" height="100" width="100" id="uploadedAvatar" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('imageP')?.hasError('pattern')">Invalid URL
+                                format.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('imageP')?.hasError('required')">Image is
+                                required</small>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
