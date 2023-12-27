@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
@@ -7,6 +7,7 @@ import { Provider } from '../../../models/Provider';
 import { ProductsService } from '../../../products-services/services/products.service';
 import { Order } from '../../../models/Order';
 import { OrdersService } from '../../services/orders.service';
+import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
 
 @Component({
   selector: 'app-orders-add',
@@ -14,6 +15,8 @@ import { OrdersService } from '../../services/orders.service';
   styleUrl: './orders-add.component.css',
 })
 export class OrdersAddComponent implements OnInit {
+  @ViewChild('successTpl') successTpl!: TemplateRef<any>;
+
 
   providers: Provider[] = [];
   products: Product[] = [];
@@ -52,7 +55,8 @@ export class OrdersAddComponent implements OnInit {
     private fb: FormBuilder,
     public providerServ: ProvidersService,
     public productServ: ProductsService,
-    public orderServ: OrdersService
+    public orderServ: OrdersService,
+    public toastServ:ToastServiceSuccess
     ) {
       
       const currentDate = new Date();
@@ -93,6 +97,7 @@ export class OrdersAddComponent implements OnInit {
           console.log(this.newOrder)
           this.orderServ.createOrder(this.newOrder).subscribe((res)=>{
             console.log(res);
+            this.showSuccessToast(this.successTpl);
           });
           this.myFormReactivoOrd.reset();
           this.productsOrder = [];
@@ -104,6 +109,11 @@ export class OrdersAddComponent implements OnInit {
         console.log('form invalido:', this.myFormReactivoOrd.value);
       }
     }
+
+    showSuccessToast(template : TemplateRef<any>) {
+      this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 10000 });
+    }
+
     onSubmitProd() {
       if (this.myFormReactivoProd.valid) {
         console.log('Formulario válido:', this.myFormReactivoProd.value);

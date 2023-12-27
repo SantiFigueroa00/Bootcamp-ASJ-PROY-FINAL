@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Provider } from '../../../models/Provider';
 import { ProvidersService } from '../../services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
-
+import { Toast, ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
 
 @Component({
   selector: 'app-providers-add',
@@ -11,7 +11,7 @@ import { v4 as uuidv4, v4 } from 'uuid';
   styleUrl: './providers-add.component.css',
 })
 export class ProvidersAddComponent {
-  
+  @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
   newProvider: Provider = {
     id: '',
@@ -48,6 +48,7 @@ export class ProvidersAddComponent {
       this.mapFormValuesToProvider();
       this.providerServ.createProvider(this.newProvider).subscribe((res)=>{
         console.log(res);
+        this.showSuccessToast(this.successTpl);
       });
       this.myFormReactivo.reset();
     }else{
@@ -55,10 +56,14 @@ export class ProvidersAddComponent {
     }
   }
 
+  showSuccessToast(template : TemplateRef<any>) {
+    this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 10000 });
+  }
+
   // REACTIVE FORM
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, private providerServ: ProvidersService) {
+  constructor(private fb: FormBuilder, private providerServ: ProvidersService, public toastServ:ToastServiceSuccess) {
     this.myFormReactivo = this.fb.group({
       logo: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
       compName: ['', [Validators.required, Validators.minLength(4)]],

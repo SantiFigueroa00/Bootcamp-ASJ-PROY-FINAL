@@ -16,7 +16,9 @@ import { HomeComponent } from './dashboard/components/home/home.component';
 import { ProvidersAddComponent } from './providers/components/providers-add/providers-add.component';
 import { ProvidersService } from './providers/services/providers.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ToastsContainer } from './shared/components/toast/toast-success/toasts-container.component';
+import { NgbdToastGlobal } from './shared/components/toast/toast-success/toast-global.component';
+import { NgbdToastEdit } from './shared/components/toast/toast-success copy/toast-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,14 +31,17 @@ import { HttpClientModule } from '@angular/common/http';
     OrdersListComponent,
     OrdersAddComponent,
     HomeComponent,
-    ProvidersAddComponent
+    ProvidersAddComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastsContainer,
+    NgbdToastGlobal,
+    NgbdToastEdit
   ],
   providers: [],
   bootstrap: [AppComponent]

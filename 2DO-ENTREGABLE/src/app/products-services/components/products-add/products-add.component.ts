@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
 import { Product } from '../../../models/Product';
 import { Provider } from '../../../models/Provider';
 import { ProductsService } from '../../services/products.service';
+import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
 
 @Component({
   selector: 'app-products-add',
@@ -12,6 +13,8 @@ import { ProductsService } from '../../services/products.service';
   styleUrl: './products-add.component.css'
 })
 export class ProductsAddComponent implements OnInit{
+
+  @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
   providers: Provider[]=[];
   newProduct: Product={
@@ -34,6 +37,7 @@ export class ProductsAddComponent implements OnInit{
       this.mapFormValuesToProduct();
       this.productServ.createProduct(this.newProduct).subscribe((res)=>{
         console.log(res);
+        this.showSuccessToast(this.successTpl);
       });
       this.myFormReactivo.reset();
     }else{
@@ -41,10 +45,14 @@ export class ProductsAddComponent implements OnInit{
     }
   }
 
+  showSuccessToast(template : TemplateRef<any>) {
+    this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 10000 });
+  }
+
   // REACTIVE FORM
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, public providerServ: ProvidersService, public productServ : ProductsService) {
+  constructor(private fb: FormBuilder, public providerServ: ProvidersService, public productServ : ProductsService, public toastServ:ToastServiceSuccess) {
     this.myFormReactivo = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required, Validators.maxLength(50)]],

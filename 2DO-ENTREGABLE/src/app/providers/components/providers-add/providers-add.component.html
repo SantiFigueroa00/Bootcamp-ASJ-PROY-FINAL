@@ -25,6 +25,8 @@
                             autofocus formControlName="logo" />
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('logo')?.hasError('pattern')">Invalid URL format.</small>
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('logo')?.hasError('required')">Logo is required</small>
                         <div class="button-wrapper">
                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                 <span class="d-none d-sm-block">Add logo</span>
@@ -224,7 +226,7 @@
                         </div>
                     </div>
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary me-2">Add Provider</button>
+                        <ngbd-toast-global ></ngbd-toast-global>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
                 </div>
@@ -234,3 +236,5 @@
 
     </div>
 </div>
+
+<ng-template #successTpl> Provider successfully created! </ng-template>

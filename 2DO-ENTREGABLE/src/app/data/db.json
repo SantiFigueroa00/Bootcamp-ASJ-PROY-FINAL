@@ -80,6 +80,33 @@
         "email": "ceo@hotmail.com",
         "role": "CEO"
       }
+    },
+    {
+      "id": "62cc6",
+      "compName": "Tu corporation",
+      "item": "Mens Cloth",
+      "webSite": "https://boxicons.com/",
+      "phone": "884452223",
+      "email": "men@ropa.com",
+      "address": {
+        "street": "Av mate de luna",
+        "number": 2015,
+        "zip": "4000",
+        "country": "Australia",
+        "province": "sidney",
+        "locality": "town"
+      },
+      "taxData": {
+        "cuit": "20-84562213-8",
+        "iva": "No Responsable"
+      },
+      "logo": "https://d500.epimg.net/cincodias/imagenes/2015/05/08/pyme/1431098283_691735_1431098420_noticia_normal.jpg",
+      "contact": {
+        "name": "Luciano",
+        "phone": "32123458",
+        "email": "luciano@html.com",
+        "role": "Empleado"
+      }
     }
   ],
   "products": [
@@ -122,6 +149,14 @@
       "provider": "ffa1c",
       "price": 125,
       "description": "This is a description"
+    },
+    {
+      "id": "825f79ff",
+      "name": "PC GAMER",
+      "category": "Gaming",
+      "provider": "ffa1c",
+      "price": 150,
+      "description": "THIS IS A DESCRIPTION"
     }
   ],
   "orders": [
@@ -180,6 +215,40 @@
         }
       ],
       "total": 1600,
+      "state": true
+    },
+    {
+      "id": "35e027db-2",
+      "dateE": "2023-12-27",
+      "dateR": "2023-12-29",
+      "info": "Av fildel",
+      "provider": "ffa1c",
+      "products": [
+        {
+          "id": "825f79ff",
+          "name": "PC GAMER",
+          "quantity": 3,
+          "price": 150
+        }
+      ],
+      "total": 450,
+      "state": true
+    },
+    {
+      "id": "358b2a8f-c",
+      "dateE": "2023-12-27",
+      "dateR": "2024-01-06",
+      "info": "Av Cordoba",
+      "provider": "ffa1c",
+      "products": [
+        {
+          "id": "a587fac6",
+          "name": "Product Awesome",
+          "quantity": 5,
+          "price": 125
+        }
+      ],
+      "total": 625,
       "state": true
     }
   ]
