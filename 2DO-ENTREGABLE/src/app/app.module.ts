@@ -18,7 +18,8 @@ import { ProvidersService } from './providers/services/providers.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastsContainer } from './shared/components/toast/toast-success/toasts-container.component';
 import { NgbdToastGlobal } from './shared/components/toast/toast-success/toast-global.component';
-import { NgbdToastEdit } from './shared/components/toast/toast-success copy/toast-edit.component';
+import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts-container.component';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { NgbdToastEdit } from './shared/components/toast/toast-success copy/toas
     HttpClientModule,
     ToastsContainer,
     NgbdToastGlobal,
-    NgbdToastEdit
+    ToastsContainerEdit
   ],
   providers: [],
   bootstrap: [AppComponent]

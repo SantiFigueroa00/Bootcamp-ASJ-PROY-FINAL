@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Product } from '../../../models/Product';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
 import { v4 as uuidv4, v4 } from 'uuid';
 import { Provider } from '../../../models/Provider';
 import { ProvidersService } from '../../../providers/services/providers.service';
+import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/toast-service';
 
 @Component({
   selector: 'app-products-list',
@@ -12,6 +13,7 @@ import { ProvidersService } from '../../../providers/services/providers.service'
   styleUrl: './products-list.component.css'
 })
 export class ProductsListComponent {
+  @ViewChild('editTpl') editTpl!: TemplateRef<any>;
 
   providers: Provider[]=[];
   products: Product[]=[];
@@ -81,13 +83,19 @@ export class ProductsListComponent {
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProduct();
       this.productServ.putProduct(this.productEdit).subscribe((res)=>{
-        console.log(res);
+        console.log(this.editTpl);
+        this.showEditToast(this.editTpl);
+        
       });
       this.myFormReactivo.reset();
     
     }else{
       console.log('form invalido:', this.myFormReactivo.value);
     }
+  }
+
+  showEditToast(template : TemplateRef<any>) {
+    this.toastServ.show({ template, classname: 'bg-primary text-white', delay: 2000 });
   }
   
   mapFormValuesToProduct() {
@@ -100,7 +108,7 @@ export class ProductsListComponent {
 
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, private productServ: ProductsService, public providerServ : ProvidersService) {
+  constructor(private fb: FormBuilder, private productServ: ProductsService, public providerServ : ProvidersService,public toastServ:ToastServiceEdit) {
     this.myFormReactivo = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required, Validators.maxLength(50)]],

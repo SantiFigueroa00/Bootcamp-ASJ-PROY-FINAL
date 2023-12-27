@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ProvidersService } from '../../services/providers.service';
 import { Provider } from '../../../models/Provider';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/toast-service';
 
 @Component({
   selector: 'app-providers-list',
@@ -10,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProvidersListComponent implements OnInit{
 
-
+  @ViewChild('editTpl') editTpl!: TemplateRef<any>;
   
   providers: Provider[]=[];
   providerEdit: Provider={
@@ -92,12 +93,17 @@ export class ProvidersListComponent implements OnInit{
       this.mapFormValuesToProvider();
       this.providerServ.putProvider(this.providerEdit).subscribe((res)=>{
         console.log(res);
+        this.showEditToast(this.editTpl);
       });
       this.myFormReactivo.reset();
     
     }else{
       console.log('form invalido:', this.myFormReactivo.value);
     }
+  }
+
+  showEditToast(template : TemplateRef<any>) {
+    this.toastServ.show({ template, classname: 'bg-primary text-white', delay: 10000 });
   }
   
   mapFormValuesToProvider() {
@@ -122,7 +128,7 @@ export class ProvidersListComponent implements OnInit{
 
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, private providerServ: ProvidersService) {
+  constructor(private fb: FormBuilder, private providerServ: ProvidersService, public toastServ:ToastServiceEdit) {
     this.myFormReactivo = this.fb.group({
       logo: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
       compName: ['', [Validators.required, Validators.minLength(4)]],
