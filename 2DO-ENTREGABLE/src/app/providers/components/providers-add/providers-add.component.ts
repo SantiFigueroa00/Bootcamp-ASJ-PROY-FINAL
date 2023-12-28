@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Provider } from '../../../models/Provider';
 import { ProvidersService } from '../../services/providers.service';
@@ -10,7 +10,7 @@ import { Toast, ToastServiceSuccess } from '../../../shared/components/toast/toa
   templateUrl: './providers-add.component.html',
   styleUrl: './providers-add.component.css',
 })
-export class ProvidersAddComponent {
+export class ProvidersAddComponent  implements OnInit{
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
   newProvider: Provider = {
@@ -41,7 +41,23 @@ export class ProvidersAddComponent {
     },
   };
 
-  
+  countries: any[]=[];
+  provinces: any[]=[];
+  countrySelected: string=''
+
+  ngOnInit(): void {
+    this.providerServ.getCountries().subscribe((data)=>{
+      this.countries = data;
+    })
+  }
+
+  selectedCount() {
+    this.provinces = [];
+    this.countrySelected = this.myFormReactivo.get('country')?.value || '';
+    let countrySelect = this.countries.find(country => country.name === this.countrySelected);
+    this.provinces= countrySelect.states;
+}
+
   onSubmit() {
     if (this.myFormReactivo.valid) {
       console.log('Formulario válido:', this.myFormReactivo.value);
@@ -75,7 +91,7 @@ export class ProvidersAddComponent {
       number: [null, [Validators.required, Validators.max(10000),, Validators.min(1)]],
       zip: ['', [Validators.required, Validators.pattern(/^\d{1,5}$/)]],
       country: ['', [Validators.required, Validators.maxLength(50)]],
-      province: ['', [Validators.required, Validators.maxLength(50)]],
+      province: ['', [Validators.required]],
       locality: ['', [Validators.required, Validators.maxLength(50)]],
       cuit: ['', [Validators.required, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)]],
       ivaCondition: ['', [Validators.required, Validators.maxLength(50)]],

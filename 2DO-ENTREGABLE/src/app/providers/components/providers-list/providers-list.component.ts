@@ -69,9 +69,25 @@ export class ProvidersListComponent implements OnInit{
     }
   }
   
+  countries: any[]=[];
+  provinces: any[]=[];
+  countrySelected?: string=''
+
   ngOnInit(): void {
     this.listProviders();
+    this.providerServ.getCountries().subscribe((data)=>{
+      this.countries = data;
+    })
   }
+
+  selectedCount() {
+    this.provinces = [];
+    this.countrySelected = this.myFormReactivo.get('country')?.value || '';
+    console.log(this.countrySelected);
+    let countryFind = this.countries.find(country => country.name === this.countrySelected);
+    this.provinces= countryFind.states;
+}
+
   
   listProviders(){
     this.providerServ.getProviders().subscribe((res)=>{
@@ -92,6 +108,9 @@ export class ProvidersListComponent implements OnInit{
   }
   
   editProv(p: Provider) {
+    this.countrySelected = p.address.country;
+    let countryFind = this.countries.find(country => country.name === this.countrySelected);
+    this.provinces= countryFind.states;
     this.myFormReactivo.setValue({
       logo: p.logo,
       compName: p.compName,

@@ -26,4 +26,8 @@ export class ProvidersService {
   getProviderById(id: string) :Observable<any>{
     return this.http.get(`${this.API_URL}/${id}`);
   }
+  
+  getCountries() :Observable<any>{
+    return this.http.get(`http://localhost:3000/countries?subregion=South%20America`);
+  }
 }

@@ -135,33 +135,9 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Country</label>
-                            <select id="country" class="select2 form-select" formControlName="country">
+                            <select id="country" class="select2 form-select" formControlName="country" (change)="selectedCount()">
                                 <option value="">Select Country</option>
-                                <option value="Argentina">Argentina</option>
-                                <option value="Australia">Australia</option>
-                                <option value="Bangladesh">Bangladesh</option>
-                                <option value="Bielorrusia">Bielorrusia</option>
-                                <option value="Brasil">Brasil</option>
-                                <option value="Canadá">Canadá</option>
-                                <option value="China">China</option>
-                                <option value="Francia">Francia</option>
-                                <option value="Alemania">Alemania</option>
-                                <option value="India">India</option>
-                                <option value="Indonesia">Indonesia</option>
-                                <option value="Israel">Israel</option>
-                                <option value="Italia">Italia</option>
-                                <option value="Japón">Japón</option>
-                                <option value="Corea del Sur">Corea del Sur</option>
-                                <option value="México">México</option>
-                                <option value="Filipinas">Filipinas</option>
-                                <option value="Federación Rusa">Federación Rusa</option>
-                                <option value="Sudáfrica">Sudáfrica</option>
-                                <option value="Tailandia">Tailandia</option>
-                                <option value="Turquía">Turquía</option>
-                                <option value="Ucrania">Ucrania</option>
-                                <option value="Emiratos Árabes Unidos">Emiratos Árabes Unidos</option>
-                                <option value="Reino Unido">Reino Unido</option>
-                                <option value="Estados Unidos">Estados Unidos</option>
+                                <option value="{{c.name}}" *ngFor="let c of countries">{{c.name}}</option>
                             </select>
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('country')?.hasError('required')">Country is
@@ -169,14 +145,13 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="province" class="form-label">Province</label>
-                            <input class="form-control" type="text" id="province" name="province" placeholder="Cordoba"
-                                formControlName="province" />
+                            <select id="province" class="select2 form-select" formControlName="province" >
+                                <option value="">Select Province</option>
+                                <option value="{{p.name}}" *ngFor="let p of provinces">{{p.name}}</option>
+                            </select>
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('province')?.hasError('required')">Province is
                                 required.</small>
-                            <small class="text-primary"
-                                *ngIf="myFormReactivo.get('province')?.hasError('maxlength')">Maximum 50 characters
-                                allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="locality" class="form-label">Locality</label>
