@@ -10,9 +10,11 @@ import { OrdersListComponent } from './purchase-orders/components/orders-list/or
 import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
 import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
 import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'dashboard', component: HomeComponent },
   {
     path: 'providers', 
     children: [
