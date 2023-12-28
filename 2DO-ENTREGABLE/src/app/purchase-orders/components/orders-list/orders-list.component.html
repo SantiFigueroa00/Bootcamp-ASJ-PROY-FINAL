@@ -70,6 +70,7 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
+                                                <th class="text-center">Info</th>
                                                 <th>Purchase Order No.</th>
                                                 <th>Date Issued</th>
                                                 <th>Delivery Date</th>
@@ -80,6 +81,7 @@
                                         </thead>
                                         <tbody class="table-border-bottom-0" id="grillaProv2">
                                             <tr *ngFor="let o of p.orders">
+                                                <td class="text-center"><i class='bx bx-info-circle text-primary' routerLink="../detail/{{o.id}}"></i></td>
                                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                                     <strong>{{o.id}}</strong>
                                                 </td>

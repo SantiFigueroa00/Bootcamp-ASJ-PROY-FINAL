@@ -18,6 +18,7 @@ import { ProvidersService } from './providers/services/providers.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastsContainer } from './shared/components/toast/toast-success/toasts-container.component';
 import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts-container.component';
+import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts
     OrdersAddComponent,
     HomeComponent,
     ProvidersAddComponent,
+    OrdersDetailComponent,
   ],
   imports: [
     BrowserModule,

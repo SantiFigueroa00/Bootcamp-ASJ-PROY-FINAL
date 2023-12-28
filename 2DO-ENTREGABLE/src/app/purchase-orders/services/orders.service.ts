@@ -14,7 +14,7 @@ export class OrdersService {
   createOrder(order: Order):Observable<any> {
     return this.http.post(this.API_URL, order);
   }
-
+  
   getOrders() :Observable<any>{
     return this.http.get(this.API_URL);
   }
@@ -25,5 +25,9 @@ export class OrdersService {
   
   putOrder(order: Order) :Observable<any>{
     return this.http.put(`${this.API_URL}/${order.id}`,order);
+  }
+
+  getOrderById(orderId: string | null) :Observable<any>{
+    return this.http.get(`${this.API_URL}/${orderId}`);
   }
 }

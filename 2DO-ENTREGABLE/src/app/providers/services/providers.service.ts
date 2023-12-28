@@ -23,7 +23,7 @@ export class ProvidersService {
     return this.http.put(`${this.API_URL}/${p.id}`,p);
   }
   
-  getProviderById(id: string) {
+  getProviderById(id: string) :Observable<any>{
     return this.http.get(`${this.API_URL}/${id}`);
   }
 }
