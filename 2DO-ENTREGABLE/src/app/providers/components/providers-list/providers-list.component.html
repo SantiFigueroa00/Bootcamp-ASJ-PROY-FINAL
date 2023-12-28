@@ -59,19 +59,25 @@
                                         </p>
                                     </div>
                                     <div class="col-md-12 mt-4">
-                                        <div class="d-flex justify-content-end">
-
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                                data-bs-target="#modalEditar" (click)="editProv(p)">
-                                                <i class='bx bx-edit-alt'></i>
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <button type="button" class="btn btn-outline-primary" routerLink="../detail/{{p.id}}">
+                                                <i class='bx bx-info-circle'></i>
                                             </button>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-outline-danger ms-2"
-                                                data-bs-toggle="modal" data-bs-target="#modalCenter"
-                                                (click)="checkDelete(p)">
-                                                <i class='bx bx-trash'></i>
-                                            </button>
+                                            </div>
+                                            <div>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#modalEditar" (click)="editProv(p)">
+                                                    <i class='bx bx-edit-alt'></i>
+                                                </button>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-outline-danger ms-2"
+                                                    data-bs-toggle="modal" data-bs-target="#modalCenter"
+                                                    (click)="checkDelete(p)">
+                                                    <i class='bx bx-trash'></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

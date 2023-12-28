@@ -8,6 +8,7 @@ import { ProductsListComponent } from './products-services/components/products-l
 import { OrdersAddComponent } from './purchase-orders/components/orders-add/orders-add.component';
 import { OrdersListComponent } from './purchase-orders/components/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
+import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
     path: 'providers', 
     children: [
       { path: 'add', component: ProvidersAddComponent },
-      { path: 'list', component: ProvidersListComponent }
+      { path: 'list', component: ProvidersListComponent },
+      { path: 'detail/:id', component: ProvidersDetailComponent }
     ]
   },
   {
