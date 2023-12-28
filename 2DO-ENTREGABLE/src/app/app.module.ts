@@ -20,6 +20,7 @@ import { ToastsContainer } from './shared/components/toast/toast-success/toasts-
 import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts-container.component';
 import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
 import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
+import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ProvidersDetailComponent } from './providers/components/providers-detai
     ProvidersAddComponent,
     OrdersDetailComponent,
     ProvidersDetailComponent,
+    ProductsDetailComponent,
   ],
   imports: [
     BrowserModule,

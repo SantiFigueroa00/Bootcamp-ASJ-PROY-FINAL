@@ -9,6 +9,7 @@ import { OrdersAddComponent } from './purchase-orders/components/orders-add/orde
 import { OrdersListComponent } from './purchase-orders/components/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
 import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
+import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
     path: 'products', 
     children: [
       { path: 'add', component: ProductsAddComponent },
-      { path: 'list', component: ProductsListComponent }
+      { path: 'list', component: ProductsListComponent },
+      { path: 'detail/:id', component: ProductsDetailComponent }
     ]
   },
   {

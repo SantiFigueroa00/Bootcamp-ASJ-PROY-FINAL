@@ -27,4 +27,7 @@ export class ProductsService {
   getProductsByIdProvider(providerIdSelect: string):Observable<any> {
     return this.http.get(`${this.API_URL}?provider=${providerIdSelect}`);
   }
+  getProductById(productId: string | null):Observable<any> {
+    return this.http.get(`${this.API_URL}/${productId}`);
+  }
 }
