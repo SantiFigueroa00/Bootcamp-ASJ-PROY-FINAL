@@ -30,7 +30,7 @@
     },
     {
       "id": "f559e",
-      "compName": "Enterprise SRL",
+      "compName": "Enterprise SA",
       "item": "Electronic",
       "webSite": "https://www.npmjs.com/package/json-server",
       "phone": "3692515",
@@ -77,7 +77,7 @@
       },
       "logo": "https://www.designevo.com/res/templates/thumb_small/green-and-blue-investment-building.webp",
       "contact": {
-        "name": "Ernesto",
+        "name": "Alejandra",
         "phone": "11478852",
         "email": "ceo@hotmail.com",
         "role": "CEO"
@@ -109,6 +109,34 @@
         "phone": "32123458",
         "email": "luciano@html.com",
         "role": "Empleado"
+      },
+      "isDeleted": true
+    },
+    {
+      "id": "15f2c",
+      "compName": "Lard Lad Donuts",
+      "item": "Food",
+      "webSite": "http://www.simpsons.com",
+      "phone": "3813041676",
+      "email": "lard@donut.com",
+      "address": {
+        "street": "Av Universal",
+        "number": 200,
+        "zip": "4000",
+        "country": "Argentina",
+        "province": "Tucumán",
+        "locality": "Yerba buena"
+      },
+      "taxData": {
+        "cuit": "20-18740353-7",
+        "iva": "Responsable Inscripto"
+      },
+      "logo": "https://static.wikia.nocookie.net/simpsonstappedout/images/9/91/Lard_Lad_Donuts.png",
+      "contact": {
+        "name": "Jeremy",
+        "phone": "381562471",
+        "email": "lar@Freedman.com",
+        "role": "Employee"
       },
       "isDeleted": false
     }
@@ -194,6 +222,15 @@
       "price": 155,
       "description": "Smart kitchen",
       "imageP": "https://http2.mlstatic.com/D_Q_NP_631215-MLA44545783536_012021-O.webp"
+    },
+    {
+      "id": "7e9cd9f1",
+      "name": "donut",
+      "category": "Smart Home",
+      "provider": "15f2c",
+      "price": 100,
+      "description": "thiis a desscription",
+      "imageP": "https://img.freepik.com/vector-gratis/vector-colorido-icono-rosquilla-rosa-aislado-sobre-fondo-blanco_134830-1096.jpg"
     }
   ],
   "orders": [
@@ -303,6 +340,23 @@
         }
       ],
       "total": 310,
+      "state": true
+    },
+    {
+      "id": "ab599332-a",
+      "dateE": "2023-12-29",
+      "dateR": "2024-01-03",
+      "info": "Av cordoba",
+      "provider": "ffa1c",
+      "products": [
+        {
+          "id": "825f79ff",
+          "name": "PC GAMER",
+          "quantity": 2,
+          "price": 150
+        }
+      ],
+      "total": 300,
       "state": true
     }
   ],
