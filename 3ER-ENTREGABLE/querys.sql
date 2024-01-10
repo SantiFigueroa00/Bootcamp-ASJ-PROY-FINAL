@@ -3,14 +3,14 @@ USE DB_INTEGRADOR
 
 --1 Obtener todos los productos, mostrando nombre del producto, categoría, proveedor (razón social y codigo proveedor), precio.
 
-SELECT p.prod_name as 'Nombre del Producto', c.cat_name as 'Categoria', prov.prov_compName as 'Razon Social Proveedor', prov.prov_cod as 'Codigo Proveedor', p.prod_name as 'Precio'
+SELECT p.prod_name as 'Nombre del Producto', c.cat_name as 'Categoria', prov.prov_compName as 'Razon Social Proveedor', prov.prov_cod as 'Codigo Proveedor', p.prod_price as 'Precio'
 FROM Products p
 INNER JOIN Categories c ON c.cat_id = p.id_cat
 JOIN Providers prov ON prov.prov_id = p.id_prov;
 
 
 --2 En el listado anterior, además de los datos mostrados, traer el campo imagen aunque el producto NO tenga una. Sino tiene imagen, mostrar "-".
-SELECT p.prod_name as 'Nombre del Producto', c.cat_name as 'Categoria', prov.prov_compName as 'Razon Social Proveedor', prov.prov_cod as 'Codigo Proveedor', p.prod_name as 'Precio', pImg.img_url as 'Url Imagen'
+SELECT p.prod_name as 'Nombre del Producto', c.cat_name as 'Categoria', prov.prov_compName as 'Razon Social Proveedor', prov.prov_cod as 'Codigo Proveedor', p.prod_price as 'Precio', pImg.img_url as 'Url Imagen'
 FROM Products p
 INNER JOIN Categories c ON c.cat_id = p.id_cat
 JOIN Providers prov ON prov.prov_id = p.id_prov
