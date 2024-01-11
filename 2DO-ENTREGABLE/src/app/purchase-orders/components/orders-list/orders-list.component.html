@@ -18,47 +18,41 @@
                 <ng-container *ngIf="p.orders && p.orders.length>0 ">
                     <div class="card mb-3">
                         <div class="row g-0 ">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <img class="card-img card-img-left img-prov" src="{{p.logo}}" alt="Card image" />
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <div class="card-body ">
                                     <div class="row ">
                                         <div class="col-md-12">
                                             <h5 class="card-title mb-3">{{p.id }} - {{p.compName}}</h5>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h6 class="card-subtitle text-muted">Item /Rubric</h6>
-                                            <p class="card-text">
-                                                {{p.item}}
-                                            </p>
-                                            <h6 class="card-subtitle text-muted">Email</h6>
-                                            <p class="card-text">
-                                                {{p.email}}
-                                            </p>
-                                            <h6 class="card-subtitle text-muted">Web Site</h6>
-                                            <p class="card-text">
-                                                <a href="{{p.webSite}}" target="_blank">{{p.webSite}}</a>
-                                            </p>
-                                            <h6 class="card-subtitle text-muted">Phone</h6>
-                                            <p class="card-text">
-                                                {{p.phone}}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h6 class="card-subtitle mb-2">Contact Info</h6>
-                                            <h6 class="card-subtitle text-muted">First and Last Name</h6>
-                                            <p class="card-text">
-                                                {{p.contact.name}}
-                                            </p>
-                                            <h6 class="card-subtitle text-muted">Role</h6>
-                                            <p class="card-text">
-                                                {{p.contact.role}}
-                                            </p>
-                                            <h6 class="card-subtitle text-muted">Phone</h6>
-                                            <p class="card-text">
-                                                {{p.contact.phone}}
-                                            </p>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h6 class="card-subtitle mb-2">Contact Info</h6>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div>
+                                                        <h6 class="card-subtitle text-muted">First and Last Name</h6>
+                                                        <p class="card-text">
+                                                            {{p.contact.name}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h6 class="card-subtitle text-muted">Role</h6>
+                                                    <p class="card-text">
+                                                        {{p.contact.role}}
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h6 class="card-subtitle text-muted">Phone</h6>
+                                                    <p class="card-text">
+                                                        {{p.contact.phone}}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

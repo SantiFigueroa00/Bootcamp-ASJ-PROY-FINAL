@@ -2,18 +2,19 @@
     <span class="text-muted fw-light">Purchase Orders /</span> Add Purchase Order
 </h4>
 
+<ul class="nav nav-pills flex-column flex-md-row mb-3">
+    <li class="nav-item">
+        <a class="nav-link " routerLink="../list"><i class="bx bx-user me-1"></i> List of Purchase Orders</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-plus me-1"></i> Add Purchase
+            Orders</a>
+    </li>
+</ul>
+
 <div class="row">
-    <div class="col-md-12">
-        <ul class="nav nav-pills flex-column flex-md-row mb-3">
-            <li class="nav-item">
-                <a class="nav-link " routerLink="../list"><i class="bx bx-user me-1"></i> List of Purchase Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-plus me-1"></i> Add Purchase
-                    Orders</a>
-            </li>
-        </ul>
-        <div class="card mb-4">
+    <div class="col-md-7">
+        <div class="card mb-4 card-form">
             <h5 class="card-header">Add Purchase Order</h5>
             <!-- Account -->
             <hr class="my-0" />
@@ -78,17 +79,16 @@
         </div>
 
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
+    <div class="col-md-5">
+        <div class="card card-form">
             <h5 class="card-header">Add product to Purchase Order</h5>
             <!-- Account -->
             <hr class="my-0" />
             <div class="card-body">
                 <form id="formProd" [formGroup]="myFormReactivoProd" (ngSubmit)="onSubmitProd()">
+
                     <div class="row">
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label for="product" class="form-label">Product</label>
                             <select class="form-select" id="product" aria-label="Default select example"
                                 formControlName="product">
@@ -100,7 +100,7 @@
                                 *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
                                 required.</small>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label for="quantity" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="quantity" name="quantity" placeholder="2"
                                 formControlName="quantity" />
@@ -114,11 +114,25 @@
                                 be less than 1000.</small>
                         </div>
                     </div>
+
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary me-2">Add product to Purchase Order</button>
+                        <button type="submit" class="btn btn-primary me-2">Add product to PO</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
+
+
+
+
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-md-12">
+
+        <div class="card">
+            <div class="card-body">
                 <div class="table-responsive text-nowrap m-3">
                     <table class="table table-striped">
                         <thead>
