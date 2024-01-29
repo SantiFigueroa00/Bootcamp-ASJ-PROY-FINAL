@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bootcamp.backIntegrador.models.AddressModel;
 import com.bootcamp.backIntegrador.repositories.AddressRepository;
+import com.bootcamp.backIntegrador.repositories.LocalityRepository;
 
 @Service
 public class AddressService {
@@ -14,12 +15,15 @@ public class AddressService {
 	@Autowired
 	AddressRepository addressRepository;
 	
+	@Autowired
+	LocalityService localityService;
+	
 	public List<AddressModel> getAddresses() {
 		return addressRepository.findAll();
 	}
 	
 	public String createAddress(AddressModel addressModel) {
-		// AGREGAR PARA QUE SE CREE LOCALIDAD
+		localityService.createLocality(addressModel.getLocality());
 		addressRepository.save(addressModel);
 		return "Created Success";
 	}

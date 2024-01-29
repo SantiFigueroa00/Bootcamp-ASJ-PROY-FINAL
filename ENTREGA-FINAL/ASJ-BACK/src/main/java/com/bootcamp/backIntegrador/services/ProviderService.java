@@ -37,7 +37,6 @@ public class ProviderService {
 	}
 
 	public String createProvider(ProviderModel newProv) {
-		
 		addressService.createAddress(newProv.getAddress());
 		infoContactService.createInfoContact(newProv.getInfoContact());
 		providerRepository.save(newProv);

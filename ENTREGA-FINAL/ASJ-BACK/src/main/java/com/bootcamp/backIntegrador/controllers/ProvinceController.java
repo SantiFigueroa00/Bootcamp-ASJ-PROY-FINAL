@@ -19,7 +19,7 @@ public class ProvinceController {
 	@Autowired
 	ProvinceService provinceService;
 	
-	@GetMapping("/{id}")
+	@GetMapping("/byCountry/{id}")
 	public ResponseEntity<List<ProvinceModel>> getProvincesByCountry(@PathVariable Integer id) {
 		System.out.println(id);
 		return ResponseEntity.ok(provinceService.getProvincesByCountry(id));

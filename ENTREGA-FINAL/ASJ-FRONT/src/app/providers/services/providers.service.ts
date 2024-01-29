@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ProviderBack } from '../../models/ProviderBack';
 import { Provider } from '../../models/Provider';
 import { Observable } from 'rxjs';
 
@@ -7,10 +8,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProvidersService {
+  
   constructor(private http : HttpClient) { }
   
-  API_URL = "http://localhost:3000/providers"
-  public createProvider(provider:Provider):Observable<any>{
+  API_URL = "http://localhost:8080/providers";
+  
+  public createProvider(provider:ProviderBack):Observable<any>{
     return this.http.post(this.API_URL,provider);
   }
   getProviders() :Observable<any>{
@@ -28,6 +31,18 @@ export class ProvidersService {
   }
   
   getCountries() :Observable<any>{
-    return this.http.get(`http://localhost:3000/countries?subregion=South%20America`);
+    return this.http.get("http://localhost:8080/countries");
+  }
+  
+  getProvincesByCountry(idCountrySelected: number) :Observable<any> {
+    return this.http.get("http://localhost:8080/provinces/byCountry/"+idCountrySelected);
+  }
+
+  getItems() :Observable<any>{
+    return this.http.get("http://localhost:8080/items");
+  }
+
+  getIvaConditions() :Observable<any>{
+    return this.http.get("http://localhost:8080/iva");
   }
 }

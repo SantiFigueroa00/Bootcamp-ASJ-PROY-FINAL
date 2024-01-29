@@ -60,7 +60,7 @@ public class ProviderModel {
     
     @OneToOne
     @JoinColumn(name = "id_ad", nullable = false)
-    private AddressModel Address;
+    private AddressModel address;
     
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -209,13 +209,13 @@ public class ProviderModel {
 
 
 	public AddressModel getAddress() {
-		return Address;
+		return address;
 	}
 
 
 
 	public void setAddress(AddressModel address) {
-		Address = address;
+		this.address = address;
 	}
 
 

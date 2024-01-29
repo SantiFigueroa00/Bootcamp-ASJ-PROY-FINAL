@@ -18,4 +18,9 @@ public class LocalityService {
 		return localityRepository.findByProvince_proId(id);
 	}
 
+	public String createLocality(LocalityModel locality) {
+		localityRepository.save(locality);
+		return "Created Success";
+	}
+
 }
