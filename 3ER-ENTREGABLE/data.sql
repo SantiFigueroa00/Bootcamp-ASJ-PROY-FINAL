@@ -177,7 +177,7 @@ INSERT INTO Info_Contacts (cont_name, cont_phone, cont_email, cont_role) VALUES 
 
 CREATE TABLE Providers (
     prov_id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    prov_cod VARCHAR(7) not null,
+    prov_cod VARCHAR(7) not null UNIQUE,
     prov_compName VARCHAR(50) not null,
     prov_webSite VARCHAR(50) not null,
     prov_email VARCHAR(50) not null,
@@ -252,7 +252,7 @@ INSERT INTO Categories (cat_name, created_at, update_at) VALUES ('Herramientas',
 
 CREATE TABLE Products (
     prod_id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    prod_cod VARCHAR(8),
+    prod_cod VARCHAR(8) UNIQUE,
     prod_name VARCHAR(50),
     prod_price FLOAT,
     prod_description VARCHAR(100),
