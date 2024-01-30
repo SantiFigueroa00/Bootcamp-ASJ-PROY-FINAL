@@ -11,12 +11,12 @@ export interface ProductBack {
         catId?:number;
         catName?:string;
     };
-    images:[
-        productImage:{
-            imgId?:number;
-            imgUrl?:string;
-            product?:ProductBack;
-        }
-    ];
+    images:ProductImage[];
     prodIsDeleted?:boolean; 
+}
+
+export interface ProductImage{
+    imgId?:number;
+    imgUrl?:string;
+    product?:ProductBack;
 }

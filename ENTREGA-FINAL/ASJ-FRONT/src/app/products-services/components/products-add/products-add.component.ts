@@ -74,7 +74,7 @@ export class ProductsAddComponent implements OnInit{
         catId:0,
         catName:'',
     },
-    images:[{}]
+    images:[]
   };
   images: any[]=[];
   
@@ -91,16 +91,10 @@ export class ProductsAddComponent implements OnInit{
     if (this.myFormReactivo.valid) {
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProduct();
+      console.log(this.newProduct);
       this.productServ.createProduct(this.newProduct).subscribe((res)=>{
         console.log(res);
-        this.images.forEach(imgUrl => {
-          this.productServ.createProductImage(imgUrl,res.prodId).subscribe((res)=>{
-            console.log(res);
-          })
-        });
-
         this.showSuccessToast(this.successTpl);
-
       });
       this.myFormReactivo.reset();
     }else{
@@ -134,7 +128,9 @@ export class ProductsAddComponent implements OnInit{
     this.newProduct.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.newProduct.prodDescription = this.myFormReactivo.get('description')?.value || '';
     this.newProduct.prodIsDeleted = false;
-    this.images.push(this.myFormReactivo.get('imageP')?.value || '') ;
+    this.newProduct.images.push({
+      imgUrl:this.myFormReactivo.get('imageP')?.value || '',
+    })
   }
   
 }

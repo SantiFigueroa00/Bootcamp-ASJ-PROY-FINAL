@@ -14,7 +14,7 @@ export class ProductsService {
   
   API_URL = "http://localhost:8080/products"
   public createProduct(product:ProductBack):Observable<any>{
-    return this.http.post(this.API_URL,product);
+    return this.http.post(this.API_URL,product,{responseType:'text'});
   }
   getProducts() :Observable<any>{
     return this.http.get(this.API_URL);

@@ -32,9 +32,14 @@ public class ProductService {
 		return productRepository.findById(id);
 	}
 
-	public ProductModel createProduct(ProductModel newProd) {
+	public String createProduct(ProductModel newProd) {
 		ProductModel p = productRepository.save(newProd);
-		return p;
+		
+		for (ProductImageModel img : newProd.getImages()) {
+			img.setProduct(p);
+			productImageService.createImage(img);
+		}
+		return "Created Success";
 	}
 	
 
