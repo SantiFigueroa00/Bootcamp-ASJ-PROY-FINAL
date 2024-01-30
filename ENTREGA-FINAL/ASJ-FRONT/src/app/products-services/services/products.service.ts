@@ -19,7 +19,7 @@ export class ProductsService {
   getProducts() :Observable<any>{
     return this.http.get(this.API_URL);
   }
-  deleteProduct(id?: string) :Observable<any>{
+  deleteProduct(id?: number) :Observable<any>{
     return this.http.delete(`${this.API_URL}/${id}`,{responseType:'text'});
   }
   putProduct(p:ProductBack) :Observable<any>{

@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0" id="grillaProd">
-                    <tr *ngFor="let p of products">
+                    <tr *ngFor="let p of products" [ngClass]="{'deleted-row': p.prodIsDeleted}">
                         <td>
                             <img src="{{p.images[0].imgUrl}}" alt="Product Image" width="100">
                         </td>
@@ -51,9 +51,9 @@
                             <button class="dropdown-item" type="button" data-bs-toggle="modal"
                                 data-bs-target="#modalEdit" (click)="editProd(p)"><i class="bx bx-edit-alt me-1"></i>
                                 Edit</button>
-                            <!-- <button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                data-bs-target="#modalCenter" (click)="checkDelete(p.id)"><i
-                                    class="bx bx-trash me-1"></i> Delete</button> -->
+                            <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                data-bs-target="#modalCenter" (click)="checkDelete(p.prodId)"><i
+                                    class="bx bx-trash me-1"></i> Delete</button>
 
                         </td>
                     </tr>

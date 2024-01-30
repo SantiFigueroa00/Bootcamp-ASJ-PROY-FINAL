@@ -47,7 +47,10 @@ public class ProductService {
 			prod.setCategory(editProd.getCategory());
 			prod.setProvider(editProd.getProvider());
 			prod.setProdIsDeleted(editProd.isProdIsDeleted());
-//			prod.setImages(editProd.getImages());
+			List<ProductImageModel> images = editProd.getImages();
+			for (ProductImageModel productImageModel : images) {
+				productImageService.updateImage(productImageModel.getImgId(), productImageModel);
+			}
 			productRepository.save(prod);
 			return "Update Success";
 		}
@@ -59,4 +62,14 @@ public class ProductService {
 	}
 	
 
+	public String deleteProduct(int id) {
+		ProductModel p = productRepository.findById(id).get();
+		if (p!=null) {
+			p.setProdIsDeleted(!p.isProdIsDeleted());
+			productRepository.save(p);
+			return "Delete Success";
+		}
+		return "error";
+	}
+	
 }

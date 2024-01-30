@@ -18,5 +18,5 @@ export interface ProductBack {
             product?:ProductBack;
         }
     ];
-
+    prodIsDeleted?:boolean; 
 }

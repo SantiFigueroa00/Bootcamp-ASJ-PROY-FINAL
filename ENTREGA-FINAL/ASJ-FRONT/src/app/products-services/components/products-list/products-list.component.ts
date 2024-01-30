@@ -77,7 +77,7 @@ export class ProductsListComponent {
     images:[{}]
   };
   
-  idDelete?:string='';
+  idDelete?:number=0;
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
       let auxProviders:ProviderBack[] = res;
@@ -113,7 +113,7 @@ export class ProductsListComponent {
     });
   }
   
-  checkDelete(id?:string){
+  checkDelete(id?:number){
     this.idDelete=id;
   }
   deleteProd() {
@@ -139,6 +139,7 @@ export class ProductsListComponent {
     if (this.myFormReactivo.valid) {
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProduct();
+      console.log(this.productEdit);
       this.productServ.putProduct(this.productEdit).subscribe((res)=>{
         console.log(res);
         this.showEditToast(this.editTpl);

@@ -133,6 +133,7 @@ export class ProductsAddComponent implements OnInit{
     this.newProduct.provider.provId = this.myFormReactivo.get('provider')?.value || '';
     this.newProduct.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.newProduct.prodDescription = this.myFormReactivo.get('description')?.value || '';
+    this.newProduct.prodIsDeleted = false;
     this.images.push(this.myFormReactivo.get('imageP')?.value || '') ;
   }
   
