@@ -54,12 +54,23 @@ public class ProviderService {
 			p.setProvLogo(editProv.getProvLogo());
 			p.setProvIsDeleted(editProv.isProvIsDeleted()); 
 			providerRepository.save(p);
+			p.setItem(editProv.getItem());
+			p.setIvaCondition(editProv.getIvaCondition());
 			infoContactService.updateInfoContact(editProv.getInfoContact().getContId(),editProv.getInfoContact());
-			itemService.updateItem(editProv.getItem().getItemId(),editProv.getItem());
-			ivaConditionService.updateIva(editProv.getIvaCondition().getIvaId(),editProv.getIvaCondition());
 			addressService.updateAddress(editProv.getAddress().getAdId(),editProv.getAddress());
 			return "Update Success";
 		}
+		return "error";
+	}
+
+	public String deleteProvider(int id) {
+		ProviderModel p = providerRepository.findById(id).get();
+		if (p!=null) {
+			p.setProvIsDeleted(!p.isProvIsDeleted());
+			providerRepository.save(p);
+			return "Delete Success";
+		}
+		
 		return "error";
 	}
 	
