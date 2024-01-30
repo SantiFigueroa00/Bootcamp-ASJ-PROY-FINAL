@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ProvidersService } from '../../services/providers.service';
 import { ActivatedRoute } from '@angular/router';
-import { Provider } from '../../../models/Provider';
+import { ProviderBack } from '../../../models/ProviderBack';
 
 @Component({
   selector: 'app-providers-detail',
@@ -10,35 +10,50 @@ import { Provider } from '../../../models/Provider';
 })
 export class ProvidersDetailComponent {
   providerId: string='';
-  provider:Provider={
-    id:'',
-    compName:'',
-    item:'',
-    webSite:'',
-    phone:'',
-    email:'',
+  provider:ProviderBack={
+    provId:0,
+    provCod:'',
+    provCompName:'',
+    provWebSite:'',
+    provEmail:'',
+    provPhone:'',
+    item:{
+        itemId:0,
+        itemName:''
+    },
     address:{
-      street:'',
-      number:0,
-      zip:'',
-      country:'',
-      province:'',
-      locality:''
+        adId:0,
+        adStreet:'',
+        adNumber:0,
+        adZip:'',
+        locality:{
+            locId:0,
+            locName:'',
+            province:{
+                proId:0,
+                proName:'',
+                country:{
+                    conId:0,
+                    conName:''
+                }
+            }
+        }
     },
-    taxData:{
-      cuit:'',
-      iva:''
+    provCuit:'',
+    ivaCondition:{
+        ivaId:0,
+        ivaCond:'',
     },
-    logo:'',
-    contact:{
-      name:'',
-      phone:'',
-      email:'',
-      role:''
+    provLogo:'',
+    infoContact:{
+        contId:0,
+        contName:'',
+        contPhone:'',
+        contEmail:'',
+        contRole:''
     },
-    orders:[],
-    isDeleted:false
-  }
+    provIsDeleted:false
+}
 
   constructor( public providerServ : ProvidersService, private route: ActivatedRoute) { }
   ngOnInit(): void {
