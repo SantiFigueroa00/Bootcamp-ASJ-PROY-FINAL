@@ -1,5 +1,7 @@
 package com.bootcamp.backIntegrador.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ public class ProductImageModel {
     @Column(name = "img_url", nullable = false)
     private String imgUrl;
     
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_prod", nullable = false)
     private ProductModel product;

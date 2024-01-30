@@ -11,28 +11,20 @@
     <div class="row">
         <div class="card col-md-8 p-3">
             <div class="card-boy row g-0">
-                <div class="col-md-6">
-                    <img src="{{product.imageP}}" alt="" width="100%">
+                <div class="col-md-6" *ngFor="let img of product.images">
+                    <img src="{{img.imgUrl}}" alt="" width="100%">
                 </div>
-                <div class="col-md-6">
-                    <img src="{{product.imageP}}" alt="" width="100%">
-                </div>
-                <div class="col-md-6">
-                    <img src="{{product.imageP}}" alt="" width="100%">
-                </div>
-                <div class="col-md-6">
-                    <img src="{{product.imageP}}" alt="" width="100%">
-                </div>
+
             </div>
         </div>
         <div class=" col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <small># {{product.id}}</small>
-                    <h2 class="text-primary">{{product.name}}</h2>
-                    <small class="badge bg-label-primary me-1">{{product.category}}</small>
-                    <p>{{product.description}}</p>
-                    <h2 class="text-primary">{{product.price|currency}}</h2>
+                    <small># {{product.prodCod}}</small>
+                    <h2 class="text-primary">{{product.prodName}}</h2>
+                    <small class="badge bg-label-primary me-1">{{product.category.catName}}</small>
+                    <p>{{product.prodDescription}}</p>
+                    <h2 class="text-primary">{{product.prodPrice|currency}}</h2>
                 </div>
             </div>
         </div>
@@ -45,8 +37,9 @@
                 </div>
                 <div class="col-md-3 " *ngFor="let p of products">
                     <div class="card p-2">
-                        <a routerLink="../{{p.id}}">
-                            <img src="{{p.imageP}}" alt="" width="100%">
+                        <a routerLink="../{{p.prodId}}">
+                            <img src="{{p.images[0].imgUrl}}" alt="" width="100%">
+
                         </a>
                     </div>
                 </div>

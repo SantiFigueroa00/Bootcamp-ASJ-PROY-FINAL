@@ -41,6 +41,11 @@ public class ProductController{
 		return ResponseEntity.ok(productService.getProductById(id));
 	}
 	
+	@GetMapping("/byProv/{id}")
+	public ResponseEntity<List<ProductModel>> getProductsByProvider(@PathVariable int id) {
+		return ResponseEntity.ok(productService.getProductsByProvider(id));
+	}
+	
 	
 	@PostMapping()
 	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductModel newProd,BindingResult bindingResult) {

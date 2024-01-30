@@ -36,11 +36,8 @@
                             <select class="form-select" id="category" aria-label="Default select example"
                                 formControlName="category">
                                 <option value="">Select Category</option>
-                                <option value="Gaming">Gaming</option>
-                                <option value="Smart Home">Smart Home</option>
-                                <option value="Music">Music</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Vehicles">Vehicles</option>
+                                <option value="{{c.catId}}" *ngFor="let c of categories">{{c.catName}}
+                                </option>
                             </select>
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('category')?.hasError('required')">Category is
@@ -51,7 +48,7 @@
                             <select class="form-select" id="provider" aria-label="Default select example"
                                 formControlName="provider">
                                 <option value="">Select Provider</option>
-                                <option value="{{prov.id}}" *ngFor="let prov of providers">{{prov.compName}}
+                                <option value="{{prov.provId}}" *ngFor="let prov of providers">{{prov.provCompName}}
                                 </option>
                             </select>
                             <small class="text-primary"

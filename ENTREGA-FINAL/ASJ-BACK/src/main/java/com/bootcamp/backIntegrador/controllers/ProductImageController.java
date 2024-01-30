@@ -33,7 +33,7 @@ public class ProductImageController{
 	
 	@GetMapping
 	public ResponseEntity<List<ProductImageModel>> getImages() {
-		return ResponseEntity.ok(productImageService.getImages());
+		return ResponseEntity.ok(productImageService.getImages()); 
 	}
 	
 	@GetMapping("/{id}")

@@ -37,23 +37,23 @@
                 <tbody class="table-border-bottom-0" id="grillaProd">
                     <tr *ngFor="let p of products">
                         <td>
-                            <img src="{{p.imageP}}" alt="Product Image" width="100">
+                            <img src="{{p.images[0].imgUrl}}" alt="Product Image" width="100">
                         </td>
-                        <td>{{p.name}}</td>
+                        <td>{{p.prodName}}</td>
                         <td>
-                            {{setCompName(p.provider)}}
+                            {{p.provider.provCompName}}
                         </td>
-                        <td><span class="badge bg-label-primary me-1">{{p.category}}</span></td>
-                        <td>{{p.price|currency}}</td>
+                        <td><span class="badge bg-label-primary me-1">{{p.category.catName}}</span></td>
+                        <td>{{p.prodPrice|currency}}</td>
                         <td>
-                            <button class="dropdown-item" type="button" routerLink="../detail/{{p.id}}"><i class="bx bx-info-circle me-1"></i>
+                            <button class="dropdown-item" type="button" routerLink="../detail/{{p.prodId}}"><i class="bx bx-info-circle me-1"></i>
                                 Info</button>
                             <button class="dropdown-item" type="button" data-bs-toggle="modal"
                                 data-bs-target="#modalEdit" (click)="editProd(p)"><i class="bx bx-edit-alt me-1"></i>
                                 Edit</button>
-                            <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                            <!-- <button class="dropdown-item" type="button" data-bs-toggle="modal"
                                 data-bs-target="#modalCenter" (click)="checkDelete(p.id)"><i
-                                    class="bx bx-trash me-1"></i> Delete</button>
+                                    class="bx bx-trash me-1"></i> Delete</button> -->
 
                         </td>
                     </tr>
@@ -124,11 +124,8 @@
                             <select class="form-select" id="category" aria-label="Default select example"
                                 formControlName="category">
                                 <option value="">Select Category</option>
-                                <option value="Gaming">Gaming</option>
-                                <option value="Smart Home">Smart Home</option>
-                                <option value="Music">Music</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Vehicles">Vehicles</option>
+                                <option value="{{c.catId}}" *ngFor="let c of categories">{{c.catName}}
+                                </option>
                             </select>
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('category')?.hasError('required')">Category is
@@ -139,7 +136,7 @@
                             <select class="form-select" id="provider" aria-label="Default select example"
                                 formControlName="provider">
                                 <option value="">Select Provider</option>
-                                <option value="{{prov.id}}" *ngFor="let prov of providers">{{prov.compName}}
+                                <option value="{{prov.provId}}" *ngFor="let prov of providers">{{prov.provCompName}}
                                 </option>
                             </select>
                             <small class="text-primary"

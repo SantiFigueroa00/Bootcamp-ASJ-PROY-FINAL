@@ -2,32 +2,49 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../../models/Product';
+import { ProductBack } from '../../models/ProductBack';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   
+  
   constructor(private http : HttpClient) { }
   
-  API_URL = "http://localhost:3000/products"
-  public createProduct(product:Product):Observable<any>{
+  API_URL = "http://localhost:8080/products"
+  public createProduct(product:ProductBack):Observable<any>{
     return this.http.post(this.API_URL,product);
   }
   getProducts() :Observable<any>{
     return this.http.get(this.API_URL);
   }
   deleteProduct(id?: string) :Observable<any>{
-    return this.http.delete(`${this.API_URL}/${id}`);
+    return this.http.delete(`${this.API_URL}/${id}`,{responseType:'text'});
   }
-  putProduct(p:Product) :Observable<any>{
-    return this.http.put(`${this.API_URL}/${p.id}`,p);
+  putProduct(p:ProductBack) :Observable<any>{
+    return this.http.put(`${this.API_URL}/${p.prodId}`,p,{responseType:'text'});
   }
   
-  getProductsByIdProvider(providerIdSelect: string):Observable<any> {
-    return this.http.get(`${this.API_URL}?provider=${providerIdSelect}`);
+  getProductsByIdProvider(providerIdSelect?: number):Observable<any> {
+    return this.http.get(`${this.API_URL}/byProv/${providerIdSelect}`);
   }
   getProductById(productId: string | null):Observable<any> {
     return this.http.get(`${this.API_URL}/${productId}`);
   }
+
+  getCategories():Observable<any>  {
+    return this.http.get(`http://localhost:8080/categories`);
+  }
+
+  createProductImage(imgUrl: any, prodId: any) {
+    const newImg = {
+      imgUrl: imgUrl,
+      product:{
+        prodId: prodId
+      }
+    }
+    return this.http.post(`http://localhost:8080/images`,newImg,{responseType:'text'});
+  }
+
 }

@@ -7,10 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "Products")
@@ -33,6 +38,9 @@ public class ProductModel {
     @Column(name = "prod_description", nullable = false)
     private String prodDescription; 
     
+    @Column(name = "prod_isDeleted", nullable = false)
+    private boolean prodIsDeleted;
+    
     @ManyToOne
     @JoinColumn(name = "id_prov", nullable = false)
     private ProviderModel provider;
@@ -40,6 +48,10 @@ public class ProductModel {
     @ManyToOne
     @JoinColumn(name = "id_cat", nullable = false)
     private CategoryModel category;
+    
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+	private List<ProductImageModel> images;
     
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -137,7 +149,23 @@ public class ProductModel {
 		return createdAt;
 	}
 
+	
 
+	public boolean isProdIsDeleted() {
+		return prodIsDeleted;
+	}
+
+	public void setProdIsDeleted(boolean prodIsDeleted) {
+		this.prodIsDeleted = prodIsDeleted;
+	}
+
+	public List<ProductImageModel> getImages() { 
+		return images;
+	}
+
+	public void setImages(List<ProductImageModel> images) {
+		this.images = images;
+	}
 
 	@PrePersist
     protected void onCreate() {

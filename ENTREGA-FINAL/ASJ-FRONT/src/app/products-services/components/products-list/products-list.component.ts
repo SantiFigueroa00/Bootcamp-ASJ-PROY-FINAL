@@ -6,6 +6,8 @@ import { v4 as uuidv4, v4 } from 'uuid';
 import { Provider } from '../../../models/Provider';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/toast-service';
+import { ProviderBack } from '../../../models/ProviderBack';
+import { ProductBack } from '../../../models/ProductBack';
 
 @Component({
   selector: 'app-products-list',
@@ -15,38 +17,89 @@ import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/to
 export class ProductsListComponent {
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
 
-  providers: Provider[]=[];
-  products: Product[]=[];
-  productEdit: Product={
-    id:'',
-    name: '',
-    category: '',
-    provider: '',
-    price: 0,
-    description: '',
-    imageP:''
-  }
+  providers: ProviderBack[]=[];
+  categories:any[] = [];
+  products: ProductBack[]=[];
+  productEdit: ProductBack={
+    prodId:0,
+    prodCod:'',
+    prodName:'',
+    prodPrice:0,
+    prodDescription:'', 
+    provider:{
+      provId:0,
+      provCod:'',
+      provCompName:'',
+      provWebSite:'',
+      provEmail:'',
+      provPhone:'',
+      item:{
+          itemId:0,
+          itemName:''
+      },
+      address:{
+          adId:0,
+          adStreet:'',
+          adNumber:0,
+          adZip:'',
+          locality:{
+              locId:0,
+              locName:'',
+              province:{
+                  proId:0,
+                  proName:'',
+                  country:{
+                      conId:0,
+                      conName:''
+                  }
+              }
+          }
+      },
+      provCuit:'',
+      ivaCondition:{
+          ivaId:0,
+          ivaCond:'',
+      },
+      provLogo:'',
+      infoContact:{
+          contId:0,
+          contName:'',
+          contPhone:'',
+          contEmail:'',
+          contRole:''
+      },
+      provIsDeleted:false
+    },
+    category:{
+        catId:0,
+        catName:'',
+    },
+    images:[{}]
+  };
   
   idDelete?:string='';
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
-      let auxProviders:Provider[] = res;
-      this.providers = auxProviders.filter(provider => provider.isDeleted === false);
+      let auxProviders:ProviderBack[] = res;
+      this.providers = auxProviders.filter(provider => provider.provIsDeleted === false);
+    });
+    this.productServ.getCategories().subscribe(data=>{
+      this.categories=data;
     });
     this.listProducts();
   }
   
-  setCompName(id:string){
-    const provider = this.providers.find((prov) => prov.id === id);
-    return provider ? provider.compName : '';
+  setCompName(id:number){
+    const provider = this.providers.find((prov) => prov.provId === id);
+    return provider ? provider.provCompName : '';
   }
 
 
   listProducts(){
     this.productServ.getProducts().subscribe((res)=>{
-      let auxProviders:Product[] = res.sort((a:Product, b:Product) => {
-        const nameA = a.name.toUpperCase(); // convertir a mayúsculas para ordenar de manera no sensible a mayúsculas/minúsculas
-        const nameB = b.name.toUpperCase();
+      let auxProviders:ProductBack[] = res.sort((a:ProductBack, b:ProductBack) => {
+        const nameA = a.prodName.toUpperCase(); // convertir a mayúsculas para ordenar de manera no sensible a mayúsculas/minúsculas
+        const nameB = b.prodName.toUpperCase();
   
         if (nameA < nameB) {
           return -1;
@@ -56,7 +109,7 @@ export class ProductsListComponent {
         }
         return 0;
       });
-      this.products = auxProviders.filter(prod => this.providers.map(provider => provider.id).includes(prod.provider));
+      this.products = auxProviders.filter(prod => this.providers.map(provider => provider.provId).includes(prod.provider.provId));
     });
   }
   
@@ -70,14 +123,14 @@ export class ProductsListComponent {
     });
   }
   
-  editProd(p: Product) {
+  editProd(p: ProductBack) {
     this.myFormReactivo.setValue({
-      name: p.name,
-      category: p.category,
-      provider: p.provider,
-      price: p.price,
-      description: p.description,
-      imageP: p.imageP
+      name: p.prodName,
+      category: p.category.catId,
+      provider: p.provider.provId,
+      price: p.prodPrice,
+      description: p.prodDescription,
+      imageP: ''
     });
     this.productEdit=p;
   }
@@ -101,25 +154,29 @@ export class ProductsListComponent {
     this.toastServ.show({ template, classname: 'bg-primary text-white', delay: 2000 });
   }
   
-  mapFormValuesToProduct() {
-    this.productEdit.name = this.myFormReactivo.get('name')?.value || '';
-    this.productEdit.category = this.myFormReactivo.get('category')?.value || '';
-    this.productEdit.provider = this.myFormReactivo.get('provider')?.value || '';
-    this.productEdit.price = this.myFormReactivo.get('price')?.value || '';
-    this.productEdit.description = this.myFormReactivo.get('description')?.value || '';
-    this.productEdit.imageP = this.myFormReactivo.get('imageP')?.value || '';
-  }
-
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, private productServ: ProductsService, public providerServ : ProvidersService,public toastServ:ToastServiceEdit) {
+  constructor(private fb: FormBuilder, public providerServ: ProvidersService, public productServ : ProductsService, public toastServ:ToastServiceEdit) {
     this.myFormReactivo = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
-      category: ['', [Validators.required, Validators.maxLength(50)]],
-      provider: ['', [Validators.required, Validators.minLength(4)]],
+      category: ['', [Validators.required]],
+      provider: ['', [Validators.required]],
       price: [null, [Validators.required, Validators.max(10000000), Validators.min(1)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
-      imageP: ['', [Validators.required, Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]]
+      imageP: ['', [Validators.required, Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
     });
   }
+
+  mapFormValuesToProduct() {
+    this.productEdit.prodCod = v4().slice(0,8)
+    this.productEdit.prodName = this.myFormReactivo.get('name')?.value || '';
+    this.productEdit.category.catId = this.myFormReactivo.get('category')?.value || '';
+    this.productEdit.provider.provId = this.myFormReactivo.get('provider')?.value || '';
+    this.productEdit.prodPrice = this.myFormReactivo.get('price')?.value || '';
+    this.productEdit.prodDescription = this.myFormReactivo.get('description')?.value || '';
+    this.productEdit.images[0].imgUrl= this.myFormReactivo.get('imageP')?.value || '';
+    console.log(this.productEdit);
+  }
+
+  
 }

@@ -27,7 +27,7 @@ export class OrdersAddComponent implements OnInit {
     price: number;
   }[] = [];
   total: number = 0;
-  providerIdSelect: string = '';
+  providerIdSelect: number = 0;
   newOrder: Order={
     id : '',
     dateE : new Date,

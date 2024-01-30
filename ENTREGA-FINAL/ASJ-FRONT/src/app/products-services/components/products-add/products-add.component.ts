@@ -6,6 +6,8 @@ import { Product } from '../../../models/Product';
 import { Provider } from '../../../models/Provider';
 import { ProductsService } from '../../services/products.service';
 import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
+import { ProviderBack } from '../../../models/ProviderBack';
+import { ProductBack } from '../../../models/ProductBack';
 
 @Component({
   selector: 'app-products-add',
@@ -16,21 +18,73 @@ export class ProductsAddComponent implements OnInit{
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
-  providers: Provider[]=[];
-  newProduct: Product={
-    id:'',
-    name: '',
-    category: '',
-    provider: '',
-    price: 0,
-    description: '',
-    imageP:''
-  }
+  providers: ProviderBack[]=[];
+  categories:any[] = [];
+  newProduct: ProductBack={
+    prodId:0,
+    prodCod:'',
+    prodName:'',
+    prodPrice:0,
+    prodDescription:'', 
+    provider:{
+      provId:0,
+      provCod:'',
+      provCompName:'',
+      provWebSite:'',
+      provEmail:'',
+      provPhone:'',
+      item:{
+          itemId:0,
+          itemName:''
+      },
+      address:{
+          adId:0,
+          adStreet:'',
+          adNumber:0,
+          adZip:'',
+          locality:{
+              locId:0,
+              locName:'',
+              province:{
+                  proId:0,
+                  proName:'',
+                  country:{
+                      conId:0,
+                      conName:''
+                  }
+              }
+          }
+      },
+      provCuit:'',
+      ivaCondition:{
+          ivaId:0,
+          ivaCond:'',
+      },
+      provLogo:'',
+      infoContact:{
+          contId:0,
+          contName:'',
+          contPhone:'',
+          contEmail:'',
+          contRole:''
+      },
+      provIsDeleted:false
+    },
+    category:{
+        catId:0,
+        catName:'',
+    },
+    images:[{}]
+  };
+  images: any[]=[];
   
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
-      let auxProviders:Provider[] = res;
-      this.providers = auxProviders.filter(provider => provider.isDeleted === false);
+      let auxProviders:ProviderBack[] = res;
+      this.providers = auxProviders.filter(provider => provider.provIsDeleted === false);
+    });
+    this.productServ.getCategories().subscribe(data=>{
+      this.categories=data;
     });
   }
   onSubmit() {
@@ -39,7 +93,14 @@ export class ProductsAddComponent implements OnInit{
       this.mapFormValuesToProduct();
       this.productServ.createProduct(this.newProduct).subscribe((res)=>{
         console.log(res);
+        this.images.forEach(imgUrl => {
+          this.productServ.createProductImage(imgUrl,res.prodId).subscribe((res)=>{
+            console.log(res);
+          })
+        });
+
         this.showSuccessToast(this.successTpl);
+
       });
       this.myFormReactivo.reset();
     }else{
@@ -57,8 +118,8 @@ export class ProductsAddComponent implements OnInit{
   constructor(private fb: FormBuilder, public providerServ: ProvidersService, public productServ : ProductsService, public toastServ:ToastServiceSuccess) {
     this.myFormReactivo = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
-      category: ['', [Validators.required, Validators.maxLength(50)]],
-      provider: ['', [Validators.required, Validators.minLength(4)]],
+      category: ['', [Validators.required]],
+      provider: ['', [Validators.required]],
       price: [null, [Validators.required, Validators.max(10000000), Validators.min(1)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
       imageP: ['', [Validators.required, Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
@@ -66,13 +127,13 @@ export class ProductsAddComponent implements OnInit{
   }
 
   mapFormValuesToProduct() {
-    this.newProduct.id = v4().slice(0,8)
-    this.newProduct.name = this.myFormReactivo.get('name')?.value || '';
-    this.newProduct.category = this.myFormReactivo.get('category')?.value || '';
-    this.newProduct.provider = this.myFormReactivo.get('provider')?.value || '';
-    this.newProduct.price = this.myFormReactivo.get('price')?.value || '';
-    this.newProduct.description = this.myFormReactivo.get('description')?.value || '';
-    this.newProduct.imageP = this.myFormReactivo.get('imageP')?.value || '';
+    this.newProduct.prodCod = v4().slice(0,8)
+    this.newProduct.prodName = this.myFormReactivo.get('name')?.value || '';
+    this.newProduct.category.catId = this.myFormReactivo.get('category')?.value || '';
+    this.newProduct.provider.provId = this.myFormReactivo.get('provider')?.value || '';
+    this.newProduct.prodPrice = this.myFormReactivo.get('price')?.value || '';
+    this.newProduct.prodDescription = this.myFormReactivo.get('description')?.value || '';
+    this.images.push(this.myFormReactivo.get('imageP')?.value || '') ;
   }
   
 }
