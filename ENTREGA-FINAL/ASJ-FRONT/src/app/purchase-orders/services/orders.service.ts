@@ -13,19 +13,19 @@ export class OrdersService {
   
   API_URL = 'http://localhost:8080/orders'
   createOrder(order: OrderBack):Observable<any> {
-    return this.http.post(this.API_URL, order);
+    return this.http.post(this.API_URL, order,{responseType:'text'});
   }
   
   getOrders() :Observable<any>{
     return this.http.get(this.API_URL);
   }
   
-  getOrdersByProv(provId?:string):Observable<any> {
-    return this.http.get(`${this.API_URL}?provider=${provId}`)
+  getOrdersByProv(provId?:number):Observable<any> {
+    return this.http.get(`${this.API_URL}/byProv/${provId}`)
   }
   
-  putOrder(order: Order) :Observable<any>{
-    return this.http.put(`${this.API_URL}/${order.id}`,order);
+  putOrder(order: OrderBack) :Observable<any>{
+    return this.http.put(`${this.API_URL}/${order.orderId}`,order,{responseType:'text'});
   }
 
   getOrderById(orderId: string | null) :Observable<any>{

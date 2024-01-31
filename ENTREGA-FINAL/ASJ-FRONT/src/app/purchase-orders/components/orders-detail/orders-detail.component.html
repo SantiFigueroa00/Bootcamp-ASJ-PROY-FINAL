@@ -12,13 +12,13 @@
         <div class="card-header row">
             <div class="col-sm-6 mt-2">
                 <h3 class="text-primary">PURCHASE ORDER</h3>
-                <p>Purchase order# - {{order.id}}</p>
+                <p>Purchase order# - {{order.orderCod}}</p>
             </div>
             <div class="col-sm-6 mt-2">
                 <div class="d-flex justify-content-sm-end">
                     <div>
                         <h5 class="text-primary">Info Reception</h5>
-                        <p>{{order.info}}</p>
+                        <p>{{order.orderInfo}}</p>
                     </div>
                 </div>
             </div>
@@ -27,9 +27,9 @@
         <div class="card-body row">
             <div class="col-sm-6 mt-2">
                 <h5 class="text-primary">Deliver By</h5>
-                <p>{{provider.compName}} </p>
-                <p>{{provider.address.street}} {{provider.address.number}}</p>
-                <p>{{provider.address.province}}, {{provider.address.country}}</p>
+                <p>{{order.provider.provCompName}} </p>
+                <p>{{order.provider.address.adStreet}} {{order.provider.address.adNumber}}</p>
+                <p>{{order.provider.address.locality.province.proName}}, {{order.provider.address.locality.province.country.conName}}</p>
     
             </div>
             <div class="col-sm-6 mt-2">
@@ -37,11 +37,11 @@
                     <div>
                         <div class="d-flex align-items-baseline justify-content-sm-end">
                             <h5 class="text-primary me-2">Date Issue:</h5>
-                            <p>{{order.dateE}} </p>
+                            <p>{{order.orderDateE}} </p>
                         </div>
                         <div class="d-flex align-items-baseline justify-content-sm-end">
                             <h5 class="text-primary me-2">Expected delivery date:</h5>
-                            <p>{{order.dateR}} </p>
+                            <p>{{order.orderDateR}} </p>
                         </div>
                     </div>
                 </div>
@@ -61,18 +61,18 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0" id="grillaProd">
-                        <tr *ngFor="let p of order.products" class="text-center">
+                        <tr *ngFor="let det of order.details" class="text-center">
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                <strong>{{p.id}}</strong>
+                                <strong>{{det.product.prodCod}}</strong>
                             </td>
-                            <td>{{p.name}}</td>
-                            <td>{{p.quantity}}</td>
-                            <td>{{p.price}}</td>
-                            <td>${{p.price*p.quantity}}</td>
+                            <td>{{det.product.prodName}}</td>
+                            <td>{{det.detailQuantity}}</td>
+                            <td>{{det.detailPriceProd}}</td>
+                            <td>${{det.detailSubtotal}}</td>
                         </tr>
                         <tr id="" class="bg-primary text-white">
                             <td colspan="4" class="text-white">Total:</td>
-                            <td id="total" class="text-white text-center">${{order.total}}</td>
+                            <td id="total" class="text-white text-center">${{order.orderTotal}}</td>
                         </tr>
                     </tbody>
                 </table>

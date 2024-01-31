@@ -1,3 +1,5 @@
+import { OrderBack } from "./OrderBack"
+
 export interface ProviderBack{
     provId?:number,
     provCod?:string,
@@ -41,4 +43,5 @@ export interface ProviderBack{
         contRole?:string
     },
     provIsDeleted?:boolean
+    orders?:OrderBack[]
 }

@@ -41,6 +41,10 @@ public class PurchaseOrderController{
 		return ResponseEntity.ok(purchaseOrderService.getOrderById(id));
 	}
 	
+	@GetMapping("/byProv/{id}")
+	public ResponseEntity<List<PurchaseOrderModel>> getOrdersByProvider(@PathVariable int id) {
+		return ResponseEntity.ok(purchaseOrderService.getOrdersByProvider(id));
+	}
 	
 	@PostMapping()
 	public ResponseEntity<Object> createOrder(@Valid @RequestBody PurchaseOrderModel newOrder,BindingResult bindingResult) {

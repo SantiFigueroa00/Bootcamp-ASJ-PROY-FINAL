@@ -13,6 +13,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Table(name = "Providers")
 public class ProviderModel {
@@ -242,7 +243,7 @@ public class ProviderModel {
 		return createdAt;
 	}
 
-
+	
 
 	@PrePersist
     protected void onCreate() {

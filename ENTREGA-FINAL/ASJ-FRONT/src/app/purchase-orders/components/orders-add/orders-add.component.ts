@@ -23,14 +23,13 @@ export class OrdersAddComponent implements OnInit {
 
   providers: ProviderBack[] = [];
   products: ProductBack[] = [];
-  detailsOrder: any[] = [];
   total: number = 0;
   providerIdSelect: number = 0;
   newOrder: OrderBack={
     orderId:0,
     orderCod:'',
-    orderDateE:new Date(),
-    orderDateR:new Date(),
+    orderDateE:'',
+    orderDateR:'',
     orderInfo:'', 
     orderTotal:0, 
     orderState:false, 
@@ -81,8 +80,8 @@ export class OrdersAddComponent implements OnInit {
     details:[]
   };
   flag:boolean=false;
-  idProdEdit:number=0;
-  idProdDelete:number=0;
+  idProdEdit?:number=0;
+  idProdDelete?:number=0;
   
   // REACTIVE FORM
   myFormReactivoProd: FormGroup;
@@ -130,16 +129,17 @@ export class OrdersAddComponent implements OnInit {
     onSubmitOrd() {
       if (this.myFormReactivoOrd.valid) {
         console.log('Formulario válido:', this.myFormReactivoOrd.value);
-        if(this.detailsOrder.length > 0){
+        console.log(this.newOrder)
+        if(this.newOrder.details.length > 0){
           this.mapFormValuesToOrder();
           console.log(this.newOrder)
           this.orderServ.createOrder(this.newOrder).subscribe((res)=>{
             console.log(res);
             this.showSuccessToast(this.successTpl);
+            this.myFormReactivoOrd.reset();
+            this.newOrder.details = [];
+            this.total=0;
           });
-          this.myFormReactivoOrd.reset();
-          this.detailsOrder = [];
-          this.total=0;
         }else{
           alert('Debe seleccionar al menos un producto');
         }
@@ -163,7 +163,7 @@ export class OrdersAddComponent implements OnInit {
     }
 
     selectedProv() {
-      this.detailsOrder = [];
+      this.newOrder.details = [];
     this.total = 0;
     this.providerIdSelect = this.myFormReactivoOrd.get('provider')?.value || '';
     console.log(this.providerIdSelect);
@@ -195,69 +195,77 @@ export class OrdersAddComponent implements OnInit {
   }
 
   mapFormValuesToProduct() {
-    const prodId = this.myFormReactivoProd.get('product')?.value || '';
+    const prodId:number = this.myFormReactivoProd.get('product')?.value || '';
+    
     const quantityValue = this.myFormReactivoProd.get('quantity')?.value || 0;
 
     if(this.flag){
-      const product = this.products.find((prod) => prod.prodId === prodId) ;
-      if (product) {
-        const indiceProductoExistente = this.detailsOrder.findIndex(
-          (prod) => prod.product.prodId === this.idProdEdit
+      const productFind = this.products.find((prod) => prod.prodId == prodId) ;
+      if (productFind) {
+        const indiceProductoExistente = this.newOrder.details.findIndex(
+          (prod) => prod.product.prodId == this.idProdEdit
         );
     
         if (indiceProductoExistente !== -1) {
-          this.detailsOrder[indiceProductoExistente].detailQuantity =
+          this.newOrder.details[indiceProductoExistente].detailQuantity =
             parseInt(quantityValue);
-          this.detailsOrder[indiceProductoExistente].product.prodId = product.prodId;
-          this.detailsOrder[indiceProductoExistente].product.prodName = product.prodName;
-          this.detailsOrder[indiceProductoExistente].detailPriceProd = product.prodPrice!;
+          this.newOrder.details[indiceProductoExistente].product = productFind;
+          this.newOrder.details[indiceProductoExistente].detailPriceProd = productFind.prodPrice!;
+          this.newOrder.details[indiceProductoExistente].detailSubtotal = productFind.prodPrice! * parseInt(quantityValue);
         }
       }
       this.idProdEdit=0;
-      this.flag=false;
+      this.flag=false; 
     }else{
-      const product = this.products.find((prod) => prod.prodId === prodId) ;
-
-      if (product) {
-        const indiceProductoExistente = this.detailsOrder.findIndex(
-          (prod) => prod.product.prodId === product.prodId
+      const productFind = this.products.find((prod) => prod.prodId == prodId) ;
+      
+      if (productFind) {
+        const indiceProductoExistente = this.newOrder.details.findIndex(
+          (prod) => prod.product.prodId == productFind.prodId
         );
     
         if (indiceProductoExistente !== -1) {
-          this.detailsOrder[indiceProductoExistente].detailQuantity +=
+          this.newOrder.details[indiceProductoExistente].detailQuantity +=
             parseInt(quantityValue);
+          this.newOrder.details[indiceProductoExistente].detailSubtotal = productFind.prodPrice! * this.newOrder.details[indiceProductoExistente].detailQuantity;
         } else {
-          this.detailsOrder.push({
-            product: {
-              prodId: product.prodId,
-              prodName: product.prodName,
-            },
+          this.newOrder.details.push({
+            product: productFind,
             detailQuantity: quantityValue,
-            detailPriceProd: product.prodPrice!,
+            detailPriceProd: productFind.prodPrice!,
+            detailSubtotal: quantityValue* productFind.prodPrice!,
           });
         } 
-      } 
+      } else{
+        console.log("no lo encuentra")
+      }
     }
     
     this.calcTotal();
   }
   mapFormValuesToOrder() {
     this.newOrder.orderCod = v4().slice(0,10)
-    this.newOrder.orderDateE = this.myFormReactivoOrd.get('dateE')?.value || '';
-    this.newOrder.orderDateR = this.myFormReactivoOrd.get('dateR')?.value || '';
+
+    const dateEString: string = this.myFormReactivoOrd.get('dateE')?.value || '';
+    const dateRString: string = this.myFormReactivoOrd.get('dateR')?.value || '';
+    const dateE: Date = new Date(dateEString);
+    const dateR: Date = new Date(dateRString);
+    this.newOrder.orderDateE = dateE.toISOString();
+    this.newOrder.orderDateR = dateR.toISOString();
+
+
     this.newOrder.orderInfo = this.myFormReactivoOrd.get('address')?.value || '';
     this.newOrder.provider.provId = this.myFormReactivoOrd.get('provider')?.value || '';
-    this.newOrder.details = this.detailsOrder;
-    this.newOrder.orderTotal = this.total
+    this.newOrder.orderTotal = this.total;
     this.newOrder.orderState = true;
   }
 
-  checkDelete(id: number) {
+  checkDelete(id?: number) {
     this.idProdDelete=id;
   }
   
   deleteProd(){
-    this.detailsOrder = this.detailsOrder.filter((prod) => prod.detailId !== this.idProdDelete);
+    this.newOrder.details = this.newOrder.details.filter((det) => det.product.prodId != this.idProdDelete);
     this.calcTotal();
   }
   
@@ -266,12 +274,12 @@ export class OrdersAddComponent implements OnInit {
       product: prod.product.prodId,
       quantity: prod.detailQuantity,
     });
-    this.idProdEdit=prod.detailId;
+    this.idProdEdit=prod.product.prodId;
     this.flag=true;
   }
   
   calcTotal(){
-    this.total = this.detailsOrder.reduce(
+    this.total = this.newOrder.details.reduce(
       (acc, curr) => acc + curr.detailPriceProd * curr.detailQuantity,
       0
     );

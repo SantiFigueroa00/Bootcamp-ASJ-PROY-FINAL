@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Order } from '../../../models/Order';
 import { Provider } from '../../../models/Provider';
 import { ProvidersService } from '../../../providers/services/providers.service';
+import { OrderBack } from '../../../models/OrderBack';
 
 @Component({
   selector: 'app-orders-detail',
@@ -12,45 +13,61 @@ import { ProvidersService } from '../../../providers/services/providers.service'
 })
 export class OrdersDetailComponent implements OnInit{
   orderId: string|null='';
-  order:Order={
-    id:'',
-    dateE:new Date(),
-    dateR:new Date(),
-    info:'',
-    provider:'',
-    products:[],
-    total:0,
-    state:false
+  order:OrderBack={
+    orderId:0,
+    orderCod:'',
+    orderDateE:'',
+    orderDateR:'',
+    orderInfo:'', 
+    orderTotal:0, 
+    orderState:false, 
+    provider:{
+      provId:0,
+      provCod:'',
+      provCompName:'',
+      provWebSite:'',
+      provEmail:'',
+      provPhone:'',
+      item:{
+          itemId:0,
+          itemName:''
+      },
+      address:{
+          adId:0,
+          adStreet:'',
+          adNumber:0,
+          adZip:'',
+          locality:{
+              locId:0,
+              locName:'',
+              province:{
+                  proId:0,
+                  proName:'',
+                  country:{
+                      conId:0,
+                      conName:''
+                  }
+              }
+          }
+      },
+      provCuit:'',
+      ivaCondition:{
+          ivaId:0,
+          ivaCond:'',
+      },
+      provLogo:'',
+      infoContact:{
+          contId:0,
+          contName:'',
+          contPhone:'',
+          contEmail:'',
+          contRole:''
+      },
+      provIsDeleted:false
+    },
+    details:[]
   }
-  provider:Provider={
-    id:'',
-    compName:'',
-    item:'',
-    webSite:'',
-    phone:'',
-    email:'',
-    address:{
-      street:'',
-      number:0,
-      zip:'',
-      country:'',
-      province:'',
-      locality:''
-    },
-    taxData:{
-      cuit:'',
-      iva:''
-    },
-    logo:'',
-    contact:{
-      name:'',
-      phone:'',
-      email:'',
-      role:''
-    },
-    orders:[],
-    isDeleted:false
-  }
+
 
   constructor(public orderServ: OrdersService, public providerServ : ProvidersService, private route: ActivatedRoute) { }
   ngOnInit(): void {
@@ -58,10 +75,7 @@ export class OrdersDetailComponent implements OnInit{
     console.log(this.orderId);
     this.orderServ.getOrderById(this.orderId).subscribe((res)=>{
       this.order=res;
-      this.providerServ.getProviderById(this.order.provider).subscribe((res)=>{
-        this.provider=res;
-      })
-    })
+    });
   }
 
 }

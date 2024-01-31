@@ -146,20 +146,20 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0" id="grillaProd">
-                            <tr *ngFor="let p of detailsOrder">
+                            <tr *ngFor="let det of newOrder.details">
                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{p.detailId}}</strong>
+                                    <strong>{{det.product.prodCod}}</strong>
                                 </td>
-                                <td>{{p.product.prodName}}</td>
-                                <td>{{p.detailQuantity}}</td>
-                                <td>{{p.detailPriceProd}}</td>
-                                <td>${{p.detailPriceProd*p.detailQuantity}}</td>
+                                <td>{{det.product.prodName}}</td>
+                                <td>{{det.detailQuantity}}</td>
+                                <td>{{det.detailPriceProd}}</td>
+                                <td>${{det.detailSubtotal}}</td>
                                 <td>
                                     <button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit" (click)="editProd(p)"><i
+                                        data-bs-target="#modalEdit" (click)="editProd(det)"><i
                                             class="bx bx-edit-alt me-1"></i> Edit</button>
                                     <button class="dropdown-item" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#modalCenter" (click)="checkDelete(p.detailId)"><i
+                                        data-bs-target="#modalCenter" (click)="checkDelete(det.product.prodId)"><i
                                             class="bx bx-trash me-1"></i> Delete</button>
                                 </td>
                             </tr>

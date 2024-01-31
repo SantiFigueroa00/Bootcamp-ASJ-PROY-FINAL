@@ -4,8 +4,8 @@ import { ProviderBack } from "./ProviderBack";
 export interface OrderBack {
   orderId:number;
   orderCod:string;
-  orderDateE:Date;
-  orderDateR:Date;
+  orderDateE:String;
+  orderDateR:String;
   orderInfo:string; 
   orderTotal:number; 
   orderState:boolean; 
@@ -14,7 +14,7 @@ export interface OrderBack {
 }  
 
 export interface DetailOrderBack {
-  detailId:number;
+  detailId?:number;
   detailQuantity:number;
   detailPriceProd:number;
   detailSubtotal:number;

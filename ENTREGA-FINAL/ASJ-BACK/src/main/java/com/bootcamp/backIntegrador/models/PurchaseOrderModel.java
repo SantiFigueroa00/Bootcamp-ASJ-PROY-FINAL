@@ -7,13 +7,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Purchase_Orders")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId")
 public class PurchaseOrderModel {
 
     @Id
@@ -50,6 +55,9 @@ public class PurchaseOrderModel {
     @Column(name = "update_at", nullable = false)
     private LocalDateTime updateAt;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order")
+    private List<DetailOrderModel> details;
     
 
 	public PurchaseOrderModel() {
@@ -161,6 +169,18 @@ public class PurchaseOrderModel {
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
+	}
+
+	
+
+	public List<DetailOrderModel> getDetails() {
+		return details;
+	}
+
+
+
+	public void setDetails(List<DetailOrderModel> details) {
+		this.details = details;
 	}
 
 

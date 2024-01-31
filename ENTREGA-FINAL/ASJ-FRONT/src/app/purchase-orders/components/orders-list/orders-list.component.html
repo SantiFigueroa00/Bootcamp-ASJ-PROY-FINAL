@@ -15,17 +15,17 @@
         </ul>
         <div class="row mb-5">
             <div class="col-md-12" *ngFor="let p of providers">
-                <ng-container *ngIf="p.orders && p.orders.length>0 ">
+                <ng-container *ngIf="p.orders && p.orders.length>0 " >
                     <div class="card mb-3">
                         <div class="row g-0 ">
                             <div class="col-md-2">
-                                <img class="card-img card-img-left img-prov" src="{{p.logo}}" alt="Card image" />
+                                <img class="card-img card-img-left img-prov" src="{{p.provLogo}}" alt="Card image" />
                             </div>
                             <div class="col-md-10">
                                 <div class="card-body ">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h5 class="card-title mb-3">{{p.id }} - {{p.compName}}</h5>
+                                            <h5 class="card-title mb-3">{{p.provCod }} - {{p.provCompName}}</h5>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="row">
@@ -36,20 +36,20 @@
                                                     <div>
                                                         <h6 class="card-subtitle text-muted">First and Last Name</h6>
                                                         <p class="card-text">
-                                                            {{p.contact.name}}
+                                                            {{p.infoContact.contName}}
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <h6 class="card-subtitle text-muted">Role</h6>
                                                     <p class="card-text">
-                                                        {{p.contact.role}}
+                                                        {{p.infoContact.contRole}}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <h6 class="card-subtitle text-muted">Phone</h6>
                                                     <p class="card-text">
-                                                        {{p.contact.phone}}
+                                                        {{p.infoContact.contPhone}}
                                                     </p>
                                                 </div>
                                             </div>
@@ -75,22 +75,22 @@
                                         </thead>
                                         <tbody class="table-border-bottom-0" id="grillaProv2">
                                             <tr *ngFor="let o of p.orders">
-                                                <td class="text-center"><i class='bx bx-info-circle text-primary' routerLink="../detail/{{o.id}}"></i></td>
+                                                <td class="text-center"><i class='bx bx-info-circle text-primary' routerLink="../detail/{{o.orderId}}"></i></td>
                                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                                    <strong>{{o.id}}</strong>
+                                                    <strong>{{o.orderCod}}</strong>
                                                 </td>
-                                                <td>{{o.dateE}}</td>
-                                                <td>{{o.dateR}}</td>
-                                                <td>{{o.info}}</td>
+                                                <td>{{o.orderDateE}}</td>
+                                                <td>{{o.orderDateR}}</td>
+                                                <td>{{o.orderInfo}}</td>
                                                 <td>
-                                                    <span class="badge bg-label-primary me-1" *ngIf="o.state">ACTIVE</span>
-                                                    <span class="badge bg-label-danger me-1" *ngIf="!o.state">CANCELED</span>
+                                                    <span class="badge bg-label-primary me-1" *ngIf="o.orderState">ACTIVE</span>
+                                                    <span class="badge bg-label-danger me-1" *ngIf="!o.orderState">CANCELED</span>
                                                 </td>
                                                 <td>
-                                                    <button *ngIf="o.state" class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" (click)="checkCancel(o)">
+                                                    <button *ngIf="o.orderState" class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" (click)="checkCancel(o)">
                                                         <i class='bx bxs-x-circle'></i>
                                                     </button>
-                                                    <button *ngIf="!o.state" class="dropdown-item" type="button"  (click)="setActive(o)">
+                                                    <button *ngIf="!o.orderState" class="dropdown-item" type="button"  (click)="setActive(o)">
                                                         <i class='bx bxs-check-circle'></i>
                                                     </button>
                                                 </td>

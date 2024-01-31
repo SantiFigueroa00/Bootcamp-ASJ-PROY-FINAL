@@ -1,5 +1,7 @@
 package com.bootcamp.backIntegrador.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Detail_Orders")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "detailId")
 public class DetailOrderModel {
 
     @Id
@@ -32,6 +35,7 @@ public class DetailOrderModel {
     @JoinColumn(name = "id_prod", nullable = false)
     private ProductModel product;
     
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_order", nullable = false)
     private PurchaseOrderModel order;
