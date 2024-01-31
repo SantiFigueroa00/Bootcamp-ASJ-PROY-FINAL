@@ -35,9 +35,21 @@
                 <hr class="my-0" />
                 <div class="card-body">
                     <div class="row">
+                        <h3 class="text-primary">Info</h3>
+                        <div class="mb-3 col-md-6">
+                            <label for="code" class="form-label">Provider Code *</label>
+                            <input class="form-control" type="text" id="code" name="code" placeholder="PROV000"
+                                formControlName="code" />
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('code')?.hasError('required')">Code of provider is
+                                required.</small>
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('code')?.hasError('minlength')">Must be at least 4
+                                characters long.</small>
+                        </div>
                         <div class="mb-3 col-md-6">
                             <label for="compName" class="form-label">Company Name</label>
-                            <input class="form-control" type="text" id="compName" name="compName" placeholder="John"
+                            <input class="form-control" type="text" id="compName" name="compName" placeholder="Enterprice SRL"
                                 formControlName="compName" />
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('compName')?.hasError('required')">Company Name is
@@ -90,6 +102,8 @@
                                 *ngIf="myFormReactivo.get('phone')?.hasError('minlength')">Maximum 15 characters
                                 allowed.</small>
                         </div>
+                        <hr class="my-0" />
+                        <h3 class="mt-3 text-primary">Address Info</h3>
                         <div class="mb-3 col-md-6">
                             <label for="street" class="form-label">Street</label>
                             <input type="text" class="form-control" id="street" name="street"
@@ -104,7 +118,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="number" class="form-label">Number</label>
                             <input type="number" class="form-control" id="number" name="number"
-                                placeholder="Av California" formControlName="number" />
+                                placeholder="1234" formControlName="number" />
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('number')?.hasError('required')">Number is
                                 required.</small>
@@ -153,6 +167,8 @@
                                 *ngIf="myFormReactivo.get('locality')?.hasError('maxlength')">Maximum 50 characters
                                 allowed.</small>
                         </div>
+                        <hr class="my-0" />
+                        <h3 class="mt-3 text-primary">Tax Data</h3>
                         <div class="mb-3 col-md-6">
                             <label for="cuit" class="form-label">CUIT</label>
                             <input class="form-control" type="text" id="cuit" name="cuit" placeholder="27-12345678-9"
@@ -172,6 +188,8 @@
                                 *ngIf="myFormReactivo.get('ivaCondition')?.hasError('required')">Iva is
                                 required.</small>
                         </div>
+                        <hr class="my-0" />
+                        <h3 class="mt-3 text-primary">Contact Info</h3>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">First and Last Name</label>
                             <input class="form-control" type="text" id="name" name="name" placeholder="John"
@@ -210,7 +228,7 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="role" class="form-label">Role</label>
-                            <input class="form-control" type="text" id="role" name="role" placeholder="Gerente"
+                            <input class="form-control" type="text" id="role" name="role" placeholder="CEO"
                                 formControlName="role" />
                             <small class="text-primary" *ngIf="myFormReactivo.get('role')?.hasError('required')">Role is
                                 required.</small>

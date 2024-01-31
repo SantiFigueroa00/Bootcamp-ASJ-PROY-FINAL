@@ -102,6 +102,7 @@ export class ProvidersAddComponent  implements OnInit{
     this.myFormReactivo = this.fb.group({
       logo: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
       compName: ['', [Validators.required, Validators.minLength(4)]],
+      code: ['', [Validators.required, Validators.minLength(4)]],
       item: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       web: ['', [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)]],
@@ -122,7 +123,7 @@ export class ProvidersAddComponent  implements OnInit{
   }
 
   mapFormValuesToProvider() {
-    this.newProvider.provCod = v4().slice(0,5);
+    this.newProvider.provCod = this.myFormReactivo.get('code')?.value || '';
     this.newProvider.provCompName = this.myFormReactivo.get('compName')?.value || '';
     this.newProvider.item.itemId = this.myFormReactivo.get('item')?.value || '';
     this.newProvider.provWebSite = this.myFormReactivo.get('web')?.value || '';

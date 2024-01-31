@@ -12,67 +12,102 @@
                 <a class="nav-link" routerLink="../add"><i class="bx bx-plus me-1"></i> Add Provider</a>
             </li>
         </ul>
+        <div class="mb-3">
+
+        </div>
+        <label for="search" class="form-label ms-1">Search</label>
+        <div class="input-group rounded-pill mb-3">
+            <input id="search" class="form-control custom-input" type="text" placeholder="Company Name or Provider Code"
+                [(ngModel)]="searchText" />
+            <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon" [(ngModel)]="filterOption">
+                <option value="" selected>Choose what to show...</option>
+                <option value="1">Providers Actives</option>
+                <option value="2">Providers Deleted</option>
+            </select>
+        </div>
         <div class="row mb-5" id="grillaProv" *ngIf="providers.length>0">
-            <div class="col-md-12" *ngFor="let p of providers">
+            <div class="col-md-12" *ngFor="let p of providers | searchProvider: searchText | filterByStatusProvider: filterOption">
                 <div class="card mb-3">
                     <div class="row g-0 ">
-                        <div class="col-md-4">
+                        <div class="col-md-1">
                             <img class="card-img card-img-left img-prov" src="{{p.provLogo}}" alt="Card image" />
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-11">
                             <div class="card-body ">
                                 <div class="row ">
-                                    <div class="col-md-12">
+                                    <div class="col-md-5 border-start">
                                         <h5 class="card-title mb-3">{{p.provCod }} - {{p.provCompName}}</h5>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <h6 class="card-subtitle text-muted">Item /Rubric</h6>
+                                                <p class="card-text">
+                                                    {{p.item.itemName}}
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="card-subtitle text-muted">Email</h6>
+                                                <p class="card-text">
+                                                    {{p.provEmail}}
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="card-subtitle text-muted">Web Site</h6>
+                                                <p class="card-text">
+                                                    <a href="{{p.provWebSite}}" target="_blank">{{p.provWebSite}}</a>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+
+                                                <h6 class="card-subtitle text-muted">Phone</h6>
+                                                <p class="card-text">
+                                                    {{p.provPhone}}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h6 class="card-subtitle text-muted">Item /Rubric</h6>
-                                        <p class="card-text">
-                                            {{p.item.itemName}}
-                                        </p>
-                                        <h6 class="card-subtitle text-muted">Email</h6>
-                                        <p class="card-text">
-                                            {{p.provEmail}}
-                                        </p>
-                                        <h6 class="card-subtitle text-muted">Web Site</h6>
-                                        <p class="card-text">
-                                            <a href="{{p.provWebSite}}" target="_blank">{{p.provWebSite}}</a>
-                                        </p>
-                                        <h6 class="card-subtitle text-muted">Phone</h6>
-                                        <p class="card-text">
-                                            {{p.provPhone}}
-                                        </p>
+                                    <div class="col-md-6 border-start">
+                                        <h5 class="card-title mb-3">Contact Info</h5>
+                                        <div class="row g-2">
+                                            <div class="col">
+                                                <h6 class="card-subtitle text-muted">First and Last Name</h6>
+                                                <p class="card-text">
+                                                    {{p.infoContact.contName}}
+                                                </p>
+                                            </div>
+                                            <div class="col">
+                                                <h6 class="card-subtitle text-muted">Role</h6>
+                                                <p class="card-text">
+                                                    {{p.infoContact.contRole}}
+                                                </p>
+                                            </div>
+                                            <div class="col">
+                                                <h6 class="card-subtitle text-muted">Phone</h6>
+                                                <p class="card-text">
+                                                    {{p.infoContact.contPhone}}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h6 class="card-subtitle mb-2">Contact Info</h6>
-                                        <h6 class="card-subtitle text-muted">First and Last Name</h6>
-                                        <p class="card-text">
-                                            {{p.infoContact.contName}}
-                                        </p>
-                                        <h6 class="card-subtitle text-muted">Role</h6>
-                                        <p class="card-text">
-                                            {{p.infoContact.contRole}}
-                                        </p>
-                                        <h6 class="card-subtitle text-muted">Phone</h6>
-                                        <p class="card-text">
-                                            {{p.infoContact.contPhone}}
-                                        </p>
-                                    </div>
-                                    <div class="col-md-12 mt-4">
-                                        <div class="d-flex justify-content-between">
+                                    <div class="col-md-1 border-start">
+                                        <div class="d-flex flex-column align-items-end gap-1">
                                             <div>
-                                                <button type="button" class="btn btn-outline-primary" routerLink="../detail/{{p.provId}}">
-                                                <i class='bx bx-info-circle'></i>
-                                            </button>
+                                                <button type="button" class="btn rounded-pill btn-secondary"
+                                                    routerLink="../detail/{{p.provId}}">
+                                                    <i class='tf-icons bx bx-info-circle'></i>
+                                                </button>
                                             </div>
                                             <div>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#modalEditar" (click)="editProv(p)">
+                                                <button type="button" class="btn rounded-pill btn-primary"
+                                                    data-bs-toggle="modal" data-bs-target="#modalEditar"
+                                                    (click)="editProv(p)">
                                                     <i class='bx bx-edit-alt'></i>
                                                 </button>
+
+                                            </div>
+                                            <div>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-outline-danger ms-2"
+                                                <button type="button" class="btn rounded-pill btn-danger"
                                                     data-bs-toggle="modal" data-bs-target="#modalCenter"
                                                     (click)="checkDelete(p)">
                                                     <i class='bx bx-trash'></i>
@@ -89,7 +124,7 @@
         </div>
         <div *ngIf="providers.length==0">
             <div class="alert alert-primary d-flex align-items-center justify-content-between mt-2" role="alert">
-                <div class="d-flex"> 
+                <div class="d-flex">
                     <i class='bx bx-info-circle me-2'></i>
                     <div>
                         There are no providers to show, do you want to add one?
@@ -148,12 +183,11 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="item">Item / Rubric</label>
-                            <select id="item" class="select2 form-select" formControlName="item" >
+                            <select id="item" class="select2 form-select" formControlName="item">
                                 <option value="">Select Item</option>
                                 <option value="{{i.itemId}}" *ngFor="let i of items">{{i.itemName}}</option>
                             </select>
-                            <small class="text-primary"
-                                *ngIf="myFormReactivo.get('item')?.hasError('required')">Item is
+                            <small class="text-primary" *ngIf="myFormReactivo.get('item')?.hasError('required')">Item is
                                 required.</small>
                         </div>
                         <div class="mb-3 col-md-6">
@@ -224,7 +258,8 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Country</label>
-                            <select id="country" class="select2 form-select" formControlName="country" (change)="selectedCount()">
+                            <select id="country" class="select2 form-select" formControlName="country"
+                                (change)="selectedCount()">
                                 <option value="">Select Country</option>
                                 <option value="{{c.conId}}" *ngFor="let c of countries">{{c.conName}}</option>
                             </select>
@@ -234,7 +269,7 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="province" class="form-label">Province</label>
-                            <select id="province" class="select2 form-select" formControlName="province" >
+                            <select id="province" class="select2 form-select" formControlName="province">
                                 <option value="">Select Province</option>
                                 <option value="{{p.proId}}" *ngFor="let p of provinces">{{p.proName}}</option>
                             </select>
@@ -264,7 +299,7 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="item">Iva Condition</label>
-                            <select id="ivaCondition" class="select2 form-select" formControlName="ivaCondition" >
+                            <select id="ivaCondition" class="select2 form-select" formControlName="ivaCondition">
                                 <option value="">Select iva</option>
                                 <option value="{{i.ivaId}}" *ngFor="let i of ivaConditions">{{i.ivaCond}}</option>
                             </select>

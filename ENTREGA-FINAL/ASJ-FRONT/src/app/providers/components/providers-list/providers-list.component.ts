@@ -110,6 +110,8 @@ export class ProvidersListComponent implements OnInit{
   ivaConditions: any[]=[];
   countrySelected?: string=''
   idCountrySelected: number | undefined;
+  searchText: string = '';
+  filterOption: string = '';
 
   ngOnInit(): void {
     this.listProviders();
@@ -134,8 +136,7 @@ export class ProvidersListComponent implements OnInit{
   
   listProviders(){
     this.providerServ.getProviders().subscribe((res)=>{
-      let auxProviders:ProviderBack[] = res;
-      this.providers = auxProviders.filter(provider => provider.provIsDeleted === false);
+      this.providers = res;
     });
   }
   

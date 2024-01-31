@@ -21,6 +21,8 @@ import { ToastsContainerEdit } from './shared/components/toast/toast-edit/toasts
 import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
 import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
 import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
+import { SearchProviderPipe } from './providers/pipes/search-provider.pipe';
+import { FilterByStatusProviderPipe } from './providers/pipes/filter-by-status-provider.pipe';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { ProductsDetailComponent } from './products-services/components/products
     OrdersDetailComponent,
     ProvidersDetailComponent,
     ProductsDetailComponent,
+    SearchProviderPipe,
+    FilterByStatusProviderPipe,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,8 @@ import { ProductsDetailComponent } from './products-services/components/products
     ReactiveFormsModule,
     HttpClientModule,
     ToastsContainer,
-    ToastsContainerEdit
+    ToastsContainerEdit,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
