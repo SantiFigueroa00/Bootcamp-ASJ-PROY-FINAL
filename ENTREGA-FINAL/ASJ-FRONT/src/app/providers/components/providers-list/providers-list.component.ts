@@ -59,7 +59,7 @@ export class ProvidersListComponent implements OnInit{
     },
     provIsDeleted:false
 }
-  providerDel: ProviderBack={
+  providerStatus: ProviderBack={
     provId:0,
     provCod:'',
     provCompName:'',
@@ -141,11 +141,23 @@ export class ProvidersListComponent implements OnInit{
   }
   
   checkDelete(providerDel:ProviderBack){
-    providerDel.provIsDeleted = true;
-    this.providerDel=providerDel;
+    this.providerStatus=providerDel;
   }
   deleteProv() {
-    this.providerServ.deleteProvider(this.providerDel.provId).subscribe((res)=>{
+    this.providerStatus.provIsDeleted = true;
+    this.providerServ.deleteProvider(this.providerStatus.provId).subscribe((res)=>{
+      console.log(res);
+      this.listProviders();
+    });
+    
+  }
+
+  checkActive(providerAct:ProviderBack){
+    this.providerStatus=providerAct;
+  }
+  activeProv() {
+    this.providerStatus.provIsDeleted = false;
+    this.providerServ.putProvider(this.providerStatus).subscribe((res)=>{
       console.log(res);
       this.listProviders();
     });
