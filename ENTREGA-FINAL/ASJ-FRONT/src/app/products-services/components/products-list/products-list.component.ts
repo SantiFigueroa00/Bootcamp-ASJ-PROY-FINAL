@@ -15,6 +15,7 @@ import { ProductBack } from '../../../models/ProductBack';
   styleUrl: './products-list.component.css'
 })
 export class ProductsListComponent {
+
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
 
   providers: ProviderBack[]=[];
@@ -78,10 +79,11 @@ export class ProductsListComponent {
   };
   
   idDelete?:number=0;
+  filterCategoryId: any=0;
+  filterSearch: string='';
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
-      let auxProviders:ProviderBack[] = res;
-      this.providers = auxProviders.filter(provider => provider.provIsDeleted === false);
+      this.providers = res;
     });
     this.productServ.getCategories().subscribe(data=>{
       this.categories=data;
@@ -97,7 +99,7 @@ export class ProductsListComponent {
 
   listProducts(){
     this.productServ.getProducts().subscribe((res)=>{
-      let auxProviders:ProductBack[] = res.sort((a:ProductBack, b:ProductBack) => {
+      let auxProducts:ProductBack[] = res.sort((a:ProductBack, b:ProductBack) => {
         const nameA = a.prodName.toUpperCase(); // convertir a mayúsculas para ordenar de manera no sensible a mayúsculas/minúsculas
         const nameB = b.prodName.toUpperCase();
   
@@ -109,9 +111,20 @@ export class ProductsListComponent {
         }
         return 0;
       });
-      this.products = auxProviders.filter(prod => this.providers.map(provider => provider.provId).includes(prod.provider.provId));
+      this.products = auxProducts.filter(prod => this.providers.map(provider => provider.provId).includes(prod.provider.provId));
     });
   }
+
+  filterByCategory() {
+    if (this.filterCategoryId !== '0') {
+        this.productServ.getProductsByIdCategory(this.filterCategoryId).subscribe(res => {
+            this.products = res;
+        });
+    }else{
+      this.listProducts();
+    }
+}
+
   
   checkDelete(id?:number){
     this.idDelete=id;
@@ -122,6 +135,20 @@ export class ProductsListComponent {
       this.listProducts();
     });
   }
+
+  checkActivate(prod:ProductBack){
+    this.productEdit=prod;
+  }
+
+  activateProd(){
+    this.productEdit.prodIsDeleted=false;
+    this.productServ.putProduct(this.productEdit).subscribe((res)=>{
+      console.log(res);
+      this.listProducts();
+    });
+  }
+
+
   
   editProd(p: ProductBack) {
     this.myFormReactivo.setValue({
@@ -143,6 +170,7 @@ export class ProductsListComponent {
       this.productServ.putProduct(this.productEdit).subscribe((res)=>{
         console.log(res);
         this.showEditToast(this.editTpl);
+        this.listProducts();
       });
       this.myFormReactivo.reset();
     

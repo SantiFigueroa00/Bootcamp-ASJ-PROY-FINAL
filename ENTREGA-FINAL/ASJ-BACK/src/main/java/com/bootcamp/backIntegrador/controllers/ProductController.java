@@ -47,6 +47,11 @@ public class ProductController{
 		return ResponseEntity.ok(productService.getProductsByProvider(id));
 	}
 	
+	@GetMapping("/byCat/{id}")
+	public ResponseEntity<List<ProductModel>> getProductsByCategory(@PathVariable int id) {
+		return ResponseEntity.ok(productService.getProductsByCategory(id));
+	}
+	
 	
 	@PostMapping()
 	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductModel newProd,BindingResult bindingResult) {

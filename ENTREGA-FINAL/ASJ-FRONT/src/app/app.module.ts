@@ -24,7 +24,7 @@ import { ProductsDetailComponent } from './products-services/components/products
 import { SearchProviderPipe } from './providers/pipes/search-provider.pipe';
 import { FilterByStatusProviderPipe } from './providers/pipes/filter-by-status-provider.pipe';
 import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
-
+import { FilterBySearchPipe } from './products-services/pipes/filter-by-search.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import { CategoryAddComponent } from './categories/components/category-add/categ
     SearchProviderPipe,
     FilterByStatusProviderPipe,
     CategoryAddComponent,
+    FilterBySearchPipe,
   ],
   imports: [
     BrowserModule,

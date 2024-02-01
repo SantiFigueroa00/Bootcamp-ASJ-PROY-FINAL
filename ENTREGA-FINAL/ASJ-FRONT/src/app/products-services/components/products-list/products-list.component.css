@@ -1,4 +1,13 @@
 .deleted-row {
-    background-color: #ff9999; 
     border: 2px solid #ff9999;
 }  
+
+img {
+    width: 70px; /* Ancho deseado */
+    height: 70px; /* Altura deseada */
+    object-fit: cover; /* Ajustar para cubrir el contenedor sin distorsiones */
+  }
+
+.custom-input {
+    width: 60%; /* Puedes ajustar el valor según tus necesidades */
+}

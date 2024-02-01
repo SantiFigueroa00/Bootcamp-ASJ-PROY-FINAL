@@ -66,6 +66,10 @@ public class ProductService {
 		return productRepository.findByProvider_ProvId(id);
 	}
 	
+	public List<ProductModel> getProductsByCategory(int id) {
+		return productRepository.findByCategory_CatId(id);
+	}
+	
 
 	public String deleteProduct(int id) {
 		ProductModel p = productRepository.findById(id).get();
