@@ -23,6 +23,7 @@ import { ProvidersDetailComponent } from './providers/components/providers-detai
 import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
 import { SearchProviderPipe } from './providers/pipes/search-provider.pipe';
 import { FilterByStatusProviderPipe } from './providers/pipes/filter-by-status-provider.pipe';
+import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { FilterByStatusProviderPipe } from './providers/pipes/filter-by-status-p
     ProductsDetailComponent,
     SearchProviderPipe,
     FilterByStatusProviderPipe,
+    CategoryAddComponent,
   ],
   imports: [
     BrowserModule,

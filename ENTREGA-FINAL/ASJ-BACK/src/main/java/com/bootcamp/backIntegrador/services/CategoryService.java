@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.backIntegrador.models.CategoryModel;
+import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.repositories.CategoryRepository;
 
 
@@ -29,14 +30,25 @@ public class CategoryService {
 		return "Created Success";
 	}
 
-	public String updateItem(int id, CategoryModel catEdit) {
+	public String updateCategory(int id, CategoryModel catEdit) {
 		CategoryModel c = categoryRepository.findById(id).get();
 		if (c!=null) {
 			c.setCatName(catEdit.getCatName());
+			c.setCatIsDeleted(catEdit.isCatIsDeleted());
 			categoryRepository.save(c);
 			return "Update Success";
 		}
 		return "Error";
+	}
+	
+	public String deleteCategory(int id) {
+		CategoryModel cat = categoryRepository.findById(id).get();
+		if (cat!=null) {
+			cat.setCatIsDeleted(!cat.isCatIsDeleted());
+			categoryRepository.save(cat);
+			return "Delete Success";
+		}
+		return "error";
 	}
 	
 

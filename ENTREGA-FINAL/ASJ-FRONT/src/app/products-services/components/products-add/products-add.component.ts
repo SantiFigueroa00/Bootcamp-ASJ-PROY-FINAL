@@ -8,6 +8,7 @@ import { ProductsService } from '../../services/products.service';
 import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
 import { ProviderBack } from '../../../models/ProviderBack';
 import { ProductBack } from '../../../models/ProductBack';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-add',
@@ -109,9 +110,10 @@ export class ProductsAddComponent implements OnInit{
   // REACTIVE FORM
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, public providerServ: ProvidersService, public productServ : ProductsService, public toastServ:ToastServiceSuccess) {
+  constructor(private fb: FormBuilder, public providerServ: ProvidersService, public productServ : ProductsService, public toastServ:ToastServiceSuccess, private router :Router) {
     this.myFormReactivo = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
+      code: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required]],
       provider: ['', [Validators.required]],
       price: [null, [Validators.required, Validators.max(10000000), Validators.min(1)]],
@@ -121,7 +123,7 @@ export class ProductsAddComponent implements OnInit{
   }
 
   mapFormValuesToProduct() {
-    this.newProduct.prodCod = v4().slice(0,8)
+    this.newProduct.prodCod = this.myFormReactivo.get('code')?.value || '';
     this.newProduct.prodName = this.myFormReactivo.get('name')?.value || '';
     this.newProduct.category.catId = this.myFormReactivo.get('category')?.value || '';
     this.newProduct.provider.provId = this.myFormReactivo.get('provider')?.value || '';
@@ -133,4 +135,10 @@ export class ProductsAddComponent implements OnInit{
     })
   }
   
+  onSelectChange(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'external-link') {
+      this.router.navigate(['categories', 'add']);
+    }
+  }
 }

@@ -27,14 +27,26 @@ public class CategoryModel {
     
     @Column(name = "update_at", nullable = false)
     private LocalDateTime updateAt;
-
     
+    @Column(name = "cat_IsDeleted", nullable = false)
+    private boolean catIsDeleted;
 
     public CategoryModel() {
 		super();
+	} 
+
+	public boolean isCatIsDeleted() {
+		return catIsDeleted;
 	}
-    
-    
+
+
+
+	public void setCatIsDeleted(boolean catIsDeleted) {
+		this.catIsDeleted = catIsDeleted;
+	}
+
+
+
 
 	public String getCatName() {
 		return catName;

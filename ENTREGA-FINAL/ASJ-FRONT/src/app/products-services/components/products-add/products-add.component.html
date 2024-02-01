@@ -1,5 +1,5 @@
 <h4 class="fw-bold py-3 mb-4">
-    <span class="text-muted fw-light">Products-Services /</span> List of Products-Services
+    <span class="text-muted fw-light">Products-Services /</span> Add Products-Services
 </h4>
 <ul class="nav nav-pills flex-column flex-md-row mb-3">
     <li class="nav-item">
@@ -21,8 +21,18 @@
                 <form id="formProd" [formGroup]="myFormReactivo" (ngSubmit)="onSubmit()">
                     <div class="row">
                         <div class="mb-3 col-md-6">
+                            <label for="code" class="form-label">SKU</label>
+                            <input class="form-control" type="text" id="code" name="code" placeholder="PROD001"
+                                autofocus formControlName="code" />
+                            <small class="text-primary" *ngIf="myFormReactivo.get('code')?.hasError('required')">SKU is
+                                required.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('code')?.hasError('minlength')">Must
+                                be at least 4
+                                characters long.</small>
+                        </div>
+                        <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Product Name</label>
-                            <input class="form-control" type="text" id="name" name="name" placeholder="Parlante"
+                            <input class="form-control" type="text" id="name" name="name" placeholder="Speaker"
                                 autofocus formControlName="name" />
                             <small class="text-primary" *ngIf="myFormReactivo.get('name')?.hasError('required')">Company
                                 Name is
@@ -33,11 +43,11 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category" aria-label="Default select example"
-                                formControlName="category">
+                            <select class="form-select" id="category" aria-label="Default select example" formControlName="category" (change)="onSelectChange($event)">
                                 <option value="">Select Category</option>
-                                <option value="{{c.catId}}" *ngFor="let c of categories">{{c.catName}}
-                                </option>
+                                <option value="{{c.catId}}" *ngFor="let c of categories">{{c.catName}}</option>
+                                <hr>
+                                <option value="external-link">New Category...</option>
                             </select>
                             <small class="text-primary"
                                 *ngIf="myFormReactivo.get('category')?.hasError('required')">Category is

@@ -11,6 +11,7 @@ import { OrdersDetailComponent } from './purchase-orders/components/orders-detai
 import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
 import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
 import { AppComponent } from './app.component';
+import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -37,6 +38,12 @@ const routes: Routes = [
       { path: 'add', component: OrdersAddComponent },
       { path: 'list', component: OrdersListComponent },
       { path: 'detail/:id', component: OrdersDetailComponent }
+    ]
+  },
+  {
+    path: 'categories', 
+    children: [
+      { path: 'add', component: CategoryAddComponent }
     ]
   },
 ];
