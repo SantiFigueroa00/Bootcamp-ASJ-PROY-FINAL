@@ -11,7 +11,7 @@ import { ProductsAddComponent } from './products-services/components/products-ad
 import { ProvidersListComponent } from './providers/components/providers-list/providers-list.component';
 import { OrdersListComponent } from './purchase-orders/components/orders-list/orders-list.component';
 import { OrdersAddComponent } from './purchase-orders/components/orders-add/orders-add.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './dashboard/components/home/home.component';
 import { ProvidersAddComponent } from './providers/components/providers-add/providers-add.component';
 import { ProvidersService } from './providers/services/providers.service';
@@ -25,6 +25,7 @@ import { SearchProviderPipe } from './providers/pipes/search-provider.pipe';
 import { FilterByStatusProviderPipe } from './providers/pipes/filter-by-status-provider.pipe';
 import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
 import { FilterBySearchPipe } from './products-services/pipes/filter-by-search.pipe';
+
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { FilterBySearchPipe } from './products-services/pipes/filter-by-search.p
     HttpClientModule,
     ToastsContainer,
     ToastsContainerEdit,
-    FormsModule
+    FormsModule,
+    NgbPopoverModule
   ],
   providers: [],
   bootstrap: [AppComponent]
