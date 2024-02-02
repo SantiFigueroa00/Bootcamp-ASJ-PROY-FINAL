@@ -66,6 +66,10 @@ public class ProductService {
 		return productRepository.findByProvider_ProvId(id);
 	}
 	
+	public List<ProductModel> getProductsByProviderActivate(int id) {
+		return productRepository.findByProvider_ProvIdAndProdIsDeleted(id,false);
+	}
+	
 	public List<ProductModel> getProductsByCategory(int id) {
 		return productRepository.findByCategory_CatId(id);
 	}

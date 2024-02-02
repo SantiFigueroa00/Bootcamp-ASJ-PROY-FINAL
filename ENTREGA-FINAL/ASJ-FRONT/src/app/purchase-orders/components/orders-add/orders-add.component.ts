@@ -1,16 +1,14 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
-import { Product } from '../../../models/Product';
-import { Provider } from '../../../models/Provider';
 import { ProductsService } from '../../../products-services/services/products.service';
-import { Order } from '../../../models/Order';
 import { OrdersService } from '../../services/orders.service';
 import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
 import { DetailOrderBack, OrderBack } from '../../../models/OrderBack';
 import { ProviderBack } from '../../../models/ProviderBack';
 import { ProductBack } from '../../../models/ProductBack';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
 
 @Component({
   selector: 'app-orders-add',
@@ -19,6 +17,8 @@ import { ProductBack } from '../../../models/ProductBack';
 })
 export class OrdersAddComponent implements OnInit {
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
+  @ViewChild('infoTpl1') infoTpl1!: TemplateRef<any>;
+  toastService = inject(AppToastService);
 
 
   providers: ProviderBack[] = [];
@@ -86,6 +86,7 @@ export class OrdersAddComponent implements OnInit {
   // REACTIVE FORM
   myFormReactivoProd: FormGroup;
   myFormReactivoOrd: FormGroup;
+  imgProvSelected: string='';
 
   constructor(
     private fb: FormBuilder,
@@ -141,7 +142,8 @@ export class OrdersAddComponent implements OnInit {
             this.total=0;
           });
         }else{
-          alert('Debe seleccionar al menos un producto');
+          
+          this.showToastInfo(this.infoTpl1);
         }
       } else {
         console.log('form invalido:', this.myFormReactivoOrd.value);
@@ -150,6 +152,11 @@ export class OrdersAddComponent implements OnInit {
 
     showSuccessToast(template : TemplateRef<any>) {
       this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 10000 });
+    }
+
+    showToastInfo(template: TemplateRef<any>) {
+      console.log("llegoooooo")
+      this.toastService.show({ template, classname: 'bg-primary text-white', delay: 5000 });
     }
 
     onSubmitProd() {
@@ -168,7 +175,7 @@ export class OrdersAddComponent implements OnInit {
     this.providerIdSelect = this.myFormReactivoOrd.get('provider')?.value || '';
     console.log(this.providerIdSelect);
     this.productServ
-      .getProductsByIdProvider(this.providerIdSelect)
+      .getProductsByIdProviderActivated(this.providerIdSelect)
       .subscribe((res) => {
         this.products = res;
       });

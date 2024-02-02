@@ -32,6 +32,14 @@ public class PurchaseOrderService {
 	public List<PurchaseOrderModel> getOrdersByProvider(int id) {
 		return purchaseOrderRepository.findByProvider_ProvId(id);
 	}
+	
+	public List<PurchaseOrderModel> getOrdersActivatedByProvider(int id) {
+		return purchaseOrderRepository.findByProvider_ProvIdAndOrderState(id,true);
+	}
+	
+	public List<PurchaseOrderModel> getOrdersCancelledByProvider(int id) {
+		return purchaseOrderRepository.findByProvider_ProvIdAndOrderState(id,false);
+	}
 
 	public String createOrder(PurchaseOrderModel newOrder) {
 		PurchaseOrderModel ord = purchaseOrderRepository.save(newOrder);

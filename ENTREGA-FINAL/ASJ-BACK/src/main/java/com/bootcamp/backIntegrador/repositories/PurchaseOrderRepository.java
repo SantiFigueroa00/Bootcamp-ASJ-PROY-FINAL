@@ -10,4 +10,6 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrderMode
 
 	List<PurchaseOrderModel> findByProvider_ProvId(int id);
 
+	List<PurchaseOrderModel> findByProvider_ProvIdAndOrderState(int id, boolean b);
+
 }

@@ -30,6 +30,10 @@ export class ProductsService {
     return this.http.get(`${this.API_URL}/byProv/${providerIdSelect}`);
   }
 
+  getProductsByIdProviderActivated(providerIdSelect?: number):Observable<any> {
+    return this.http.get(`${this.API_URL}/activate/byProv/${providerIdSelect}`);
+  }
+
   getProductsByIdCategory(categoryIdSelect?: number):Observable<any> {
     return this.http.get(`${this.API_URL}/byCat/${categoryIdSelect}`);
   }

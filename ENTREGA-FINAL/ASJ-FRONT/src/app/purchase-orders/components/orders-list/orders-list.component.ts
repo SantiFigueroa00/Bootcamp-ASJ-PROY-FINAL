@@ -1,134 +1,191 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { OrdersService } from '../../services/orders.service';
-import { Provider } from '../../../models/Provider';
-import { Order } from '../../../models/Order';
-import { forkJoin } from 'rxjs';
 import { OrderBack } from '../../../models/OrderBack';
 import { ProviderBack } from '../../../models/ProviderBack';
+import { forkJoin } from 'rxjs';
+import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
 
 @Component({
   selector: 'app-orders-list',
   templateUrl: './orders-list.component.html',
-  styleUrl: './orders-list.component.css'
+  styleUrl: './orders-list.component.css',
 })
-export class OrdersListComponent implements OnInit {
+export class OrdersListComponent implements OnInit, OnDestroy {
 
-  
+  @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+
   noOrders: boolean = true;
+  showActivated: boolean = true;
+  constructor(
+    public providerServ: ProvidersService,
+    public orderServ: OrdersService,
+    public toastServ: ToastServiceSuccess
+  ) {}
 
-  constructor(public providerServ :ProvidersService,public orderServ : OrdersService){}
-  
-  
-  providers:ProviderBack[]=[]
-  orderCancel:OrderBack = {
-    orderId:0,
-    orderCod:'',
-    orderDateE:'',
-    orderDateR:'',
-    orderInfo:'', 
-    orderTotal:0, 
-    orderState:false, 
-    provider:{
-      provId:0,
-      provCod:'',
-      provCompName:'',
-      provWebSite:'',
-      provEmail:'',
-      provPhone:'',
-      item:{
-          itemId:0,
-          itemName:''
+  providers: ProviderBack[] = [];
+  orderCancel: OrderBack = {
+    orderId: 0,
+    orderCod: '',
+    orderDateE: '',
+    orderDateR: '',
+    orderInfo: '',
+    orderTotal: 0,
+    orderState: false,
+    provider: {
+      provId: 0,
+      provCod: '',
+      provCompName: '',
+      provWebSite: '',
+      provEmail: '',
+      provPhone: '',
+      item: {
+        itemId: 0,
+        itemName: '',
       },
-      address:{
-          adId:0,
-          adStreet:'',
-          adNumber:0,
-          adZip:'',
-          locality:{
-              locId:0,
-              locName:'',
-              province:{
-                  proId:0,
-                  proName:'',
-                  country:{
-                      conId:0,
-                      conName:''
-                  }
-              }
-          }
+      address: {
+        adId: 0,
+        adStreet: '',
+        adNumber: 0,
+        adZip: '',
+        locality: {
+          locId: 0,
+          locName: '',
+          province: {
+            proId: 0,
+            proName: '',
+            country: {
+              conId: 0,
+              conName: '',
+            },
+          },
+        },
       },
-      provCuit:'',
-      ivaCondition:{
-          ivaId:0,
-          ivaCond:'',
+      provCuit: '',
+      ivaCondition: {
+        ivaId: 0,
+        ivaCond: '',
       },
-      provLogo:'',
-      infoContact:{
-          contId:0,
-          contName:'',
-          contPhone:'',
-          contEmail:'',
-          contRole:''
+      provLogo: '',
+      infoContact: {
+        contId: 0,
+        contName: '',
+        contPhone: '',
+        contEmail: '',
+        contRole: '',
       },
-      provIsDeleted:false
+      provIsDeleted: false,
     },
-    details:[]
+    details: [],
   };
+  
+  toastService = inject(AppToastService);
+
+  showToastInfo(template: TemplateRef<any>) {
+		this.toastService.show({ template, classname: 'bg-primary text-white', delay: 5000 });
+	}
+
+	ngOnDestroy(): void {
+		this.toastService.clear();
+	}
 
   ngOnInit(): void {
-    this.providerServ.getProviders().subscribe((res)=>{
-      this.providers=res; 
+    this.providerServ.getProviders().subscribe((res) => {
+      this.providers = res;
       this.loadOrdersForProviders();
     });
   }
-  
 
-  loadOrdersForProviders(){
-    this.providers.forEach(prov => {
-      this.orderServ.getOrdersByProv(prov.provId).subscribe((orders) => {
+  loadOrdersForProviders() {
+    const requests = this.providers.map((prov) =>
+      this.orderServ.getOrdersActivatedByProv(prov.provId)
+    );
+
+    forkJoin(requests).subscribe((activatedOrdersArray: any[]) => {
+      activatedOrdersArray.forEach((orders, index) => {
+        const prov = this.providers[index];
         prov.orders = orders || [];
-  
-        prov.orders?.sort((a:OrderBack, b:OrderBack) => {
-          if (a.orderState && !b.orderState) {
-            return -1;
-          } else if (!a.orderState && b.orderState) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
+
         if (prov.orders && prov.orders.length > 0) {
+          prov.showActivated = true;
           this.noOrders = false;
-          return; // Break out of the loop if orders are found for any provider
+          return;
         }
-  
-        
-        if (this.noOrders) {
-          this.noOrders = true;
-        }
+
+        this.orderServ
+          .getOrdersCancelledByProv(prov.provId)
+          .subscribe((cancelledOrders) => {
+            prov.orders = cancelledOrders || [];
+
+            if (prov.orders && prov.orders.length > 0) {
+              prov.showActivated = false;
+              this.noOrders = false;
+              return;
+            }
+
+            if (this.noOrders) {
+              this.noOrders = true;
+            }
+          });
       });
     });
   }
 
+  statusShow(provId?: number) {
+    this.providers.forEach((prov) => {
+      if (prov.provId == provId) {
+        prov.showActivated = !prov.showActivated;
+      }
+    });
+    this.loadOrdersByStatus();
+  }
+
+  loadOrdersByStatus() {
+    this.providers.forEach((prov) => {
+      if (prov.showActivated) {
+        this.orderServ
+          .getOrdersActivatedByProv(prov.provId)
+          .subscribe((orders) => {
+            if (orders.length > 0) {
+              prov.orders = orders;
+            } else {
+              this.showToastInfo(this.infoTpl);
+              prov.showActivated = !prov.showActivated;
+            }
+          });
+      } else {
+        this.orderServ
+          .getOrdersCancelledByProv(prov.provId)
+          .subscribe((orders) => {
+            if (orders.length > 0) {
+              prov.orders = orders;
+            } else {
+              this.showToastInfo(this.infoTpl);
+              prov.showActivated = !prov.showActivated;
+            }
+          });
+      }
+    });
+  }
+
   checkCancel(o: OrderBack) {
-    this.orderCancel=o;
+    this.orderCancel = o;
   }
 
   setCancel() {
-    this.orderCancel.orderState=false;
-    this.orderServ.putOrder(this.orderCancel).subscribe((res)=>{
+    this.orderCancel.orderState = false;
+    this.orderServ.putOrder(this.orderCancel).subscribe((res) => {
       console.log(res);
-      this.loadOrdersForProviders();
+      this.loadOrdersByStatus();
     });
   }
 
-  setActive(o : OrderBack) {
-    o.orderState=true;
-    this.orderServ.putOrder(o).subscribe((res)=>{
+  setActive(o: OrderBack) {
+    o.orderState = true;
+    this.orderServ.putOrder(o).subscribe((res) => {
       console.log(res);
-      this.loadOrdersForProviders();
+      this.loadOrdersByStatus();
     });
   }
-
 }

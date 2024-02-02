@@ -15,47 +15,46 @@
         </ul>
         <div class="row mb-5">
             <div class="col-md-12" *ngFor="let p of providers">
+                <ng-template #infoTpl> There are no {{!p.showActivated?"Activateds":"Cancelleds"}} Orders! 
+                                                    
+                </ng-template>
                 <ng-container *ngIf="p.orders && p.orders.length>0 ">
                     <div class="card mb-3">
                         <div class="row g-0 ">
                             <div class="col-md-1">
                                 <img class="card-img card-img-left img-prov" src="{{p.provLogo}}" alt="Card image" />
                             </div>
-                            <div class="col-md-11">
-                                <div class="card-body ">
-                                    <div class="row ">
+                            <div class="col-md-11 d-flex align-items-baseline justify-content-between p-3">
+
+                                <div class="">
+                                    <h5 class="card-title mb-3">{{p.provCod }} - {{p.provCompName}}</h5>
+                                </div>
+                                <div class="">
+                                    <div class="row">
                                         <div class="col-md-12">
-                                            <h5 class="card-title mb-3">{{p.provCod }} - {{p.provCompName}}</h5>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div>
-                                                        <h6 class="card-subtitle text-muted">Contact Info</h6>
-                                                        <p class="card-text">
-                                                            {{p.infoContact.contName}}
-                                                            <i class="bx bx-info-circle text-primary "
-                                                                [ngbPopover]="popoverContentTemplate"
-                                                                placement="bottom"
-                                                                container="body" [openDelay]="1000"
-                                                                [closeDelay]="5000"
-                                                                triggers="hover"></i>
-                                                            <ng-template #popoverContentTemplate>
-                                                                <ul>
-                                                                    <li>{{p.infoContact.contRole}}</li>
-                                                                    <li>{{p.infoContact.contPhone}}</li>
-                                                                </ul>
-                                                            </ng-template>
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                            <div>
+                                                <h6 class="card-subtitle text-muted">Contact Info</h6>
+                                                <p class="card-text">
+                                                    <i class="bx bx-info-circle text-primary "
+                                                        [ngbPopover]="popoverContentTemplate" placement="bottom"
+                                                        container="body" [closeDelay]="5000"
+                                                        triggers="hover"></i>
+                                                    {{p.infoContact.contName}}
+                                                    <ng-template #popoverContentTemplate>
+                                                        <ul>
+                                                            <li>{{p.infoContact.contRole}}</li>
+                                                            <li>{{p.infoContact.contPhone}}</li>
+                                                        </ul>
+                                                    </ng-template>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-                        <div class="row g-0 ">
+                        <div class="row g-0">
                             <div class="col-md-12">
                                 <div class="table-responsive text-nowrap m-3">
                                     <table class="table table-striped">
@@ -66,7 +65,13 @@
                                                 <th>Date Issued</th>
                                                 <th>Delivery Date</th>
                                                 <th>Delivery Address</th>
-                                                <th>State</th>
+                                                <th>
+                                                    Status ({{p.showActivated?"Activateds":"Cancelleds"}})
+                                                    <button type="button" class="btn btn-icon me-2 btn-primary btn-sm" (click)="statusShow(p.provId)">
+                                                        <span class="tf-icons bx bx-refresh"></span>
+                                                    </button>
+                                                    
+                                                </th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -145,3 +150,8 @@
         </div>
     </div>
 </div>
+
+
+<app-toast-info aria-live="polite" aria-atomic="true"></app-toast-info>
+
+

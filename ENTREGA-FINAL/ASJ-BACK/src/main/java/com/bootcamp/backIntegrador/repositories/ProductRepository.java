@@ -11,5 +11,7 @@ public interface ProductRepository extends JpaRepository<ProductModel, Integer>{
 	List<ProductModel> findByProvider_ProvId(int id);
 
 	List<ProductModel> findByCategory_CatId(int id);
+	
+	List<ProductModel> findByProvider_ProvIdAndProdIsDeleted(int id, boolean isDeleted);
 
 }

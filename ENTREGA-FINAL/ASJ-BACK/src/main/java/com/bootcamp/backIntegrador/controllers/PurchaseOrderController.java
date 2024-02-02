@@ -46,6 +46,16 @@ public class PurchaseOrderController{
 		return ResponseEntity.ok(purchaseOrderService.getOrdersByProvider(id));
 	}
 	
+	@GetMapping("/activated/byProv/{id}")
+	public ResponseEntity<List<PurchaseOrderModel>> getOrdersActivatedByProvider(@PathVariable int id) {
+		return ResponseEntity.ok(purchaseOrderService.getOrdersActivatedByProvider(id));
+	}
+	
+	@GetMapping("/cancelled/byProv/{id}")
+	public ResponseEntity<List<PurchaseOrderModel>> getOrdersCancelledByProvider(@PathVariable int id) {
+		return ResponseEntity.ok(purchaseOrderService.getOrdersCancelledByProvider(id));
+	}
+	
 	@PostMapping()
 	public ResponseEntity<Object> createOrder(@Valid @RequestBody PurchaseOrderModel newOrder,BindingResult bindingResult) {
 

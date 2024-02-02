@@ -47,6 +47,11 @@ public class ProductController{
 		return ResponseEntity.ok(productService.getProductsByProvider(id));
 	}
 	
+	@GetMapping("/activate/byProv/{id}")
+	public ResponseEntity<List<ProductModel>> getProductsByProviderActivate(@PathVariable int id) {
+		return ResponseEntity.ok(productService.getProductsByProviderActivate(id));
+	}
+	
 	@GetMapping("/byCat/{id}")
 	public ResponseEntity<List<ProductModel>> getProductsByCategory(@PathVariable int id) {
 		return ResponseEntity.ok(productService.getProductsByCategory(id));

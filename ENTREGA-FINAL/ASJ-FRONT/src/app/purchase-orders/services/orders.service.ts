@@ -23,6 +23,14 @@ export class OrdersService {
   getOrdersByProv(provId?:number):Observable<any> {
     return this.http.get(`${this.API_URL}/byProv/${provId}`)
   }
+
+  getOrdersActivatedByProv(provId?:number):Observable<any> {
+    return this.http.get(`${this.API_URL}/activated/byProv/${provId}`)
+  }
+
+  getOrdersCancelledByProv(provId?:number):Observable<any> {
+    return this.http.get(`${this.API_URL}/cancelled/byProv/${provId}`)
+  }
   
   putOrder(order: OrderBack) :Observable<any>{
     return this.http.put(`${this.API_URL}/${order.orderId}`,order,{responseType:'text'});

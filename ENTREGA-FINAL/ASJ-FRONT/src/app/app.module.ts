@@ -25,6 +25,7 @@ import { SearchProviderPipe } from './providers/pipes/search-provider.pipe';
 import { FilterByStatusProviderPipe } from './providers/pipes/filter-by-status-provider.pipe';
 import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
 import { FilterBySearchPipe } from './products-services/pipes/filter-by-search.pipe';
+import { ToastInfoComponent } from './shared/components/toast/toast-info/toast-info.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { FilterBySearchPipe } from './products-services/pipes/filter-by-search.p
     FilterByStatusProviderPipe,
     CategoryAddComponent,
     FilterBySearchPipe,
+    ToastInfoComponent,
   ],
   imports: [
     BrowserModule,
