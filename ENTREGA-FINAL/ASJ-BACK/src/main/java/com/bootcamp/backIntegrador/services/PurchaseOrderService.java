@@ -1,11 +1,14 @@
 package com.bootcamp.backIntegrador.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.DetailOrderModel;
 import com.bootcamp.backIntegrador.models.PurchaseOrderModel;
 import com.bootcamp.backIntegrador.repositories.PurchaseOrderRepository;
@@ -39,6 +42,19 @@ public class PurchaseOrderService {
 	
 	public List<PurchaseOrderModel> getOrdersCancelledByProvider(int id) {
 		return purchaseOrderRepository.findByProvider_ProvIdAndOrderState(id,false);
+	}
+	
+	public Integer getTotalOrders() {
+		return purchaseOrderRepository.getTotalPurchaseOrders();
+	}
+	
+	public List<ProviderPercentageDTO> getProviderPercentages() {
+		List<ProviderPercentageDTO> providerPercentages = purchaseOrderRepository.getProviderPercentages();
+
+        return providerPercentages.stream()
+                .sorted(Comparator.comparing(ProviderPercentageDTO::getPercentage).reversed())
+                .limit(4)
+                .collect(Collectors.toList());
 	}
 
 	public String createOrder(PurchaseOrderModel newOrder) {

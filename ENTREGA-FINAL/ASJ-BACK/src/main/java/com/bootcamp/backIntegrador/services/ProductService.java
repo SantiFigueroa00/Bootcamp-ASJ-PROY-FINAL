@@ -1,11 +1,15 @@
 package com.bootcamp.backIntegrador.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProductImageModel;
 import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.repositories.ProductRepository;
@@ -30,6 +34,19 @@ public class ProductService {
 	
 	public Optional<ProductModel> getProductById(int id) {
 		return productRepository.findById(id);
+	}
+	
+	public Integer getTotalProductsByCategory() {
+		return productRepository.getTotalProducts();
+	}
+	
+	public List<CategoryProductCountDTO> getTopCategoriesWithProductCount() {
+		List<CategoryProductCountDTO> productQuantity = productRepository.getTopCategoriesWithProductCount();
+
+        return productQuantity.stream()
+                .sorted(Comparator.comparing(CategoryProductCountDTO::getProductCount).reversed())
+                .limit(4)
+                .collect(Collectors.toList());
 	}
 
 	public String createProduct(ProductModel newProd) {

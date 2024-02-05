@@ -1,11 +1,15 @@
 package com.bootcamp.backIntegrador.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO;
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.repositories.ProviderRepository;
 
@@ -34,6 +38,19 @@ public class ProviderService {
 	
 	public Optional<ProviderModel> getProvidersById(int id) {
 		return providerRepository.findById(id);
+	}
+	
+	public Integer getTotalProviders() {
+		return providerRepository.getTotalProviders();
+	}
+	
+	public List<ProviderPercentageByProvinceDTO> getProviderPercentageByProvince() {
+		List<ProviderPercentageByProvinceDTO> providerPercentages = providerRepository.getProviderPercentageByProvince();
+
+        return providerPercentages.stream()
+                .sorted(Comparator.comparing(ProviderPercentageByProvinceDTO::getPorcentaje).reversed())
+                .limit(4)
+                .collect(Collectors.toList());
 	}
 
 	public String createProvider(ProviderModel newProv) {

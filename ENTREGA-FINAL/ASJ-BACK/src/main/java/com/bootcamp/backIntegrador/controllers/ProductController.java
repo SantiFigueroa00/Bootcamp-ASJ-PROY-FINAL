@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
+import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.services.ProductService;
 
@@ -57,6 +59,15 @@ public class ProductController{
 		return ResponseEntity.ok(productService.getProductsByCategory(id));
 	}
 	
+	@GetMapping("/total")
+	public ResponseEntity<Integer> getTotalProductsByCategory() {
+		return ResponseEntity.ok(productService.getTotalProductsByCategory());
+	}
+	
+	@GetMapping("/quantityCat")
+	public ResponseEntity<List<CategoryProductCountDTO>> getProviderPercentages() {
+		return ResponseEntity.ok(productService.getTopCategoriesWithProductCount());
+	}
 	
 	@PostMapping()
 	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductModel newProd,BindingResult bindingResult) {

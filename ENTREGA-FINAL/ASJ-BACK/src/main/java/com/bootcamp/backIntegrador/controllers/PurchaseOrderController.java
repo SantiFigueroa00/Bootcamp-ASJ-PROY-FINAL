@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.PurchaseOrderModel;
 import com.bootcamp.backIntegrador.services.PurchaseOrderService;
 
@@ -54,6 +55,16 @@ public class PurchaseOrderController{
 	@GetMapping("/cancelled/byProv/{id}")
 	public ResponseEntity<List<PurchaseOrderModel>> getOrdersCancelledByProvider(@PathVariable int id) {
 		return ResponseEntity.ok(purchaseOrderService.getOrdersCancelledByProvider(id));
+	}
+	
+	@GetMapping("/total")
+	public ResponseEntity<Integer> getTotalOrders() {
+		return ResponseEntity.ok(purchaseOrderService.getTotalOrders());
+	}
+	
+	@GetMapping("/percentages")
+	public ResponseEntity<List<ProviderPercentageDTO>> getProviderPercentages() {
+		return ResponseEntity.ok(purchaseOrderService.getProviderPercentages());
 	}
 	
 	@PostMapping()

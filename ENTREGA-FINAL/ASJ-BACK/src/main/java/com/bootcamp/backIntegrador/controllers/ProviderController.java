@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO;
+import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.services.ProviderService;
 
@@ -40,6 +42,16 @@ public class ProviderController{
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<ProviderModel>> getProvidersById(@PathVariable int id) {
 		return ResponseEntity.ok(providerService.getProvidersById(id));
+	}
+	
+	@GetMapping("/total")
+	public ResponseEntity<Integer> getTotalOrders() {
+		return ResponseEntity.ok(providerService.getTotalProviders());
+	}
+	
+	@GetMapping("/percentages")
+	public ResponseEntity<List<ProviderPercentageByProvinceDTO>> getProviderPercentages() {
+		return ResponseEntity.ok(providerService.getProviderPercentageByProvince());
 	}
 	
 	@DeleteMapping("/{id}")
