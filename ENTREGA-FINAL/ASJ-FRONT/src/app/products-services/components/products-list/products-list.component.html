@@ -20,6 +20,11 @@
         <input type="search" class="form-control" id="floatingInput" placeholder="Product Name or Description" aria-describedby="floatingInputHelp" [(ngModel)]="filterSearch"/>
         <label for="floatingInput"><i class="bx bx-search me-1"></i></label>
     </div>
+    <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon" [(ngModel)]="filterStatus">
+        <option value="0" selected>Choose what to show...</option>
+        <option value="1">Products Actives</option>
+        <option value="2">Products Deleted</option>
+    </select>
 </div>
 <div class="card">
     <div class="card-body">
@@ -36,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0" id="grillaProd">
-                    <tr *ngFor="let p of products | filterBySearch : filterSearch" [ngClass]="{'deleted-row': p.prodIsDeleted}">
+                    <tr *ngFor="let p of products | filterBySearch : filterSearch | filterByStatus : filterStatus" [ngClass]="{'deleted-row': p.prodIsDeleted}">
                         <td>
                             <img src="{{p.images[0].imgUrl}}" alt="Product Image" width="100">
                         </td>

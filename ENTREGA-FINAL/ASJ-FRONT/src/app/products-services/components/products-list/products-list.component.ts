@@ -81,6 +81,7 @@ export class ProductsListComponent {
   idDelete?:number=0;
   filterCategoryId: any=0;
   filterSearch: string='';
+  filterStatus: string='0';
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
       this.providers = res;
@@ -99,7 +100,7 @@ export class ProductsListComponent {
 
   listProducts(){
     this.productServ.getProducts().subscribe((res)=>{
-      let auxProducts:ProductBack[] = res.sort((a:ProductBack, b:ProductBack) => {
+      this.products = res.sort((a:ProductBack, b:ProductBack) => {
         const nameA = a.prodName.toUpperCase(); // convertir a mayúsculas para ordenar de manera no sensible a mayúsculas/minúsculas
         const nameB = b.prodName.toUpperCase();
   
@@ -111,7 +112,6 @@ export class ProductsListComponent {
         }
         return 0;
       });
-      this.products = auxProducts.filter(prod => this.providers.map(provider => provider.provId).includes(prod.provider.provId));
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
@@ -15,7 +15,7 @@ import { AppToastService } from '../../../shared/components/toast/toast-info/toa
   templateUrl: './orders-add.component.html',
   styleUrl: './orders-add.component.css',
 })
-export class OrdersAddComponent implements OnInit {
+export class OrdersAddComponent implements OnInit, OnDestroy {
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
   @ViewChild('infoTpl1') infoTpl1!: TemplateRef<any>;
   toastService = inject(AppToastService);
@@ -125,6 +125,10 @@ export class OrdersAddComponent implements OnInit {
         let auxProviders:ProviderBack[] = res;
         this.providers = auxProviders.filter(provider => provider.provIsDeleted === false);
       });
+    }
+
+    ngOnDestroy(): void {
+      this.toastService.clear();
     }
     
     onSubmitOrd() {
