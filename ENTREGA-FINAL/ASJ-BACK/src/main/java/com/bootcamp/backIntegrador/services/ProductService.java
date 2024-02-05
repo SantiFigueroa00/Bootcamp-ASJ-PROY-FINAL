@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
-import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProductImageModel;
 import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.repositories.ProductRepository;

@@ -43,7 +43,8 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category" aria-label="Default select example" formControlName="category" (change)="onSelectChange($event)">
+                            <select class="form-select" id="category" aria-label="Default select example"
+                                formControlName="category" (change)="onSelectChange($event)">
                                 <option value="">Select Category</option>
                                 <option value="{{c.catId}}" *ngFor="let c of categories">{{c.catName}}</option>
                                 <hr>
@@ -90,13 +91,27 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="imageP" class="form-label">Image URL</label>
-                            <input type="url" class="form-control" id="imageP" name="imageP" placeholder="https://exaple.png|jpg|jpeg|gif|webp"
-                                formControlName="imageP" />
-                            <img src="{{myFormReactivo.value.imageP? myFormReactivo.value.imageP :'../../../../assets/img/elements/4.jpg'}}"
-                            alt="user-avatar" class="d-block rounded mt-2" height="100" width="100" id="uploadedAvatar" />
-                            <small class="text-primary" *ngIf="myFormReactivo.get('imageP')?.hasError('pattern')">Invalid URL
+                            <div class="input-group mb-3">
+                                <input type="url" class="form-control" id="imageP" name="imageP"
+                                placeholder="https://exaple.png|jpg|jpeg|gif|webp" formControlName="imageP" />
+                                <button type="button" class="btn  btn-primary" (click)="addImg()" *ngIf="newProduct.images.length<3">
+                                    <span class="tf-icons bx bx-plus-circle"></span>
+                                </button>
+                            </div>
+                            <div class="d-flex">
+                                <img src="{{img.imgUrl}}"
+                                    alt="user-avatar" class="d-block rounded mt-2 me-2" height="100" width="100"
+                                    id="uploadedAvatar" *ngFor="let img of newProduct.images"/>
+                                
+                                <img src="{{myFormReactivo.value.imageP? myFormReactivo.value.imageP :'../../../../assets/img/elements/4.jpg'}}"
+                                    alt="user-avatar" class="d-block rounded mt-2" height="100" width="100"
+                                    id="uploadedAvatar" />
+                            </div>
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('imageP')?.hasError('pattern')">Invalid URL
                                 format.</small>
-                            <small class="text-primary" *ngIf="myFormReactivo.get('imageP')?.hasError('required')">Image is
+                            <small class="text-primary" *ngIf="myFormReactivo.get('imageP')?.hasError('required')">Image
+                                is
                                 required</small>
                         </div>
                     </div>

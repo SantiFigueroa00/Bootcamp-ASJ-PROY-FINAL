@@ -9,6 +9,7 @@ import { ToastServiceSuccess } from '../../../shared/components/toast/toast-succ
 import { ProviderBack } from '../../../models/ProviderBack';
 import { ProductBack } from '../../../models/ProductBack';
 import { Router } from '@angular/router';
+import { CategoryBack } from '../../../models/CategoryBack';
 
 @Component({
   selector: 'app-products-add',
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
   styleUrl: './products-add.component.css'
 })
 export class ProductsAddComponent implements OnInit{
+
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
@@ -85,7 +87,8 @@ export class ProductsAddComponent implements OnInit{
       this.providers = auxProviders.filter(provider => provider.provIsDeleted === false);
     });
     this.productServ.getCategories().subscribe(data=>{
-      this.categories=data;
+      let auxCategories:CategoryBack[] = data;
+      this.categories = auxCategories.filter(cat => cat.catIsDeleted === false);
     });
   }
   onSubmit() {
@@ -94,8 +97,9 @@ export class ProductsAddComponent implements OnInit{
       this.mapFormValuesToProduct();
       console.log(this.newProduct);
       this.productServ.createProduct(this.newProduct).subscribe((res)=>{
-        console.log(res);
         this.showSuccessToast(this.successTpl);
+        this.myFormReactivo.get('category')?.setValue('');
+        this.myFormReactivo.get('provider')?.setValue('');
       });
       this.myFormReactivo.reset();
     }else{
@@ -133,6 +137,13 @@ export class ProductsAddComponent implements OnInit{
     this.newProduct.images.push({
       imgUrl:this.myFormReactivo.get('imageP')?.value || '',
     })
+  }
+
+  addImg() {
+    this.newProduct.images.push({
+      imgUrl:this.myFormReactivo.get('imageP')?.value || '',
+    })
+    this.myFormReactivo.get('imageP')?.setValue('');
   }
   
   onSelectChange(event: any) {

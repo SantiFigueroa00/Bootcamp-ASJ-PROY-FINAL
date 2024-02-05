@@ -8,13 +8,13 @@ import { ProvidersService } from '../../../providers/services/providers.service'
 import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/toast-service';
 import { ProviderBack } from '../../../models/ProviderBack';
 import { ProductBack } from '../../../models/ProductBack';
-
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css'
 })
 export class ProductsListComponent {
+  public math = Math;
 
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
 
@@ -82,6 +82,14 @@ export class ProductsListComponent {
   filterCategoryId: any=0;
   filterSearch: string='';
   filterStatus: string='0';
+  filterPrice:boolean=false;
+  filterName:boolean=true
+  activeFilter:string='name';
+
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  displayedProducts: ProductBack[]=[];
+
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
       this.providers = res;
@@ -100,19 +108,27 @@ export class ProductsListComponent {
 
   listProducts(){
     this.productServ.getProducts().subscribe((res)=>{
-      this.products = res.sort((a:ProductBack, b:ProductBack) => {
-        const nameA = a.prodName.toUpperCase(); // convertir a mayúsculas para ordenar de manera no sensible a mayúsculas/minúsculas
-        const nameB = b.prodName.toUpperCase();
-  
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
+      this.products = res;
+      this.updatePageData();
     });
+  }
+
+  updatePageData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedProducts = this.products.slice(startIndex, endIndex);
+  }
+
+  setPage(pageNumber: number) {
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.products.length / this.itemsPerPage)) {
+      this.currentPage = pageNumber;
+      this.updatePageData();
+    }
+  }
+
+  getPages(): number[] {
+    const pageCount = Math.ceil(this.products.length / this.itemsPerPage);
+    return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
 
   filterByCategory() {
@@ -123,7 +139,17 @@ export class ProductsListComponent {
     }else{
       this.listProducts();
     }
-}
+  }
+
+  orderByPrice() {
+    this.activeFilter='price';
+    this.filterPrice=!this.filterPrice;
+  }
+  
+  orderByName() {
+    this.activeFilter='name';
+    this.filterName=!this.filterName;
+  }
 
   
   checkDelete(id?:number){
@@ -204,7 +230,6 @@ export class ProductsListComponent {
     this.productEdit.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.productEdit.prodDescription = this.myFormReactivo.get('description')?.value || '';
     this.productEdit.images[0].imgUrl= this.myFormReactivo.get('imageP')?.value || '';
-    console.log(this.productEdit);
   }
 
   

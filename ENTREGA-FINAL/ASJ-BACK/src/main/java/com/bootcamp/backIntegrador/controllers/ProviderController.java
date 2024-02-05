@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
 import com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO;
-import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.services.ProviderService;
 

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
-import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProductModel;
 
 public interface ProductRepository extends JpaRepository<ProductModel, Integer>{

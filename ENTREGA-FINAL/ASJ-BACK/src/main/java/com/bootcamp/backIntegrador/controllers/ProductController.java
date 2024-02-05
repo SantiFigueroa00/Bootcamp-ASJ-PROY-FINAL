@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
 import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
-import com.bootcamp.backIntegrador.DTOs.ProviderPercentageDTO;
 import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.services.ProductService;
 
