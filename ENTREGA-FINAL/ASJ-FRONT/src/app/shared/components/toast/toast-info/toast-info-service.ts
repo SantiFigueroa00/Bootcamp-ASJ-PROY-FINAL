@@ -11,7 +11,6 @@ export class AppToastService {
   toasts: ToastInfo[] = [];
 
 	show(toast: ToastInfo) {
-		console.log("llegooooooo")
 		this.toasts.push(toast);
 	}
 

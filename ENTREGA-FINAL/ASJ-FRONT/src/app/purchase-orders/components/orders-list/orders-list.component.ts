@@ -130,6 +130,8 @@ export class OrdersListComponent implements OnInit, OnDestroy {
           });
       });
     });
+
+    console.log(this.providers)
   }
 
   statusShow(provId?: number) {
@@ -137,34 +139,39 @@ export class OrdersListComponent implements OnInit, OnDestroy {
       if (prov.provId == provId) {
         prov.showActivated = !prov.showActivated;
       }
+
     });
-    this.loadOrdersByStatus();
+    this.loadOrdersByStatus(provId);
   }
 
-  loadOrdersByStatus() {
+  loadOrdersByStatus(provId?:number) {
     this.providers.forEach((prov) => {
-      if (prov.showActivated) {
-        this.orderServ
-          .getOrdersActivatedByProv(prov.provId)
-          .subscribe((orders) => {
-            if (orders.length > 0) {
-              prov.orders = orders;
-            } else {
-              this.showToastInfo(this.infoTpl);
-              prov.showActivated = !prov.showActivated;
-            }
-          });
-      } else {
-        this.orderServ
-          .getOrdersCancelledByProv(prov.provId)
-          .subscribe((orders) => {
-            if (orders.length > 0) {
-              prov.orders = orders;
-            } else {
-              this.showToastInfo(this.infoTpl);
-              prov.showActivated = !prov.showActivated;
-            }
-          });
+      if(prov.provId == provId) {
+        if (prov.showActivated) {
+          this.orderServ
+            .getOrdersActivatedByProv(prov.provId)
+            .subscribe((orders) => {
+              if (orders.length > 0) {
+                prov.orders = orders;
+              } else {
+                this.showToastInfo(this.infoTpl);
+                prov.showActivated = !prov.showActivated;
+                this.loadOrdersByStatus(prov.provId);
+              }
+            });
+        } else {
+          this.orderServ
+            .getOrdersCancelledByProv(prov.provId)
+            .subscribe((orders) => {
+              if (orders.length > 0) {
+                prov.orders = orders;
+              } else {
+                this.showToastInfo(this.infoTpl);
+                prov.showActivated = !prov.showActivated;
+                this.loadOrdersByStatus(prov.provId);
+              }
+            });
+        }
       }
     });
   }
@@ -177,7 +184,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     this.orderCancel.orderState = false;
     this.orderServ.putOrder(this.orderCancel).subscribe((res) => {
       console.log(res);
-      this.loadOrdersByStatus();
+      this.loadOrdersByStatus(this.orderCancel.provider.provId);
     });
   }
 
@@ -185,7 +192,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     o.orderState = true;
     this.orderServ.putOrder(o).subscribe((res) => {
       console.log(res);
-      this.loadOrdersByStatus();
+      this.loadOrdersByStatus(o.provider.provId);
     });
   }
 }
