@@ -19,14 +19,32 @@
         <div class="input-group rounded-pill mb-3">
             <input id="search" class="form-control custom-input" type="text" placeholder="Company Name or Provider Code"
                 [(ngModel)]="searchText" />
-            <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon" [(ngModel)]="filterOption">
+            <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon" [(ngModel)]="filterDeleted">
                 <option value="" selected>Choose what to show...</option>
                 <option value="1">Providers Actives</option>
                 <option value="2">Providers Deleted</option>
             </select>
         </div>
+        <div class="d-flex justify-content-end align-items-center">
+
+            <div class="btn-group">
+                <p class="me-2">order by</p>
+                <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow btn-sm"
+                    data-bs-toggle="dropdown">
+                    <i class="bx bx-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item btn" [ngClass]="{active: activeFilter=='codASC'}" (click)="changeFilter('codASC')">Code ASC</a></li>
+                    <li><a class="dropdown-item btn" [ngClass]="{active: activeFilter=='codDESC'}" (click)="changeFilter('codDESC')">Code DESC</a></li>
+                    <li><a class="dropdown-item btn" [ngClass]="{active: activeFilter=='nameASC'}" (click)="changeFilter('nameASC')">Comp Name ASC</a></li>
+                    <li><a class="dropdown-item btn" [ngClass]="{active: activeFilter=='nameDESC'}" (click)="changeFilter('nameDESC')">Comp Name DESC</a></li>
+                    <li><a class="dropdown-item btn" [ngClass]="{active: activeFilter=='counASC'}" (click)="changeFilter('counASC')">Country ASC y Province ASC</a></li>
+                    <li><a class="dropdown-item btn" [ngClass]="{active: activeFilter=='counDESC'}" (click)="changeFilter('counDESC')">Country DESC y Province ASC</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="row mb-5" id="grillaProv" *ngIf="providers.length>0">
-            <div class="col-md-12" *ngFor="let p of providers | searchProvider: searchText | filterByStatusProvider: filterOption">
+            <div class="col-md-12" *ngFor="let p of providers  | filterOrder:activeFilter | searchProvider: searchText  | filterByStatusProvider: filterDeleted ">
                 <div class="card mb-3">
                     <div class="row g-0 ">
                         <div class="col-md-1">
@@ -35,61 +53,41 @@
                         <div class="col-md-11">
                             <div class="card-body ">
                                 <div class="row ">
-                                    <div class="col-md-5 border-start">
+                                    <div class="col-md-4 border-start">
                                         <h5 class="card-title mb-3">{{p.provCod }} - {{p.provCompName}}</h5>
                                         <div class="row g-2">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <h6 class="card-subtitle text-muted">Conuntry, Province</h6>
                                                 <p class="card-text">
                                                     {{p.address.locality.province.country.conName+", "+p.address.locality.province.proName}}
                                                 </p>
                                             </div>
-                                            <div class="col-md-6">
-                                                <h6 class="card-subtitle text-muted">Email</h6>
-                                                <p class="card-text">
-                                                    {{p.provEmail}}
-                                                </p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6 class="card-subtitle text-muted">Web Site</h6>
-                                                <p class="card-text">
-                                                    <a href="{{p.provWebSite}}" target="_blank">{{p.provWebSite}}</a>
-                                                </p>
-                                            </div>
-                                            <div class="col-md-6">
-
-                                                <h6 class="card-subtitle text-muted">Phone</h6>
-                                                <p class="card-text">
-                                                    {{p.provPhone}}
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 border-start">
+                                    <div class="col-md-4 border-start">
                                         <h5 class="card-title mb-3">Contact Info</h5>
                                         <div class="row g-2">
                                             <div class="col">
                                                 <h6 class="card-subtitle text-muted">First and Last Name</h6>
-                                                <p class="card-text">
+                                                <p class="card-text d-flex align-items-center">
+                                                    
+                                                    <i class="bx bx-info-circle text-primary me-1" [ngbPopover]="popoverContentTemplate" placement="bottom"
+                                                        container="body" [closeDelay]="5000" triggers="hover"></i>
                                                     {{p.infoContact.contName}}
                                                 </p>
                                             </div>
-                                            <div class="col">
-                                                <h6 class="card-subtitle text-muted">Role</h6>
-                                                <p class="card-text">
-                                                    {{p.infoContact.contRole}}
-                                                </p>
-                                            </div>
-                                            <div class="col">
-                                                <h6 class="card-subtitle text-muted">Phone</h6>
-                                                <p class="card-text">
-                                                    {{p.infoContact.contPhone}}
-                                                </p>
-                                            </div>
+                                        
+                                            <ng-template #popoverContentTemplate>
+                                                <ul>
+                                                    <li>{{p.provWebSite}}</li>
+                                                    <li>{{p.infoContact.contEmail}}</li>
+                                                    <li>{{p.infoContact.contPhone}}</li>
+                                                </ul>
+                                            </ng-template>
                                         </div>
                                     </div>
-                                    <div class="col-md-1 border-start" [ngClass]="{'d-flex flex-md-column justify-content-center': p.provIsDeleted}">
-                                        <div class="d-flex flex-md-column align-items-end gap-1" >
+                                    <div class="col-md-4 border-start d-flex  align-items-center justify-content-center">
+                                        <div class="d-flex align-items-center gap-1" >
                                             <div *ngIf="!p.provIsDeleted">
                                                 <button type="button" class="btn rounded-pill btn-secondary"
                                                     routerLink="../detail/{{p.provId}}">

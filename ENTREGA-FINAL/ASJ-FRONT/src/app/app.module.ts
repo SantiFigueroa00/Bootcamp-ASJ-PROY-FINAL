@@ -29,6 +29,7 @@ import { ToastInfoComponent } from './shared/components/toast/toast-info/toast-i
 import { FilterByStatusPipe } from './products-services/pipes/filter-by-status.pipe';
 import { FilterByPricePipe } from './products-services/pipes/filter-by-price.pipe';
 import { FilterByNamePipe } from './products-services/pipes/filter-by-name.pipe';
+import { FilterOrderPipe } from './providers/pipes/filter-order.pipe';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { FilterByNamePipe } from './products-services/pipes/filter-by-name.pipe'
     FilterByStatusPipe,
     FilterByPricePipe,
     FilterByNamePipe,
+    FilterOrderPipe,
   ],
   imports: [
     BrowserModule,

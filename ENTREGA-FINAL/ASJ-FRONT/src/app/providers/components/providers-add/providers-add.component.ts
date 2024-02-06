@@ -84,6 +84,10 @@ export class ProvidersAddComponent  implements OnInit{
       this.providerServ.createProvider(this.newProvider).subscribe((res)=>{
         console.log(res);
         this.showSuccessToast(this.successTpl);
+        this.myFormReactivo.get('item')?.setValue('');
+        this.myFormReactivo.get('ivaCondition')?.setValue('');
+        this.myFormReactivo.get('country')?.setValue('');
+        this.myFormReactivo.get('province')?.setValue('');
       });
       this.myFormReactivo.reset();
     }else{

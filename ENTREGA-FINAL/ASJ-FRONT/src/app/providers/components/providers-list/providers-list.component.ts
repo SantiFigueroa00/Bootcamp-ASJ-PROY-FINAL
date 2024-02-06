@@ -12,6 +12,7 @@ import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/to
 })
 export class ProvidersListComponent implements OnInit{
 
+
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
   
   providers: ProviderBack[]=[];
@@ -111,7 +112,12 @@ export class ProvidersListComponent implements OnInit{
   countrySelected?: string=''
   idCountrySelected: number | undefined;
   searchText: string = '';
-  filterOption: string = '';
+  filterDeleted: string = '';
+  activeFilter: string='';
+
+  changeFilter(filter: string) {
+    this.activeFilter=filter;
+  }
 
   ngOnInit(): void {
     this.listProviders();
