@@ -68,7 +68,12 @@ import { FilterOrderPipe } from './providers/pipes/filter-order.pipe';
     FormsModule,
     NgbPopoverModule
   ],
-  providers: [],
+  providers: [
+    FilterBySearchPipe,
+    FilterByStatusPipe,
+    FilterByNamePipe,
+    FilterByPricePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -17,15 +20,23 @@ public class InfoContactModel {
     @Column(name = "cont_id", unique = true, nullable = false)
     private int contId;
 
+    @NotBlank(message="Must not be Blank or Null")
+    @Size(max = 50,min = 4, message = "Between 4 to 50 characters allowed." )
     @Column(name = "cont_name", nullable = false)
     private String contName;
     
+    @NotBlank(message="Must not be Blank or Null")
+    @Size(max = 15, message = "Maximum 15 characters allowed.")
     @Column(name = "cont_phone", nullable = false)
     private String contPhone;
     
+    @NotBlank(message="Must not be Blank or Null")
+    @Email(message = "Invalid Email format")
     @Column(name = "cont_email", nullable = false)
     private String contEmail;
     
+    @NotBlank(message="Must not be Blank or Null")
+    @Size(max = 30, message = "Maximum 30 characters allowed.")
     @Column(name = "cont_role", nullable = false)
     private String contRole;
 

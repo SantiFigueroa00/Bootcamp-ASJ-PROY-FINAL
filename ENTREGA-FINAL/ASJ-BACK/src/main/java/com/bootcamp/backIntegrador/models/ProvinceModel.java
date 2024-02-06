@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -19,6 +20,7 @@ public class ProvinceModel {
     @Column(name = "pro_id", unique = true, nullable = false)
     private int proId;
 
+    @NotBlank(message="Must not be Blank or Null")
     @Column(name = "pro_name", nullable = false)
     private String proName;
     

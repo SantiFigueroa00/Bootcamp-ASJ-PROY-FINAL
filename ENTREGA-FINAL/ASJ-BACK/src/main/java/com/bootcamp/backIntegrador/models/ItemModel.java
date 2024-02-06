@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +22,7 @@ public class ItemModel {
     @Column(name = "item_id", unique = true, nullable = false)
     private int itemId;
 
-    @NotNull
+    @NotBlank(message="Must not be Blank or Null")
     @Column(name = "item_name", nullable = false)
     private String itemName;
     

@@ -13,17 +13,17 @@
 </ul>
 <div class="input-group mb-3 rounded-pill">
     <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
-        (change)="filterByCategory()" [(ngModel)]="filterCategoryId">
+        (change)="filterByCategory()" [(ngModel)]="filterCategoryId" >
         <option value="0" selected>Choose Category...</option>
         <option value="{{cat.catId}}" *ngFor="let cat of categories">{{cat.catName}}</option>
     </select>
     <div class="form-floating custom-input ">
         <input type="search" class="form-control" id="floatingInput" placeholder="Product Name or Description"
-            aria-describedby="floatingInputHelp" [(ngModel)]="filterSearch" />
+            aria-describedby="floatingInputHelp" [(ngModel)]="filterSearch" (input)="applyFilters()"/>
         <label for="floatingInput"><i class="bx bx-search me-1"></i></label>
     </div>
     <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon"
-        [(ngModel)]="filterStatus">
+        [(ngModel)]="filterStatus" (change)="applyFilters()" >
         <option value="0" selected>Choose what to show...</option>
         <option value="1">Products Actives</option>
         <option value="2">Products Deleted</option>
@@ -64,7 +64,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0" id="grillaProd">
-                    <tr *ngFor="let p of displayedProducts | filterBySearch : filterSearch | filterByStatus : filterStatus | filterByPrice : filterPrice | filterByName : filterName "
+                    <tr *ngFor="let p of displayedProducts  "  
                         [ngClass]="{'deleted-row': p.prodIsDeleted}">
                         <td>
                             <img src="{{p.images[0].imgUrl}}" alt="Product Image" width="100">

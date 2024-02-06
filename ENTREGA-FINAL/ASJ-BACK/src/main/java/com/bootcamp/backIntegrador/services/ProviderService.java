@@ -36,6 +36,11 @@ public class ProviderService {
 	}
 	
 	public Optional<ProviderModel> getProvidersById(int id) {
+		Optional<ProviderModel> pbyIdOptional = providerRepository.findById(id);
+		
+//		if (pbyIdOptional.isEmpty()) {
+//			throw new RuntimeException("Proveedor no encontrado");
+//		}
 		return providerRepository.findById(id);
 	}
 	

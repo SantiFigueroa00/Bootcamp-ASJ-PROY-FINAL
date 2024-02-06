@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -17,6 +18,7 @@ public class IvaConditionModel {
     @Column(name = "iva_id", unique = true, nullable = false)
     private int ivaId;
 
+    @NotBlank(message="Must not be Blank or Null")
     @Column(name = "iva_cond", nullable = false)
     private String ivaCond;
 

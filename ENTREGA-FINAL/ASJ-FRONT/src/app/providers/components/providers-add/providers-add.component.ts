@@ -116,13 +116,13 @@ export class ProvidersAddComponent  implements OnInit{
       zip: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{4,5}$/)]],
       country: ['', [Validators.required]],
       province: ['', [Validators.required]],
-      locality: ['', [Validators.required, Validators.maxLength(50)]],
+      locality: ['', [Validators.required , Validators.maxLength(50)]],
       cuit: ['', [Validators.required, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)]],
       ivaCondition: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       emailProv: ['', [Validators.required, Validators.email]],
       telProv: ['', [Validators.required, Validators.maxLength(15)]],
-      role: ['', [Validators.required, Validators.maxLength(50)]],
+      role: ['', [Validators.required, Validators.maxLength(30)]],
     });
   }
 

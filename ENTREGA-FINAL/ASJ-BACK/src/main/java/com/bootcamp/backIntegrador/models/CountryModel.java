@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Countries")
@@ -16,6 +17,7 @@ public class CountryModel {
     @Column(name = "con_id", unique = true, nullable = false)
     private Integer conId;
     
+    @NotBlank(message="Must not be Blank or Null")
     @Column(name = "con_name", nullable = false)
     private String conName;
 

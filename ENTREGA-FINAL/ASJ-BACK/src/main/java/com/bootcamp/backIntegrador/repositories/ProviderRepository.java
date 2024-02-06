@@ -13,7 +13,7 @@ public interface ProviderRepository extends JpaRepository<ProviderModel, Integer
 	@Query("SELECT COUNT(p) FROM ProviderModel p")
     int getTotalProviders();
 
-	@Query("SELECT new com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO(P.proId, P.proName, COUNT(PR.provId), (COUNT(PR.provId) * 100.0 / (SELECT COUNT(*) FROM ProviderModel))) " +
+	@Query("SELECT new com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO(P.proId, P.proName, COUNT(PR.provId), ROUND(COUNT(PR.provId) * 100.0 / (SELECT COUNT(*) FROM ProviderModel),2)) " +
 	           "FROM ProvinceModel P " +
 	           "LEFT JOIN LocalityModel L ON P.proId = L.province.proId " +
 	           "LEFT JOIN AddressModel A ON L.locId = A.locality.locId " +

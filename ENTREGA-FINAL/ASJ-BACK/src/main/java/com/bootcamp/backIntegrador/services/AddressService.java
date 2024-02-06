@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.bootcamp.backIntegrador.models.AddressModel;
 import com.bootcamp.backIntegrador.repositories.AddressRepository;
 
+import jakarta.validation.Valid;
+
 @Service
 public class AddressService {
 

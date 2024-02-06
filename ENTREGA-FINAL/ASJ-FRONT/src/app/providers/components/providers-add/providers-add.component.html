@@ -200,6 +200,8 @@
                             <small class="text-primary" *ngIf="myFormReactivo.get('name')?.hasError('minlength')">Must
                                 be at least 4
                                 characters long.</small>
+                            <small class="text-primary" *ngIf="myFormReactivo.get('name')?.hasError('maxlength')">Maximum 50 characters
+                                allowed.</small>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="emailProv" class="form-label">E-mail</label>
@@ -233,7 +235,7 @@
                             <small class="text-primary" *ngIf="myFormReactivo.get('role')?.hasError('required')">Role is
                                 required.</small>
                             <small class="text-primary"
-                                *ngIf="myFormReactivo.get('role')?.hasError('minlength')">Maximum 20 characters
+                                *ngIf="myFormReactivo.get('role')?.hasError('maxlength')">Maximum 30 characters
                                 allowed.</small>
                         </div>
                     </div>
