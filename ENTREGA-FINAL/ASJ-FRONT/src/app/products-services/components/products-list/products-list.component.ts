@@ -14,6 +14,7 @@ import { FilterBySearchPipe } from '../../pipes/filter-by-search.pipe';
 import { FilterByStatusPipe } from '../../pipes/filter-by-status.pipe';
 import { FilterByNamePipe } from '../../pipes/filter-by-name.pipe';
 import { FilterByPricePipe } from '../../pipes/filter-by-price.pipe';
+import { CategoryBack } from '../../../models/CategoryBack';
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
@@ -25,7 +26,7 @@ export class ProductsListComponent {
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
 
   providers: ProviderBack[] = [];
-  categories: any[] = [];
+  categories: CategoryBack[] = [];
   products: ProductBack[] = [];
   productEdit: ProductBack = {
     prodId: 0,
@@ -102,7 +103,8 @@ export class ProductsListComponent {
       this.providers = res;
     });
     this.productServ.getCategories().subscribe((data) => {
-      this.categories = data;
+      let auxCategories:CategoryBack[] = data;
+      this.categories = auxCategories.filter(cat => cat.catIsDeleted === false);
     });
     this.listProducts();
   }
@@ -285,7 +287,15 @@ export class ProductsListComponent {
     this.productEdit.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.productEdit.prodDescription =
       this.myFormReactivo.get('description')?.value || '';
-    this.productEdit.images[0].imgUrl =
-      this.myFormReactivo.get('imageP')?.value || '';
+      this.productEdit.images.push({
+        imgUrl:this.myFormReactivo.get('imageP')?.value || '',
+    })
+  }
+
+  addImg() {
+    this.productEdit.images.push({
+      imgUrl:this.myFormReactivo.get('imageP')?.value || '',
+  })
+    this.myFormReactivo.get('imageP')?.setValue('');
   }
 }
