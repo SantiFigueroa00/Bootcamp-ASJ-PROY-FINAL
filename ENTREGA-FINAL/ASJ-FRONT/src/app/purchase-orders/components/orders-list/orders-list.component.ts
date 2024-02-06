@@ -91,89 +91,66 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 	}
 
   ngOnInit(): void {
+    this.loadProvidersWithOrders();
+  }
+
+  loadProvidersWithOrders(){
     this.providerServ.getProviders().subscribe((res) => {
       this.providers = res;
       this.loadOrdersForProviders();
     });
   }
 
-  loadOrdersForProviders() {
+  loadOrdersForProviders(): void {
     const requests = this.providers.map((prov) =>
-      this.orderServ.getOrdersActivatedByProv(prov.provId)
+      forkJoin([
+        this.orderServ.getOrdersActivatedByProv(prov.provId),
+        this.orderServ.getOrdersCancelledByProv(prov.provId)
+      ])
     );
 
-    forkJoin(requests).subscribe((activatedOrdersArray: any[]) => {
-      activatedOrdersArray.forEach((orders, index) => {
+    forkJoin(requests).subscribe((ordersArray: any[]) => {
+      ordersArray.forEach(([activatedOrders, cancelledOrders], index) => {
         const prov = this.providers[index];
-        prov.orders = orders || [];
-
-        if (prov.orders && prov.orders.length > 0) {
-          prov.showActivated = true;
-          this.noOrders = false;
-          return;
+        prov.orders = activatedOrders || [];
+        if(prov.orders!.length > 0){
+          prov.showActivated=true;
+        }else{
+          prov.orders = cancelledOrders || [];
+          prov.showActivated = false;
         }
-
-        this.orderServ
-          .getOrdersCancelledByProv(prov.provId)
-          .subscribe((cancelledOrders) => {
-            prov.orders = cancelledOrders || [];
-
-            if (prov.orders && prov.orders.length > 0) {
-              prov.showActivated = false;
-              this.noOrders = false;
-              return;
-            }
-
-            if (this.noOrders) {
-              this.noOrders = true;
-            }
-          });
+        
+        if (cancelledOrders.length > 0 || cancelledOrders.length > 0) {
+          this.noOrders = false;
+        }
       });
     });
-
-    console.log(this.providers)
   }
 
-  statusShow(provId?: number) {
-    this.providers.forEach((prov) => {
-      if (prov.provId == provId) {
-        prov.showActivated = !prov.showActivated;
-      }
-
-    });
-    this.loadOrdersByStatus(provId);
+  toggleOrderStatus(provId?: number): void {
+    const provider = this.providers.find(p => p.provId === provId);
+    if (provider) {
+      provider.showActivated = !provider.showActivated;
+      this.loadOrdersByStatus(provId);
+    }
   }
 
   loadOrdersByStatus(provId?:number) {
-    this.providers.forEach((prov) => {
-      if(prov.provId == provId) {
-        if (prov.showActivated) {
-          this.orderServ
-            .getOrdersActivatedByProv(prov.provId)
-            .subscribe((orders) => {
-              if (orders.length > 0) {
-                prov.orders = orders;
-              } else {
-                this.showToastInfo(this.infoTpl);
-                prov.showActivated = !prov.showActivated;
-                this.loadOrdersByStatus(prov.provId);
-              }
-            });
-        } else {
-          this.orderServ
-            .getOrdersCancelledByProv(prov.provId)
-            .subscribe((orders) => {
-              if (orders.length > 0) {
-                prov.orders = orders;
-              } else {
-                this.showToastInfo(this.infoTpl);
-                prov.showActivated = !prov.showActivated;
-                this.loadOrdersByStatus(prov.provId);
-              }
-            });
+    const provider = this.providers.find(p => p.provId === provId);
+    if (provider) {
+      const ordersObservable = provider.showActivated ?
+        this.orderServ.getOrdersActivatedByProv(provId) :
+        this.orderServ.getOrdersCancelledByProv(provId);
+        
+      ordersObservable.subscribe((orders) => {
+        provider.orders = orders || [];
+        if(!provider.orders!.length){
+          this.showToastInfo(this.infoTpl);
+          provider.showActivated = !provider.showActivated;
+          this.loadOrdersByStatus(provider.provId)
         }
-      }
-    });
+      });
+    }
   }
 
   checkCancel(o: OrderBack) {
