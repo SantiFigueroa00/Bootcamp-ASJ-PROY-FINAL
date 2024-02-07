@@ -96,6 +96,7 @@
                                 <option value="">Select Product</option>
                                 <option value="{{prod.prodId}}" *ngFor="let prod of products">{{prod.prodName}}
                                 </option>
+                                <option *ngIf="!products.length" class="text-primary">There are no products to show</option>
                             </select>
                             <small class="text-primary"
                                 *ngIf="myFormReactivoProd.get('product')?.hasError('required')">Product is
@@ -117,7 +118,7 @@
                     </div>
 
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary me-2">Add product to PO</button>
+                        <button type="submit" class="btn btn-primary me-2" [ngClass]="{'disabled': !products.length}">Add product to PO</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                     </div>
 

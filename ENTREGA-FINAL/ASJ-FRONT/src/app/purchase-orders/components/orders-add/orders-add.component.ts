@@ -142,6 +142,8 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
             console.log(res);
             this.showSuccessToast(this.successTpl);
             this.myFormReactivoOrd.reset();
+            this.myFormReactivoOrd.get('provider')?.setValue('');
+            this.myFormReactivoOrd.get('dateE')?.setValue(this.formatDate(new Date()));
             this.newOrder.details = [];
             this.total=0;
           });
@@ -168,6 +170,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
         console.log('Formulario válido:', this.myFormReactivoProd.value);
         this.mapFormValuesToProduct();
         this.myFormReactivoProd.reset();
+        this.myFormReactivoProd.get('product')?.setValue('');
       } else {
         console.log('form invalido:', this.myFormReactivoProd.value);
       }
