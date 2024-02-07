@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderBack } from '../../../models/ProviderBack';
 import { ProvidersService } from '../../services/providers.service';
@@ -10,7 +10,7 @@ import { Toast, ToastServiceSuccess } from '../../../shared/components/toast/toa
   templateUrl: './providers-add.component.html',
   styleUrl: './providers-add.component.css',
 })
-export class ProvidersAddComponent  implements OnInit{
+export class ProvidersAddComponent  implements OnInit, OnDestroy{
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
 
   newProvider: ProviderBack={
@@ -66,6 +66,10 @@ export class ProvidersAddComponent  implements OnInit{
     this.providerServ.getIvaConditions().subscribe((data)=>{
       this.ivaConditions = data;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.toastServ.clear();
   }
 
   selectedCount() {

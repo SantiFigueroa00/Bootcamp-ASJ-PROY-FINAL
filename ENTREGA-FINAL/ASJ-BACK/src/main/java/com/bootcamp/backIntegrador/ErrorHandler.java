@@ -11,8 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.bootcamp.backIntegrador.errors.AlreadyExistExeption;
 
 @ControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler{
@@ -27,6 +30,15 @@ public class ErrorHandler extends ResponseEntityExceptionHandler{
 		});
 		
 		return errorsMap;
+	}
+	
+	@ExceptionHandler(AlreadyExistExeption.class)
+	public ResponseEntity<Map<String, String>> alreadyExist(AlreadyExistExeption ex){
+		Map<String, String> errorsMap = new HashMap<String, String>();
+		
+		errorsMap.put("exceptionCod", ex.getMessage());
+		
+		return new ResponseEntity<>(errorsMap,HttpStatus.BAD_REQUEST);
 	}
 	
 	@Override

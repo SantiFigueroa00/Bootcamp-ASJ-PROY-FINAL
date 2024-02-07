@@ -32,7 +32,7 @@ public class ProductModel {
     @Column(name = "prod_id", unique = true, nullable = false)
     private int prodId;
 
-    @Column(name = "prod_cod", unique = true, nullable = false)
+    @Column(name = "prod_cod", nullable = false)
     private String prodCod;
     
     @NotBlank(message="Must not be Blank or Null")

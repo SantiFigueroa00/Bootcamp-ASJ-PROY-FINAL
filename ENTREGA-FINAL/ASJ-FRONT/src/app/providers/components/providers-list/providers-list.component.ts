@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ProvidersService } from '../../services/providers.service';
 import { Provider } from '../../../models/Provider';
 import { ProviderBack } from '../../../models/ProviderBack';
@@ -10,7 +10,7 @@ import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/to
   templateUrl: './providers-list.component.html',
   styleUrl: './providers-list.component.css'
 })
-export class ProvidersListComponent implements OnInit{
+export class ProvidersListComponent implements OnInit, OnDestroy{
 
 
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
@@ -130,6 +130,10 @@ export class ProvidersListComponent implements OnInit{
     this.providerServ.getIvaConditions().subscribe((data)=>{
       this.ivaConditions = data;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.toastServ.clear();
   }
 
   selectedCount() {

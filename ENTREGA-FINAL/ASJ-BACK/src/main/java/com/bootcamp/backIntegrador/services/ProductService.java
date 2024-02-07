@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
+import com.bootcamp.backIntegrador.errors.AlreadyExistExeption;
 import com.bootcamp.backIntegrador.models.ProductImageModel;
 import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.repositories.ProductRepository;
@@ -48,7 +49,13 @@ public class ProductService {
                 .collect(Collectors.toList());
 	}
 
-	public String createProduct(ProductModel newProd) {
+	public String createProduct(ProductModel newProd) throws AlreadyExistExeption {
+		Optional<ProductModel> pOptional = productRepository.findByProdCod(newProd.getProdCod());
+		
+		if (pOptional.isPresent()) {
+			throw new AlreadyExistExeption("Ya existe un producto con ese codigo");
+		}
+		
 		ProductModel p = productRepository.save(newProd);
 		
 		for (ProductImageModel img : newProd.getImages()) {
@@ -68,17 +75,19 @@ public class ProductService {
 			prod.setCategory(editProd.getCategory());
 			prod.setProvider(editProd.getProvider());
 			prod.setProdIsDeleted(editProd.isProdIsDeleted());
-//			for (ProductImageModel img : editProd.getImages()) {
-//				if(img.getImgId()== 0) {
-//					productImageService.createImage(img);
-//				}
-//			}
-//			prod.setImages(editProd.getImages());
+			for (ProductImageModel img : editProd.getImages()) {
+				if(img.getImgId()== 0) {
+					img.setProduct(prod);
+					productImageService.createImage(img);
+				}
+			}
 			productRepository.save(prod);
 			return "Update Success";
 		}
 		return "error";
 	}
+	
+	
 
 	public List<ProductModel> getProductsByProvider(int id) {
 		return productRepository.findByProvider_ProvId(id);

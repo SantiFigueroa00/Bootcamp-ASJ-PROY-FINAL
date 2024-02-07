@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -38,6 +39,7 @@ public class PurchaseOrderModel {
     @Column(name = "order_dateE", nullable = false)
     private LocalDateTime orderDateE;
     
+    @Future(message = "The date has to be different from today")
     @Column(name = "order_dateR", nullable = false)
     private LocalDateTime orderDateR;
     

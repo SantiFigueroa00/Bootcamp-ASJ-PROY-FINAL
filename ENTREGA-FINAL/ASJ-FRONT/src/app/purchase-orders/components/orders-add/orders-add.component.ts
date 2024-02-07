@@ -129,6 +129,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
       this.toastService.clear();
+      this.toastServ.clear();
     }
     
     onSubmitOrd() {
@@ -161,7 +162,6 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
     }
 
     showToastInfo(template: TemplateRef<any>) {
-      console.log("llegoooooo")
       this.toastService.show({ template, classname: 'bg-primary text-white', delay: 5000 });
     }
 

@@ -1,6 +1,7 @@
 package com.bootcamp.backIntegrador.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,7 @@ public interface ProductRepository extends JpaRepository<ProductModel, Integer>{
 	           "FROM CategoryModel c LEFT JOIN ProductModel p ON c.catId = p.category.catId " +
 	           "GROUP BY c.catName ")
 	List<CategoryProductCountDTO> getTopCategoriesWithProductCount();
+
+	Optional<ProductModel> findByProdCod(String prodCod);
 	
 }

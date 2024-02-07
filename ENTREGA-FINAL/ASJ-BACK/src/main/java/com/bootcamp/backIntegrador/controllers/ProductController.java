@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
 import com.bootcamp.backIntegrador.DTOs.CategoryProductCountDTO;
+import com.bootcamp.backIntegrador.errors.AlreadyExistExeption;
 import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.services.ProductService;
 
 import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -69,7 +71,7 @@ public class ProductController{
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductModel newProd,BindingResult bindingResult) {
+	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductModel newProd,BindingResult bindingResult) throws AlreadyExistExeption {
 
 		Map<String, String> errorsMap = ErrorHandler.validData(bindingResult);
 		
@@ -80,6 +82,7 @@ public class ProductController{
 		
 		return ResponseEntity.ok(productService.createProduct(newProd));
 	}
+	
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<String> editProduct(@PathVariable int id, @RequestBody ProductModel editProd) {

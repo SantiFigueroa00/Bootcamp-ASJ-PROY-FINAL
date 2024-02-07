@@ -1,5 +1,7 @@
 import {
   Component,
+  OnDestroy,
+  OnInit,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -20,7 +22,7 @@ import { CategoryBack } from '../../../models/CategoryBack';
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })
-export class ProductsListComponent {
+export class ProductsListComponent implements OnInit, OnDestroy{
   public math = Math;
 
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
@@ -113,6 +115,10 @@ export class ProductsListComponent {
       );
     });
     this.listProducts();
+  }
+
+  ngOnDestroy(): void {
+    this.toastServ.clear();
   }
 
   listProducts() {
@@ -302,6 +308,7 @@ export class ProductsListComponent {
 
   addImg() {
     this.productEdit.images.push({
+      imgId:0,
       imgUrl: this.myFormReactivo.get('imageP')?.value || '',
     });
     this.myFormReactivo.get('imageP')?.setValue('');

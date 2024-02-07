@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
@@ -16,7 +16,7 @@ import { CategoryBack } from '../../../models/CategoryBack';
   templateUrl: './products-add.component.html',
   styleUrl: './products-add.component.css'
 })
-export class ProductsAddComponent implements OnInit{
+export class ProductsAddComponent implements OnInit, OnDestroy{
 
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
@@ -91,6 +91,11 @@ export class ProductsAddComponent implements OnInit{
       this.categories = auxCategories.filter(cat => cat.catIsDeleted === false);
     });
   }
+
+  ngOnDestroy(): void {
+    this.toastServ.clear();    
+  }
+
   onSubmit() {
     if (this.myFormReactivo.valid) {
       console.log('Formulario válido:', this.myFormReactivo.value);
