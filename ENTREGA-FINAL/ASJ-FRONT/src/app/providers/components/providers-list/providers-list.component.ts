@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { ProvidersService } from '../../services/providers.service';
 import { Provider } from '../../../models/Provider';
 import { ProviderBack } from '../../../models/ProviderBack';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/toast-service';
+import { AppToastDeleteService } from '../../../shared/components/toast/toast-delete/toast-delete-service';
 
 @Component({
   selector: 'app-providers-list',
@@ -14,6 +15,8 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
 
 
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
+  @ViewChild('deleteTpl') deleteTpl!: TemplateRef<any>;
+  toastDeleteService = inject(AppToastDeleteService);
   
   providers: ProviderBack[]=[];
   providerEdit: ProviderBack={
@@ -134,6 +137,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.toastServ.clear();
+    this.toastDeleteService.clear();
   }
 
   selectedCount() {
@@ -157,6 +161,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
     this.providerStatus.provIsDeleted = true;
     this.providerServ.deleteProvider(this.providerStatus.provId).subscribe((res)=>{
       console.log(res);
+      this.showDeleteToast(this.deleteTpl);
       this.listProviders();
     });
     
@@ -220,6 +225,10 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   showEditToast(template : TemplateRef<any>) {
     this.toastServ.show({ template, classname: 'bg-primary text-white', delay: 10000 });
   }
+
+  showDeleteToast(template: TemplateRef<any>) {
+		this.toastDeleteService.show({ template, classname: 'bg-danger text-white', delay: 5000 });
+	}
   
   myFormReactivo: FormGroup;
 

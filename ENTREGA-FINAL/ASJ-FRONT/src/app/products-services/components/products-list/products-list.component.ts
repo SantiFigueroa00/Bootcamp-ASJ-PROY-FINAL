@@ -4,6 +4,7 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
@@ -17,6 +18,7 @@ import { FilterByStatusPipe } from '../../pipes/filter-by-status.pipe';
 import { FilterByNamePipe } from '../../pipes/filter-by-name.pipe';
 import { FilterByPricePipe } from '../../pipes/filter-by-price.pipe';
 import { CategoryBack } from '../../../models/CategoryBack';
+import { AppToastDeleteService } from '../../../shared/components/toast/toast-delete/toast-delete-service';
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
@@ -26,6 +28,8 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   public math = Math;
 
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
+  @ViewChild('deleteTpl') deleteTpl!: TemplateRef<any>;
+  toastDeleteService = inject(AppToastDeleteService);
 
   providers: ProviderBack[] = [];
   categories: CategoryBack[] = [];
@@ -119,6 +123,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.toastServ.clear();
+    this.toastDeleteService.clear();
   }
 
   listProducts() {
@@ -204,6 +209,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   deleteProd() {
     this.productServ.deleteProduct(this.idDelete).subscribe((res) => {
       console.log(res);
+      this.showDeleteToast(this.deleteTpl);
       this.listProducts();
     });
   }
@@ -259,6 +265,10 @@ export class ProductsListComponent implements OnInit, OnDestroy{
       delay: 2000,
     });
   }
+
+  showDeleteToast(template: TemplateRef<any>) {
+		this.toastDeleteService.show({ template, classname: 'bg-danger text-white', delay: 5000 });
+	}
 
   myFormReactivo: FormGroup;
 
