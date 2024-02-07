@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO;
+import com.bootcamp.backIntegrador.errors.AlreadyExistExeption;
 import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.repositories.ProviderRepository;
 
@@ -57,7 +58,14 @@ public class ProviderService {
                 .collect(Collectors.toList());
 	}
 
-	public String createProvider(ProviderModel newProv) {
+	public String createProvider(ProviderModel newProv) throws AlreadyExistExeption{
+		
+		Optional<ProviderModel> pOptional = providerRepository.findByProvCod(newProv.getProvCod());
+		
+		if (pOptional.isPresent()) {
+			throw new AlreadyExistExeption("The provider with code "+ newProv.getProvCod() +" already exists");
+		}
+		
 		addressService.createAddress(newProv.getAddress());
 		infoContactService.createInfoContact(newProv.getInfoContact());
 		providerRepository.save(newProv);

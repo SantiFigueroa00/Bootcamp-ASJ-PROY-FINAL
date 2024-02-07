@@ -53,7 +53,7 @@ public class ProductService {
 		Optional<ProductModel> pOptional = productRepository.findByProdCod(newProd.getProdCod());
 		
 		if (pOptional.isPresent()) {
-			throw new AlreadyExistExeption("Ya existe un producto con ese codigo");
+			throw new AlreadyExistExeption("The product with code "+ newProd.getProdCod() +" already exists");
 		}
 		
 		ProductModel p = productRepository.save(newProd);

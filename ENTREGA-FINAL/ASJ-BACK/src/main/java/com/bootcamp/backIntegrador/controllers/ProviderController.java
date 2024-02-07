@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
 import com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO;
+import com.bootcamp.backIntegrador.errors.AlreadyExistExeption;
 import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.services.ProviderService;
 
@@ -60,7 +61,7 @@ public class ProviderController{
 	
 	
 	@PostMapping()
-	public ResponseEntity<Object> createProvider(@Valid @RequestBody ProviderModel newProv,BindingResult bindingResult) {
+	public ResponseEntity<Object> createProvider(@Valid @RequestBody ProviderModel newProv,BindingResult bindingResult) throws AlreadyExistExeption {
 
 		Map<String, String> errorsMap = ErrorHandler.validData(bindingResult);
 		

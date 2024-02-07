@@ -1,6 +1,7 @@
 package com.bootcamp.backIntegrador.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,6 @@ public interface ProviderRepository extends JpaRepository<ProviderModel, Integer
 	           "LEFT JOIN ProviderModel PR ON A.adId = PR.address.adId " +
 	           "GROUP BY P.proId, P.proName ")
 	    List<ProviderPercentageByProvinceDTO> getProviderPercentageByProvince();
+
+	Optional<ProviderModel> findByProvCod(String provCod);
 }
