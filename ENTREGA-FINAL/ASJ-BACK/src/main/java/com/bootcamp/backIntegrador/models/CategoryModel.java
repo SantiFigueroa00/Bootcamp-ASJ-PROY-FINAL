@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +22,8 @@ public class CategoryModel {
     @Column(name = "cat_id", unique = true, nullable = false)
     private int catId;
 
+    @NotBlank(message="Must not be Blank or Null")
+    @Size(min = 4, message = "Must be at least 4 characters long.")
     @Column(name = "cat_name", nullable = false)
     private String catName;
     

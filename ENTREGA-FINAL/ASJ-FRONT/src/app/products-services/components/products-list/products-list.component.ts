@@ -100,11 +100,17 @@ export class ProductsListComponent {
 
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res) => {
-      this.providers = res;
+      let auxProviders: ProviderBack[] = res;
+      this.providers = auxProviders.filter(
+        (provider) => provider.provIsDeleted === false
+      );
+      console.log(this.providers);
     });
     this.productServ.getCategories().subscribe((data) => {
-      let auxCategories:CategoryBack[] = data;
-      this.categories = auxCategories.filter(cat => cat.catIsDeleted === false);
+      let auxCategories: CategoryBack[] = data;
+      this.categories = auxCategories.filter(
+        (cat) => cat.catIsDeleted === false
+      );
     });
     this.listProducts();
   }
@@ -116,8 +122,8 @@ export class ProductsListComponent {
     });
   }
 
-  applyFilters(){
-    this.auxProducts=this.products;
+  applyFilters() {
+    this.auxProducts = this.products;
     this.auxProducts = this.searchFilter.transform(
       this.auxProducts,
       this.filterSearch
@@ -126,7 +132,7 @@ export class ProductsListComponent {
       this.auxProducts,
       this.filterStatus
     )!;
-    if (this.activeFilter=='price') {
+    if (this.activeFilter == 'price') {
       this.auxProducts = this.priceFilter.transform(
         this.auxProducts,
         this.filterPrice
@@ -186,8 +192,6 @@ export class ProductsListComponent {
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
 
-  
-
   checkDelete(id?: number) {
     this.idDelete = id;
   }
@@ -219,6 +223,10 @@ export class ProductsListComponent {
       description: p.prodDescription,
       imageP: '',
     });
+    if (p.provider.provIsDeleted) {
+      console.log("llegooo")
+      this.myFormReactivo.get('provider')?.setValue('');
+    }
     this.productEdit = p;
   }
 
@@ -266,7 +274,7 @@ export class ProductsListComponent {
         null,
         [Validators.required, Validators.max(10000000), Validators.min(1)],
       ],
-      description: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.minLength(4) , Validators.maxLength(100)]],
       imageP: [
         '',
         [
@@ -287,15 +295,15 @@ export class ProductsListComponent {
     this.productEdit.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.productEdit.prodDescription =
       this.myFormReactivo.get('description')?.value || '';
-      this.productEdit.images.push({
-        imgUrl:this.myFormReactivo.get('imageP')?.value || '',
-    })
+    this.productEdit.images.push({
+      imgUrl: this.myFormReactivo.get('imageP')?.value || '',
+    });
   }
 
   addImg() {
     this.productEdit.images.push({
-      imgUrl:this.myFormReactivo.get('imageP')?.value || '',
-  })
+      imgUrl: this.myFormReactivo.get('imageP')?.value || '',
+    });
     this.myFormReactivo.get('imageP')?.setValue('');
   }
 }

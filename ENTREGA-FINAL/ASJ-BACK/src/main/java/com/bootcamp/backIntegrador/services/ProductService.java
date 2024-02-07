@@ -68,10 +68,12 @@ public class ProductService {
 			prod.setCategory(editProd.getCategory());
 			prod.setProvider(editProd.getProvider());
 			prod.setProdIsDeleted(editProd.isProdIsDeleted());
-			List<ProductImageModel> images = editProd.getImages();
-			for (ProductImageModel productImageModel : images) {
-				productImageService.updateImage(productImageModel.getImgId(), productImageModel);
-			}
+//			for (ProductImageModel img : editProd.getImages()) {
+//				if(img.getImgId()== 0) {
+//					productImageService.createImage(img);
+//				}
+//			}
+//			prod.setImages(editProd.getImages());
 			productRepository.save(prod);
 			return "Update Success";
 		}

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.bootcamp.backIntegrador.models.AddressModel;
 import com.bootcamp.backIntegrador.repositories.AddressRepository;
 
-import jakarta.validation.Valid;
 
 @Service
 public class AddressService {
@@ -35,7 +34,6 @@ public class AddressService {
 			ad.setAdNumber(addressEdit.getAdNumber());
 			ad.setAdStreet(addressEdit.getAdStreet());
 			ad.setAdZip(addressEdit.getAdZip());
-			// FALTA MOD LOC, PROVINCIA Y PAIS
 			localityService.updateLocality(addressEdit.getLocality().getLocId(),addressEdit.getLocality());
 			addressRepository.save(ad);
 			return "Update Success";

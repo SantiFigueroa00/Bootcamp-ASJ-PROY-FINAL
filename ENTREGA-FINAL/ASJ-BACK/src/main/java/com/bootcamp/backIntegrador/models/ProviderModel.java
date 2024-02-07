@@ -12,10 +12,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertFalse;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -68,7 +65,7 @@ public class ProviderModel {
     @Column(name = "prov_cuit", nullable = false)
     private String provCuit;
     
-    @AssertFalse(message = "Must be false")
+    @NotNull(message = "Must not be Null")
     @Column(name = "prov_isDeleted", nullable = false)
     private boolean provIsDeleted;
     
@@ -78,13 +75,11 @@ public class ProviderModel {
     @JoinColumn(name = "id_cont", nullable = false)
     private InfoContactModel infoContact;
     
-	@Valid
     @NotNull(message="Must not be Null")
     @ManyToOne
     @JoinColumn(name = "id_item", nullable = false)
     private ItemModel item;
     
-	@Valid
     @NotNull(message="Must not be Null")
     @ManyToOne
     @JoinColumn(name = "id_iva", nullable = false)

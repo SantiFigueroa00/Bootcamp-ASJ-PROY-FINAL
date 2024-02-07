@@ -11,6 +11,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,22 +35,32 @@ public class ProductModel {
     @Column(name = "prod_cod", unique = true, nullable = false)
     private String prodCod;
     
+    @NotBlank(message="Must not be Blank or Null")
+    @Size(min = 4, message = "Must be at least 4 characters long.")
     @Column(name = "prod_Name", nullable = false)
     private String prodName;
     
+    @NotNull(message="Must not be Blank or Null")
+    @Min(value = 1, message = "Must be greater than 1 and less than 10000000")
+    @Max(value = 10000000, message = "Must be greater than 1 and less than 10000000")
     @Column(name = "prod_price", nullable = false)
     private Double prodPrice;
     
+    @NotBlank(message="Must not be Blank or Null")
+    @Size(min = 4,max = 100, message = "Between 4 to 100 characters allowed.")
     @Column(name = "prod_description", nullable = false)
     private String prodDescription; 
     
+    @NotNull(message = "Must not be Null")
     @Column(name = "prod_isDeleted", nullable = false)
     private boolean prodIsDeleted;
     
+    @NotNull(message = "Must not be Null")
     @ManyToOne
     @JoinColumn(name = "id_prov", nullable = false)
     private ProviderModel provider;
     
+    @NotNull(message = "Must not be Null")
     @ManyToOne
     @JoinColumn(name = "id_cat", nullable = false)
     private CategoryModel category;

@@ -121,7 +121,7 @@ export class ProductsAddComponent implements OnInit{
       category: ['', [Validators.required]],
       provider: ['', [Validators.required]],
       price: [null, [Validators.required, Validators.max(10000000), Validators.min(1)]],
-      description: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.minLength(4) , Validators.maxLength(100)]],
       imageP: ['', [Validators.required, Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
     });
   }
