@@ -1,6 +1,7 @@
 package com.bootcamp.backIntegrador.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
@@ -45,14 +46,14 @@ public class ProductController{
 		return ResponseEntity.ok(productService.getProductById(id));
 	}
 	
+//	@GetMapping("/byProv/{id}")
+//	public ResponseEntity<List<ProductModel>> getProductsByProvider(@PathVariable int id) {
+//		return ResponseEntity.ok(productService.getProductsByProvider(id));
+//	}
+
 	@GetMapping("/byProv/{id}")
-	public ResponseEntity<List<ProductModel>> getProductsByProvider(@PathVariable int id) {
-		return ResponseEntity.ok(productService.getProductsByProvider(id));
-	}
-	
-	@GetMapping("/activate/byProv/{id}")
-	public ResponseEntity<List<ProductModel>> getProductsByProviderActivate(@PathVariable int id) {
-		return ResponseEntity.ok(productService.getProductsByProviderActivate(id));
+	public ResponseEntity<List<ProductModel>> getProductsByProviderActivate(@PathVariable int id,@RequestParam Boolean status) {
+		return ResponseEntity.ok(productService.getProductsByProviderActivate(id, status));
 	}
 	
 	@GetMapping("/byCat/{id}")
@@ -85,7 +86,7 @@ public class ProductController{
 	
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<String> editProduct(@PathVariable int id, @RequestBody ProductModel editProd) {
+	public ResponseEntity<String> editProduct(@PathVariable int id, @RequestBody ProductModel editProd) throws AlreadyExistExeption {
 		return ResponseEntity.ok(productService.updateProduct(id,editProd));
 	}
 	

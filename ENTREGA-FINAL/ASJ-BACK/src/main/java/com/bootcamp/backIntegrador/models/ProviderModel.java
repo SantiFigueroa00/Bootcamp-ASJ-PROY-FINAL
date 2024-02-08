@@ -32,7 +32,7 @@ public class ProviderModel {
 
     @NotBlank(message="Must not be Blank or Null")
     @Size(min = 4, message = "Must be at least 4 characters long.")
-    @Column(name = "prov_cod", unique = true, nullable = false)
+    @Column(name = "prov_cod", nullable = false)
     private String provCod;
     
     @NotBlank(message="Must not be Blank or Null")

@@ -219,6 +219,17 @@
                     <div class="row">
                         <h3 class="text-primary">Info</h3>
                         <div class="mb-3 col-md-6">
+                            <label for="code" class="form-label">Provider Code *</label>
+                            <input class="form-control" type="text" id="code" name="code" placeholder="PROV000"
+                                formControlName="code" />
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('code')?.hasError('required')">Code of provider is
+                                required.</small>
+                            <small class="text-primary"
+                                *ngIf="myFormReactivo.get('code')?.hasError('minlength')">Must be at least 4
+                                characters long.</small>
+                        </div>
+                        <div class="mb-3 col-md-6">
                             <label for="compName" class="form-label">Company Name</label>
                             <input class="form-control" type="text" id="compName" name="compName" placeholder="Enterprice SRL"
                                 formControlName="compName" />

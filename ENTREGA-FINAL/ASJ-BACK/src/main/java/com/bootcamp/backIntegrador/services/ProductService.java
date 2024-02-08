@@ -66,9 +66,17 @@ public class ProductService {
 	}
 	
 
-	public String updateProduct(int id, ProductModel editProd) {
+	public String updateProduct(int id, ProductModel editProd) throws AlreadyExistExeption {
+		
+		Optional<ProductModel> pOptional = productRepository.findByProdCod(editProd.getProdCod());
+		
+		if (pOptional.isPresent()) {
+			throw new AlreadyExistExeption("The product with code "+ editProd.getProdCod() +" already exists");
+		}
+		
 		ProductModel prod = productRepository.findById(id).get();
 		if (prod!=null) {
+			prod.setProdCod(editProd.getProdCod());
 			prod.setProdName(editProd.getProdName());
 			prod.setProdDescription(editProd.getProdDescription());
 			prod.setProdPrice(editProd.getProdPrice());
@@ -93,8 +101,8 @@ public class ProductService {
 		return productRepository.findByProvider_ProvId(id);
 	}
 	
-	public List<ProductModel> getProductsByProviderActivate(int id) {
-		return productRepository.findByProvider_ProvIdAndProdIsDeleted(id,false);
+	public List<ProductModel> getProductsByProviderActivate(int id, boolean status) {
+		return productRepository.findByProvider_ProvIdAndProdIsDeleted(id,status);
 	}
 	
 	public List<ProductModel> getProductsByCategory(int id) {

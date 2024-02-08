@@ -226,6 +226,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
     });
     this.myFormReactivo.setValue({
       logo: p.provLogo,
+      code: p.provCod,
       compName: p.provCompName,
       item: p.item.itemId,
       email: p.provEmail,
@@ -281,6 +282,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
     this.myFormReactivo = this.fb.group({
       logo: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
       compName: ['', [Validators.required, Validators.minLength(4)]],
+      code: ['', [Validators.required, Validators.minLength(4)]],
       item: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       web: ['', [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)]],
@@ -302,6 +304,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
 
   mapFormValuesToProvider() {
     this.providerEdit.provCompName = this.myFormReactivo.get('compName')?.value || '';
+    this.providerEdit.provCod = this.myFormReactivo.get('code')?.value || '';
     this.providerEdit.item.itemId = this.myFormReactivo.get('item')?.value || '';
     this.providerEdit.provWebSite = this.myFormReactivo.get('web')?.value || '';
     this.providerEdit.provPhone = this.myFormReactivo.get('phone')?.value || '';

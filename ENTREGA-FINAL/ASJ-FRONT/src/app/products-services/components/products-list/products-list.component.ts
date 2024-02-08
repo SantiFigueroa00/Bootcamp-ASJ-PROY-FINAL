@@ -228,6 +228,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
 
   editProd(p: ProductBack) {
     this.myFormReactivo.setValue({
+      code:p.prodCod,
       name: p.prodName,
       category: p.category.catId,
       provider: p.provider.provId,
@@ -284,6 +285,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   ) {
     this.myFormReactivo = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
+      code: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required]],
       provider: ['', [Validators.required]],
       price: [
@@ -302,7 +304,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   }
 
   mapFormValuesToProduct() {
-    this.productEdit.prodCod = v4().slice(0, 8);
+    this.productEdit.prodCod = this.myFormReactivo.get('code')?.value || '';
     this.productEdit.prodName = this.myFormReactivo.get('name')?.value || '';
     this.productEdit.category.catId =
       this.myFormReactivo.get('category')?.value || '';

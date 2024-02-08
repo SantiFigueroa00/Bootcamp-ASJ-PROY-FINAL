@@ -73,9 +73,17 @@ public class ProviderService {
 	}
 	
 
-	public String updateProvider(int id, ProviderModel editProv) {
+	public String updateProvider(int id, ProviderModel editProv) throws AlreadyExistExeption {
+		
+		Optional<ProviderModel> pOptional = providerRepository.findByProvCod(editProv.getProvCod());
+		
+		if (pOptional.isPresent()) {
+			throw new AlreadyExistExeption("The provider with code "+ editProv.getProvCod() +" already exists");
+		}
+		
 		ProviderModel p = providerRepository.findById(id).get();
 		if (p!=null) {
+			p.setProvCod(editProv.getProvCod());
 			p.setProvCompName(editProv.getProvCompName());
 			p.setProvWebSite(editProv.getProvWebSite());
 			p.setProvEmail(editProv.getProvEmail());

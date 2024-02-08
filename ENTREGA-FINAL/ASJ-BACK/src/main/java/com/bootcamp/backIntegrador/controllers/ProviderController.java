@@ -74,7 +74,7 @@ public class ProviderController{
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<String> editProvider(@PathVariable int id, @RequestBody ProviderModel editProv) {
+	public ResponseEntity<String> editProvider(@PathVariable int id, @RequestBody ProviderModel editProv) throws AlreadyExistExeption {
 		return ResponseEntity.ok(providerService.updateProvider(id,editProv));
 	}
 	
