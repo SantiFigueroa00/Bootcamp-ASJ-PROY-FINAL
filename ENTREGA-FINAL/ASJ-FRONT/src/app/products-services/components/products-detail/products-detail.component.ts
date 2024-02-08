@@ -76,7 +76,7 @@ export class ProductsDetailComponent {
       this.productId = params.get('id');
       this.productServ.getProductById(this.productId).subscribe((res)=>{
         this.product=res;
-        this.productServ.getProductsByIdProvider(this.product.provider.provId).subscribe((res:any[])=>{
+        this.productServ.getProductsByIdProviderActivated(this.product.provider.provId).subscribe((res:any[])=>{
           this.products=res.filter(product => product.id !== this.productId);
         })
       })

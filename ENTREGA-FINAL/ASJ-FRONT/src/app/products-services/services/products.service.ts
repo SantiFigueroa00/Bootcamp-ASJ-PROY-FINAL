@@ -29,10 +29,6 @@ export class ProductsService {
       catchError(this.handleError)
     );
   }
-  
-  getProductsByIdProvider(providerIdSelect?: number):Observable<any> {
-    return this.http.get(`${this.API_URL}/byProv/${providerIdSelect}`);
-  }
 
   getProductsByIdProviderActivated(providerIdSelect?: number):Observable<any> {
     return this.http.get(`${this.API_URL}/byProv/${providerIdSelect}?status=false`);

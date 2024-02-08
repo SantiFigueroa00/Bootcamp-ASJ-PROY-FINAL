@@ -113,12 +113,14 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
         catchError(error=>{
           this.infoError= error.exceptionCod;
           this.showToastInfo(this.infoTpl);
+          this.newProduct.images=[];
           return EMPTY
         })
       ).subscribe((res)=>{
         this.showSuccessToast(this.successTpl);
         this.myFormReactivo.get('category')?.setValue('');
         this.myFormReactivo.get('provider')?.setValue('');
+        this.newProduct.images=[];
         this.myFormReactivo.reset();
       });
     }else{
@@ -157,7 +159,9 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
     this.newProduct.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.newProduct.prodDescription = this.myFormReactivo.get('description')?.value || '';
     this.newProduct.prodIsDeleted = false;
-    this.newProduct.images = this.images;
+    this.newProduct.images.push({
+      imgUrl:this.myFormReactivo.get('imageP')?.value || '',
+    })
   }
 
   addImg() {
