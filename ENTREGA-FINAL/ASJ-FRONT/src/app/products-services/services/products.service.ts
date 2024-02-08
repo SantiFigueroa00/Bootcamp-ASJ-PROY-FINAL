@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Product } from '../../models/Product';
 import { ProductBack } from '../../models/ProductBack';
 
@@ -14,7 +14,9 @@ export class ProductsService {
   
   API_URL = "http://localhost:8080/products"
   public createProduct(product:ProductBack):Observable<any>{
-    return this.http.post(this.API_URL,product,{responseType:'text'});
+    return this.http.post(this.API_URL,product,{responseType:'text'}).pipe(
+      catchError(this.handleError)
+    );
   }
   getProducts() :Observable<any>{
     return this.http.get(this.API_URL);
@@ -23,7 +25,9 @@ export class ProductsService {
     return this.http.delete(`${this.API_URL}/${id}`,{responseType:'text'});
   }
   putProduct(p:ProductBack) :Observable<any>{
-    return this.http.put(`${this.API_URL}/${p.prodId}`,p,{responseType:'text'});
+    return this.http.put(`${this.API_URL}/${p.prodId}`,p,{responseType:'text'}).pipe(
+      catchError(this.handleError)
+    );
   }
   
   getProductsByIdProvider(providerIdSelect?: number):Observable<any> {
@@ -55,4 +59,20 @@ export class ProductsService {
     return this.http.post(`http://localhost:8080/images`,newImg,{responseType:'text'});
   }
 
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error occurred';
+    let errorObject = new Map<string, string>(); // Objeto Map para almacenar los detalles del error
+    
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.error.message}`;
+      return errorMessage;
+    } else {
+        errorObject = JSON.parse(error.error);
+    }
+    return throwError(errorObject);
+  }
 }
+
+

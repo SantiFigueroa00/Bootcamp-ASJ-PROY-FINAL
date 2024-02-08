@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
@@ -10,6 +10,8 @@ import { ProviderBack } from '../../../models/ProviderBack';
 import { ProductBack } from '../../../models/ProductBack';
 import { Router } from '@angular/router';
 import { CategoryBack } from '../../../models/CategoryBack';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
+import { EMPTY, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-products-add',
@@ -20,6 +22,9 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
 
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
+  @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  toastService = inject(AppToastService);
+
 
   providers: ProviderBack[]=[];
   categories:any[] = [];
@@ -80,6 +85,9 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
     images:[]
   };
   images: any[]=[];
+  infoError: string="";
+
+
   
   ngOnInit(): void {
     this.providerServ.getProviders().subscribe((res)=>{
@@ -101,12 +109,18 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProduct();
       console.log(this.newProduct);
-      this.productServ.createProduct(this.newProduct).subscribe((res)=>{
+      this.productServ.createProduct(this.newProduct).pipe(
+        catchError(error=>{
+          this.infoError= error.exceptionCod;
+          this.showToastInfo(this.infoTpl);
+          return EMPTY
+        })
+      ).subscribe((res)=>{
         this.showSuccessToast(this.successTpl);
         this.myFormReactivo.get('category')?.setValue('');
         this.myFormReactivo.get('provider')?.setValue('');
+        this.myFormReactivo.reset();
       });
-      this.myFormReactivo.reset();
     }else{
       console.log('form invalido:', this.myFormReactivo.value);
     }
@@ -115,6 +129,10 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
   showSuccessToast(template : TemplateRef<any>) {
     this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 10000 });
   }
+
+  showToastInfo(template: TemplateRef<any>) {
+		this.toastService.show({ template, classname: 'bg-warning text-white', delay: 5000 });
+	}
 
   // REACTIVE FORM
   myFormReactivo: FormGroup;
@@ -139,13 +157,11 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
     this.newProduct.prodPrice = this.myFormReactivo.get('price')?.value || '';
     this.newProduct.prodDescription = this.myFormReactivo.get('description')?.value || '';
     this.newProduct.prodIsDeleted = false;
-    this.newProduct.images.push({
-      imgUrl:this.myFormReactivo.get('imageP')?.value || '',
-    })
+    this.newProduct.images = this.images;
   }
 
   addImg() {
-    this.newProduct.images.push({
+    this.images.push({
       imgUrl:this.myFormReactivo.get('imageP')?.value || '',
     })
     this.myFormReactivo.get('imageP')?.setValue('');

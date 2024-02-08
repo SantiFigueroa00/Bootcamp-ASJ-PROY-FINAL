@@ -9,6 +9,8 @@ import { FilterOrderPipe } from '../../pipes/filter-order.pipe';
 import { FilterBySearchPipe } from '../../../products-services/pipes/filter-by-search.pipe';
 import { SearchProviderPipe } from '../../pipes/search-provider.pipe';
 import { FilterByStatusProviderPipe } from '../../pipes/filter-by-status-provider.pipe';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
+import { EMPTY, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-providers-list',
@@ -21,6 +23,9 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
   @ViewChild('deleteTpl') deleteTpl!: TemplateRef<any>;
   toastDeleteService = inject(AppToastDeleteService);
+  @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  toastService = inject(AppToastService);
+
   
   providers: ProviderBack[]=[];
   providerEdit: ProviderBack={
@@ -127,6 +132,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   displayedProviders: ProviderBack[] = [];
   auxProviders: ProviderBack[] = [];
   public math = Math;
+  infoError: string='';
 
   changeFilter(filter: string) {
     this.activeFilter=filter;
@@ -245,7 +251,10 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
       emailProv: p.infoContact.contEmail,
       role: p.infoContact.contRole,
     });
-    this.providerEdit=p;
+    this.providerEdit.provId=p.provId;
+    this.providerEdit.address.adId=p.address.adId;
+    this.providerEdit.address.locality.locId=p.address.locality.locId;
+    this.providerEdit.infoContact.contId=p.infoContact.contId;
   }
   
   onSubmit() {
@@ -253,7 +262,13 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProvider();
       console.log(this.providerEdit);
-      this.providerServ.putProvider(this.providerEdit).subscribe((res)=>{
+      this.providerServ.putProvider(this.providerEdit).pipe(
+        catchError(error=>{
+          this.infoError= error.exceptionCod;
+          this.showToastInfo(this.infoTpl);
+          return EMPTY
+        })
+      ).subscribe((res)=>{
         console.log(res);
         this.showEditToast(this.editTpl);
         this.listProviders();
@@ -270,6 +285,10 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
 
   showDeleteToast(template: TemplateRef<any>) {
 		this.toastDeleteService.show({ template, classname: 'bg-danger text-white', delay: 5000 });
+	}
+
+  showToastInfo(template: TemplateRef<any>) {
+		this.toastService.show({ template, classname: 'bg-warning text-white', delay: 5000 });
 	}
   
   myFormReactivo: FormGroup;

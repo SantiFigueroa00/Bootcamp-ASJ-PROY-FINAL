@@ -68,13 +68,17 @@ public class ProductService {
 
 	public String updateProduct(int id, ProductModel editProd) throws AlreadyExistExeption {
 		
-		Optional<ProductModel> pOptional = productRepository.findByProdCod(editProd.getProdCod());
-		
-		if (pOptional.isPresent()) {
-			throw new AlreadyExistExeption("The product with code "+ editProd.getProdCod() +" already exists");
+		ProductModel prod = productRepository.findById(id).get();
+
+		if(!prod.getProdCod().equals(editProd.getProdCod())) {
+			Optional<ProductModel> pOptional = productRepository.findByProdCod(editProd.getProdCod());
+			
+			if (pOptional.isPresent()) {
+				throw new AlreadyExistExeption("The product with code "+ editProd.getProdCod() +" already exists");
+			}
 		}
 		
-		ProductModel prod = productRepository.findById(id).get();
+		
 		if (prod!=null) {
 			prod.setProdCod(editProd.getProdCod());
 			prod.setProdName(editProd.getProdName());

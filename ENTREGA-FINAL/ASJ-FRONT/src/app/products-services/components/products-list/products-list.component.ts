@@ -19,6 +19,8 @@ import { FilterByNamePipe } from '../../pipes/filter-by-name.pipe';
 import { FilterByPricePipe } from '../../pipes/filter-by-price.pipe';
 import { CategoryBack } from '../../../models/CategoryBack';
 import { AppToastDeleteService } from '../../../shared/components/toast/toast-delete/toast-delete-service';
+import { EMPTY, catchError } from 'rxjs';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
@@ -29,7 +31,12 @@ export class ProductsListComponent implements OnInit, OnDestroy{
 
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
   @ViewChild('deleteTpl') deleteTpl!: TemplateRef<any>;
+  @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
   toastDeleteService = inject(AppToastDeleteService);
+  toastService = inject(AppToastService);
+
+
+  
 
   providers: ProviderBack[] = [];
   categories: CategoryBack[] = [];
@@ -91,6 +98,8 @@ export class ProductsListComponent implements OnInit, OnDestroy{
     images: [{}],
   };
 
+  infoError:string='';
+
   idDelete?: number = 0;
   filterCategoryId: any = 0;
   filterSearch: string = '';
@@ -127,7 +136,13 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   }
 
   listProducts() {
-    this.productServ.getProducts().subscribe((res) => {
+    this.productServ.getProducts().pipe(
+      catchError((error)=>{
+        console.log(error) 
+        return EMPTY;
+      })
+    ).subscribe(
+      (res) => {
       this.products = res;
       this.applyFilters();
     });
@@ -237,10 +252,10 @@ export class ProductsListComponent implements OnInit, OnDestroy{
       imageP: '',
     });
     if (p.provider.provIsDeleted) {
-      console.log("llegooo")
       this.myFormReactivo.get('provider')?.setValue('');
     }
-    this.productEdit = p;
+    this.productEdit.prodId = p.prodId;
+    this.productEdit.images = p.images;
   }
 
   onSubmit() {
@@ -248,12 +263,19 @@ export class ProductsListComponent implements OnInit, OnDestroy{
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProduct();
       console.log(this.productEdit);
-      this.productServ.putProduct(this.productEdit).subscribe((res) => {
+      this.productServ.putProduct(this.productEdit).pipe(
+        catchError(error=>{
+          console.log(error.exceptionCod);
+          this.infoError= error.exceptionCod;
+          this.showToastInfo(this.infoTpl);
+          return EMPTY
+        })
+      ).subscribe((res) => {
         console.log(res);
         this.showEditToast(this.editTpl);
         this.listProducts();
+        this.myFormReactivo.reset();
       });
-      this.myFormReactivo.reset();
     } else {
       console.log('form invalido:', this.myFormReactivo.value);
     }
@@ -269,6 +291,10 @@ export class ProductsListComponent implements OnInit, OnDestroy{
 
   showDeleteToast(template: TemplateRef<any>) {
 		this.toastDeleteService.show({ template, classname: 'bg-danger text-white', delay: 5000 });
+	}
+
+  showToastInfo(template: TemplateRef<any>) {
+		this.toastService.show({ template, classname: 'bg-warning text-white', delay: 5000 });
 	}
 
   myFormReactivo: FormGroup;

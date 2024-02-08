@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderBack } from '../../../models/ProviderBack';
 import { ProvidersService } from '../../services/providers.service';
 import { v4 as uuidv4, v4 } from 'uuid';
 import { Toast, ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
+import { EMPTY, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-providers-add',
@@ -12,6 +14,8 @@ import { Toast, ToastServiceSuccess } from '../../../shared/components/toast/toa
 })
 export class ProvidersAddComponent  implements OnInit, OnDestroy{
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
+  @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  toastService = inject(AppToastService);
 
   newProvider: ProviderBack={
     provCod:'',
@@ -55,6 +59,7 @@ export class ProvidersAddComponent  implements OnInit, OnDestroy{
   items: any[]=[];
   ivaConditions: any[]=[];
   idCountrySelected: number=0;
+  infoError: string='';
 
   ngOnInit(): void {
     this.providerServ.getItems().subscribe(data =>{
@@ -85,15 +90,21 @@ export class ProvidersAddComponent  implements OnInit, OnDestroy{
       console.log('Formulario válido:', this.myFormReactivo.value);
       this.mapFormValuesToProvider();
       console.log(this.newProvider);
-      this.providerServ.createProvider(this.newProvider).subscribe((res)=>{
+      this.providerServ.createProvider(this.newProvider).pipe(
+        catchError(error=>{
+          this.infoError= error.exceptionCod;
+          this.showToastInfo(this.infoTpl);
+          return EMPTY
+        })
+      ).subscribe((res)=>{
         console.log(res);
         this.showSuccessToast(this.successTpl);
         this.myFormReactivo.get('item')?.setValue('');
         this.myFormReactivo.get('ivaCondition')?.setValue('');
         this.myFormReactivo.get('country')?.setValue('');
         this.myFormReactivo.get('province')?.setValue('');
+        this.myFormReactivo.reset();
       });
-      this.myFormReactivo.reset();
     }else{
       console.log('form invalido:', this.myFormReactivo.value);
     }
@@ -102,6 +113,10 @@ export class ProvidersAddComponent  implements OnInit, OnDestroy{
   showSuccessToast(template : TemplateRef<any>) {
     this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 10000 });
   }
+
+  showToastInfo(template: TemplateRef<any>) {
+		this.toastService.show({ template, classname: 'bg-warning text-white', delay: 5000 });
+	}
 
   // REACTIVE FORM
   myFormReactivo: FormGroup;

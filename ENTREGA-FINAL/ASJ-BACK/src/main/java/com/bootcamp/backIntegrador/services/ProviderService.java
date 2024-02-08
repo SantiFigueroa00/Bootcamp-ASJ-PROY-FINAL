@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bootcamp.backIntegrador.DTOs.ProviderPercentageByProvinceDTO;
 import com.bootcamp.backIntegrador.errors.AlreadyExistExeption;
+import com.bootcamp.backIntegrador.models.ProductModel;
 import com.bootcamp.backIntegrador.models.ProviderModel;
 import com.bootcamp.backIntegrador.repositories.ProviderRepository;
 
@@ -75,13 +76,17 @@ public class ProviderService {
 
 	public String updateProvider(int id, ProviderModel editProv) throws AlreadyExistExeption {
 		
-		Optional<ProviderModel> pOptional = providerRepository.findByProvCod(editProv.getProvCod());
+		ProviderModel p = providerRepository.findById(id).get();
 		
-		if (pOptional.isPresent()) {
-			throw new AlreadyExistExeption("The provider with code "+ editProv.getProvCod() +" already exists");
+		if(!p.getProvCod().equals(editProv.getProvCod())) {
+			Optional<ProviderModel> pOptional = providerRepository.findByProvCod(editProv.getProvCod());
+			
+			if (pOptional.isPresent()) {
+				throw new AlreadyExistExeption("The provider with code "+ editProv.getProvCod() +" already exists");
+			}
 		}
 		
-		ProviderModel p = providerRepository.findById(id).get();
+		
 		if (p!=null) {
 			p.setProvCod(editProv.getProvCod());
 			p.setProvCompName(editProv.getProvCompName());
