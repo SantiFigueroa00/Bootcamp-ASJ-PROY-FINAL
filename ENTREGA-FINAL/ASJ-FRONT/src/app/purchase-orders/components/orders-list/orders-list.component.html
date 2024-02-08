@@ -98,12 +98,12 @@
                                                         *ngIf="!o.orderState">CANCELED</span>
                                                 </td>
                                                 <td>
-                                                    <button *ngIf="o.orderState" class="dropdown-item" type="button"
+                                                    <button *ngIf="o.orderState " class="dropdown-item" type="button" [ngClass]="{'disabled': pastDate(o.orderDateR)}"
                                                         data-bs-toggle="modal" data-bs-target="#modalCenter"
                                                         (click)="checkCancel(o)">
                                                         <i class='bx bxs-x-circle'></i>
                                                     </button>
-                                                    <button *ngIf="!o.orderState" class="dropdown-item" type="button"
+                                                    <button *ngIf="!o.orderState" class="dropdown-item" type="button" [ngClass]="{'disabled': pastDate(o.orderDateR)}"
                                                         (click)="setActive(o)">
                                                         <i class='bx bxs-check-circle'></i>
                                                     </button>

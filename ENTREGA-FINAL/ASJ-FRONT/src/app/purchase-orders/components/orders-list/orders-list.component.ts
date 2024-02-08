@@ -15,6 +15,7 @@ import { SearchProviderPipe } from '../../../providers/pipes/search-provider.pip
 })
 export class OrdersListComponent implements OnInit, OnDestroy {
 
+
   @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
 
   noOrders: boolean = true;
@@ -141,8 +142,8 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   loadOrdersForProviders(): void {
     const requests = this.providers.map((prov) =>
       forkJoin([
-        this.orderServ.getOrdersActivatedByProv(prov.provId),
-        this.orderServ.getOrdersCancelledByProv(prov.provId)
+        this.orderServ.getOrdersByProvByStatus(prov.provId,true),
+        this.orderServ.getOrdersByProvByStatus(prov.provId,false)
       ])
     );
 
@@ -176,8 +177,8 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     const provider = this.providers.find(p => p.provId === provId);
     if (provider) {
       const ordersObservable = provider.showActivated ?
-        this.orderServ.getOrdersActivatedByProv(provId) :
-        this.orderServ.getOrdersCancelledByProv(provId);
+        this.orderServ.getOrdersByProvByStatus(provId,provider.showActivated) :
+        this.orderServ.getOrdersByProvByStatus(provId,provider.showActivated);
         
       ordersObservable.subscribe((orders) => {
         provider.orders = orders || [];
@@ -208,5 +209,16 @@ export class OrdersListComponent implements OnInit, OnDestroy {
       console.log(res);
       this.loadOrdersByStatus(o.provider.provId);
     });
+  }
+
+  pastDate(dateR: string): boolean {
+    const currentDay = new Date();
+    const dateRecep = new Date(dateR);
+
+    if(currentDay<dateRecep){
+      return false;
+    }else{
+      return true;
+    }
   }
 }

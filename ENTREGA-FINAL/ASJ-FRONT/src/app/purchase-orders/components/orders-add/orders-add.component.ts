@@ -16,6 +16,7 @@ import { AppToastService } from '../../../shared/components/toast/toast-info/toa
   styleUrl: './orders-add.component.css',
 })
 export class OrdersAddComponent implements OnInit, OnDestroy {
+
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
   @ViewChild('infoTpl1') infoTpl1!: TemplateRef<any>;
   toastService = inject(AppToastService);
@@ -155,6 +156,12 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
       } else {
         console.log('form invalido:', this.myFormReactivoOrd.value);
       }
+    }
+
+    resetForm() {
+      this.myFormReactivoOrd.get('provider')?.setValue('');
+      this.myFormReactivoOrd.reset();
+      this.myFormReactivoOrd.get('dateE')?.setValue(this.formatDate(new Date()));
     }
 
     showSuccessToast(template : TemplateRef<any>) {

@@ -46,10 +46,6 @@ public class ProductController{
 		return ResponseEntity.ok(productService.getProductById(id));
 	}
 	
-//	@GetMapping("/byProv/{id}")
-//	public ResponseEntity<List<ProductModel>> getProductsByProvider(@PathVariable int id) {
-//		return ResponseEntity.ok(productService.getProductsByProvider(id));
-//	}
 
 	@GetMapping("/byProv/{id}")
 	public ResponseEntity<List<ProductModel>> getProductsByProviderActivate(@PathVariable int id,@RequestParam Boolean status) {

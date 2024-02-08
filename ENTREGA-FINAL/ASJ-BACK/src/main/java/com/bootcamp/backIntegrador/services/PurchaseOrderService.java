@@ -36,13 +36,10 @@ public class PurchaseOrderService {
 		return purchaseOrderRepository.findByProvider_ProvId(id);
 	}
 	
-	public List<PurchaseOrderModel> getOrdersActivatedByProvider(int id) {
-		return purchaseOrderRepository.findByProvider_ProvIdAndOrderState(id,true);
+	public List<PurchaseOrderModel> getOrdersByProviderByStatus(int id, boolean status) {
+		return purchaseOrderRepository.findByProvider_ProvIdAndOrderState(id,status);
 	}
-	
-	public List<PurchaseOrderModel> getOrdersCancelledByProvider(int id) {
-		return purchaseOrderRepository.findByProvider_ProvIdAndOrderState(id,false);
-	}
+
 	
 	public Integer getTotalOrders() {
 		return purchaseOrderRepository.getTotalPurchaseOrders();

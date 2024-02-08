@@ -1,6 +1,7 @@
 package com.bootcamp.backIntegrador.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.backIntegrador.ErrorHandler;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -43,19 +45,10 @@ public class PurchaseOrderController{
 	}
 	
 	@GetMapping("/byProv/{id}")
-	public ResponseEntity<List<PurchaseOrderModel>> getOrdersByProvider(@PathVariable int id) {
-		return ResponseEntity.ok(purchaseOrderService.getOrdersByProvider(id));
+	public ResponseEntity<List<PurchaseOrderModel>> getOrdersByProviderByStatus(@PathVariable int id,@RequestParam Boolean status) {
+		return ResponseEntity.ok(purchaseOrderService.getOrdersByProviderByStatus(id,status));
 	}
-	
-	@GetMapping("/activated/byProv/{id}")
-	public ResponseEntity<List<PurchaseOrderModel>> getOrdersActivatedByProvider(@PathVariable int id) {
-		return ResponseEntity.ok(purchaseOrderService.getOrdersActivatedByProvider(id));
-	}
-	
-	@GetMapping("/cancelled/byProv/{id}")
-	public ResponseEntity<List<PurchaseOrderModel>> getOrdersCancelledByProvider(@PathVariable int id) {
-		return ResponseEntity.ok(purchaseOrderService.getOrdersCancelledByProvider(id));
-	}
+
 	
 	@GetMapping("/total")
 	public ResponseEntity<Integer> getTotalOrders() {
