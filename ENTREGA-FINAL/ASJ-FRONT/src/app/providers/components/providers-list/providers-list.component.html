@@ -18,8 +18,8 @@
         <label for="search" class="form-label ms-1">Search</label>
         <div class="input-group rounded-pill mb-3">
             <input id="search" class="form-control custom-input" type="text" placeholder="Company Name or Provider Code"
-                [(ngModel)]="searchText" />
-            <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon" [(ngModel)]="filterDeleted">
+                [(ngModel)]="searchText" (input)="applyFilters()"/>
+            <select class="form-select " id="inputGroupSelect03" aria-label="Example select with button addon" [(ngModel)]="filterDeleted" (change)="applyFilters()">
                 <option value="" selected>Choose what to show...</option>
                 <option value="1">Providers Actives</option>
                 <option value="2">Providers Deleted</option>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="row mb-5" id="grillaProv" *ngIf="providers.length>0">
-            <div class="col-md-12" *ngFor="let p of providers  | filterOrder:activeFilter | searchProvider: searchText  | filterByStatusProvider: filterDeleted ">
+            <div class="col-md-12" *ngFor="let p of displayedProviders ">
                 <div class="card mb-3">
                     <div class="row g-0 ">
                         <div class="col-md-1">
@@ -128,6 +128,8 @@
                 </div>
             </div>
         </div>
+
+        
         <div *ngIf="providers.length==0">
             <div class="alert alert-primary d-flex align-items-center justify-content-between mt-2" role="alert">
                 <div class="d-flex">
@@ -145,6 +147,27 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+        <div class="mt-3">
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-primary justify-content-center">
+                    <li class="page-item prev">
+                        <a class="page-link btn"  (click)="setPage(currentPage - 1)"
+                            [ngClass]="{ 'disabled': currentPage === 1 }"><i
+                                class="tf-icon bx bx-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item" *ngFor="let page of getPages()" [class.active]="currentPage === page">
+                        <a class="page-link btn" (click)="setPage(page)">{{ page
+                            }}</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link btn" (click)="setPage(currentPage + 1)"
+                            [ngClass]="{ 'disabled': currentPage === math.ceil(auxProviders.length / itemsPerPage) }"><i
+                                class="tf-icon bx bx-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

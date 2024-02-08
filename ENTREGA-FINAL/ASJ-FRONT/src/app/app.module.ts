@@ -74,7 +74,10 @@ import { ToastDeleteComponent } from './shared/components/toast/toast-delete/toa
     FilterBySearchPipe,
     FilterByStatusPipe,
     FilterByNamePipe,
-    FilterByPricePipe
+    FilterByPricePipe,
+    FilterByStatusProviderPipe,
+    SearchProviderPipe,
+    FilterOrderPipe
   ],
   bootstrap: [AppComponent]
 })

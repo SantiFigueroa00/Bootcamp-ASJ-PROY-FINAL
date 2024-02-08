@@ -6,6 +6,7 @@ import { ProviderBack } from '../../../models/ProviderBack';
 import { forkJoin } from 'rxjs';
 import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
 import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
+import { SearchProviderPipe } from '../../../providers/pipes/search-provider.pipe';
 
 @Component({
   selector: 'app-orders-list',
@@ -18,10 +19,12 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
   noOrders: boolean = true;
   showActivated: boolean = true;
+  searchText: string = '';
   constructor(
     public providerServ: ProvidersService,
     public orderServ: OrdersService,
-    public toastServ: ToastServiceSuccess
+    public toastServ: ToastServiceSuccess,
+    private searchProvider: SearchProviderPipe
   ) {}
 
   providers: ProviderBack[] = [];
@@ -80,6 +83,12 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     details: [],
   };
   
+  currentPage: number = 1;
+  itemsPerPage: number = 2;
+  displayedProviders: ProviderBack[] = [];
+  auxProviders: ProviderBack[] = [];
+  public math = Math;
+
   toastService = inject(AppToastService);
 
   showToastInfo(template: TemplateRef<any>) {
@@ -94,9 +103,37 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     this.loadProvidersWithOrders();
   }
 
+  applyFilters() {
+    this.auxProviders = this.providers;
+    this.auxProviders = this.searchProvider.transform(this.auxProviders,this.searchText)!;
+    this.updatePageData();
+  }
+
+  updatePageData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedProviders = this.auxProviders.slice(startIndex, endIndex);
+  }
+
+  setPage(pageNumber: number) {
+    if (
+      pageNumber >= 1 &&
+      pageNumber <= Math.ceil(this.providers.length / this.itemsPerPage)
+    ) {
+      this.currentPage = pageNumber;
+      this.updatePageData();
+    }
+  }
+
+  getPages(): number[] {
+    const pageCount = Math.ceil(this.auxProviders.length / this.itemsPerPage);
+    return Array.from({ length: pageCount }, (_, index) => index + 1);
+  }
+
   loadProvidersWithOrders(){
     this.providerServ.getProviders().subscribe((res) => {
       this.providers = res;
+      this.applyFilters();
       this.loadOrdersForProviders();
     });
   }

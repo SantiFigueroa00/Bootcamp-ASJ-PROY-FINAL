@@ -5,6 +5,10 @@ import { ProviderBack } from '../../../models/ProviderBack';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastServiceEdit } from '../../../shared/components/toast/toast-edit/toast-service';
 import { AppToastDeleteService } from '../../../shared/components/toast/toast-delete/toast-delete-service';
+import { FilterOrderPipe } from '../../pipes/filter-order.pipe';
+import { FilterBySearchPipe } from '../../../products-services/pipes/filter-by-search.pipe';
+import { SearchProviderPipe } from '../../pipes/search-provider.pipe';
+import { FilterByStatusProviderPipe } from '../../pipes/filter-by-status-provider.pipe';
 
 @Component({
   selector: 'app-providers-list',
@@ -118,8 +122,15 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   filterDeleted: string = '';
   activeFilter: string='';
 
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  displayedProviders: ProviderBack[] = [];
+  auxProviders: ProviderBack[] = [];
+  public math = Math;
+
   changeFilter(filter: string) {
     this.activeFilter=filter;
+    this.applyFilters();
   }
 
   ngOnInit(): void {
@@ -151,7 +162,37 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   listProviders(){
     this.providerServ.getProviders().subscribe((res)=>{
       this.providers = res;
+      this.applyFilters();
     });
+  }
+
+  applyFilters() {
+    this.auxProviders = this.providers;
+    this.auxProviders = this.filterOrder.transform(this.auxProviders,this.activeFilter)!;
+    this.auxProviders = this.searchProvider.transform(this.auxProviders,this.searchText)!;
+    this.auxProviders = this.filterByStatusProvider.transform(this.auxProviders,this.filterDeleted)!;
+    this.updatePageData();
+  }
+
+  updatePageData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedProviders = this.auxProviders.slice(startIndex, endIndex);
+  }
+
+  setPage(pageNumber: number) {
+    if (
+      pageNumber >= 1 &&
+      pageNumber <= Math.ceil(this.providers.length / this.itemsPerPage)
+    ) {
+      this.currentPage = pageNumber;
+      this.updatePageData();
+    }
+  }
+
+  getPages(): number[] {
+    const pageCount = Math.ceil(this.auxProviders.length / this.itemsPerPage);
+    return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
   
   checkDelete(providerDel:ProviderBack){
@@ -232,7 +273,11 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   
   myFormReactivo: FormGroup;
 
-  constructor(private fb: FormBuilder, private providerServ: ProvidersService, public toastServ:ToastServiceEdit) {
+  constructor(private fb: FormBuilder, private providerServ: ProvidersService, public toastServ:ToastServiceEdit,
+    private filterOrder: FilterOrderPipe,
+    private searchProvider: SearchProviderPipe,
+    private filterByStatusProvider:FilterByStatusProviderPipe
+    ) {
     this.myFormReactivo = this.fb.group({
       logo: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^https:\/\/.*\.(png|jpg|jpeg|gif|webp)$/)]],
       compName: ['', [Validators.required, Validators.minLength(4)]],
