@@ -127,7 +127,8 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   }
 
   getPages(): number[] {
-    const pageCount = Math.ceil(this.auxProviders.length / this.itemsPerPage);
+    let provPages = this.auxProviders.filter(p=> p.orders!.length > 0)
+    const pageCount = Math.ceil(provPages.length / this.itemsPerPage);
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
 

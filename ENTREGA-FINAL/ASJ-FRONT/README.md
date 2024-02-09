@@ -1,27 +1,91 @@
-# 2DOENTREGABLE
+# Proyect Integrador Final
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
+Desarrollo de un *Sistema de Gestión Compras* para manejar información de Proveedores, Productos y Órdenes de compra.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Ejecutar localmente
 
-## Build
+Pasos necesarios para correr el proyecto localmente
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Crear una base de datos llamada
+```sql
+  CREATE DATABASE miProyecto;
+```
 
-## Running unit tests
+- Crear la(s) siguiente(s) tabla(s)
+```sql
+  CREATE TABLE miTabla(
+    id int not null,
+    nombre varchar not null,
+    fecha date
+  );
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Insertar **Paises**
 
-## Running end-to-end tests
+```sql
+  INSERT INTO paises (id, nombre) VALUES (1, "Argentina");
+  INSERT INTO paises (id, nombre) VALUES (2, "Brasil");
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Insertar  **Provincias**
 
-## Further help
+```sql
+  INSERT INTO provincias (id, nombre, pais_id) VALUES (1, "Córdoba", 1);
+  INSERT INTO provincias (id, nombre, pais_id) VALUES (2, "Mendoza", 1);
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Ejecutar el servidor de Angular (*puerto 4300*)
+
+```bash
+  ng start -o
+```
+
+- Ejecutar el servidor de Java (*puerto 8080*)
+
+- Insertar algunas **Categorías** desde el FRONT
+
+- Insertar algunas **Rubros** desde el FRONT
+
+- Insertar algunas **Proveedores** desde el FRONT
+
+- Insertar algunas **Productos** desde el FRONT
+
+- Insertar algunas **Ordenes de Compra** desde el FRONT
+## Aclaraciones sobre algunas partes de su código *(opcional)*
+
+El método o función miMetodo lo hice para que pudiera chequear el estado de la respuesta del servidor ... 
+
+```javascript
+
+function miMetodo() {
+  return "Ok";
+}
+```
+
+
+## API Reference *(opcional)*
+
+#### Obtener todos los productos
+
+```http
+  GET /api/productos
+```
+
+
+#### Obtener un producto
+
+```http
+  GET /api/producto/${id}
+```
+
+| Parámetro | Tipo     | Descripción                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `Integer` | **Obligatorio**. ID del Producto a buscar |
+
+
+## Desarrollado por *(opcional)*
+
+Este proyecto fue desarrollado por: **Homero Simpson**
