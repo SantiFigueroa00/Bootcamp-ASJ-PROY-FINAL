@@ -108,7 +108,7 @@ Pasos necesarios para correr el proyecto localmente
   PUT/DELETE /orders/{idProducto}
 ```
 
-## ✅ Tecnologías utilizadas
+## ✔ Tecnologías utilizadas
 
 - Angular
 
