@@ -160,7 +160,7 @@ INSERT INTO Providers (prov_cod, prov_comp_Name, prov_web_Site, prov_email, prov
 VALUES ('PROV010', 'Herramientas Pro S.A.', 'https://www.herramientaspro.com', 'ventas@herramientaspro.com', '+5491101234567', 'https://www.shutterstock.com/image-vector/home-repair-tool-symbol-vector-260nw-510803722.jpg', '30-01234567-9',FALSE , 10, 5, 5, 10, '2022-10-01', '2022-10-02');
 
 INSERT INTO Providers (prov_cod, prov_comp_Name, prov_web_Site, prov_email, prov_phone, prov_logo, prov_cuit, prov_is_Deleted, id_cont, id_item, id_iva, id_ad, created_at, update_at)
-VALUES ('PROV011', 'Proveedor Cordoba S.A.', 'https://www.proveedorcordoba.com', 'info@proveedorcordoba.com', '3516284515', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Epec_cba_logo.png/300px-Epec_cba_logo.png', '30-12345678-9', FALSE, 11, 5, 5, 11, '2022-10-01', '2022-10-02');
+VALUES ('PROV011', 'Proveedor Cordoba S.A.', 'https://www.proveedorcordoba.com', 'info@proveedorcordoba.com', '3516284515', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Epec_cba_logo.png/300px-Epec_cba_logo.png', '30-12345678-9', FALSE, 11, 5, 5, 13, '2022-10-01', '2022-10-02');
 
 -- Proveedor con direcci�n en Villa Carlos Paz
 INSERT INTO Providers (prov_cod, prov_comp_Name, prov_web_Site, prov_email, prov_phone, prov_logo, prov_cuit, prov_is_Deleted, id_cont, id_item, id_iva, id_ad, created_at, update_at)
