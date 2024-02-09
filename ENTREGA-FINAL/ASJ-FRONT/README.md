@@ -1,91 +1,123 @@
-# Proyect Integrador Final
 
-Desarrollo de un *Sistema de Gestión Compras* para manejar información de Proveedores, Productos y Órdenes de compra.
+<h1 align="center"> Proyect Integrador Final / BOOTCAMP ASJ-SERVICOS </h1>
+
+El objetivo principal de este proyecto es desarrollar un sistema integral de gestión de compras que permita a una empresa administrar de manera eficiente y efectiva toda la información relacionada con sus proveedores, productos y órdenes de compra. Este sistema se diseñará y construirá utilizando las habilidades y tecnologías aprendidas durante el bootcamp, lo que implica un enfoque full stack, abarcando tanto el desarrollo del backend como del frontend.
+
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)
 
 
-
-
-## Ejecutar localmente
+## 🛠️ Abre y ejecuta el proyecto
 
 Pasos necesarios para correr el proyecto localmente
 
-- Crear una base de datos llamada
-```sql
-  CREATE DATABASE miProyecto;
-```
+- Ejecutar el servidor de Java (*puerto 8080*)
 
-- Crear la(s) siguiente(s) tabla(s)
-```sql
-  CREATE TABLE miTabla(
-    id int not null,
-    nombre varchar not null,
-    fecha date
-  );
-```
+- Realizar los inserts que se encuentran en el archivo [data.sql](https://github.com/SantiFigueroa00/Bootcamp-ASJ-PROY-FINAL/blob/main/ENTREGA-FINAL/data.sql) en la [consola de H2](http://localhost:8080/h2-console/)
 
-- Insertar **Paises**
-
-```sql
-  INSERT INTO paises (id, nombre) VALUES (1, "Argentina");
-  INSERT INTO paises (id, nombre) VALUES (2, "Brasil");
-```
-
-- Insertar  **Provincias**
-
-```sql
-  INSERT INTO provincias (id, nombre, pais_id) VALUES (1, "Córdoba", 1);
-  INSERT INTO provincias (id, nombre, pais_id) VALUES (2, "Mendoza", 1);
-```
-
-- Ejecutar el servidor de Angular (*puerto 4300*)
+- Ejecutar el servidor de Angular (*puerto 4200*)
 
 ```bash
   ng start -o
 ```
 
-- Ejecutar el servidor de Java (*puerto 8080*)
+- Insertar algunos **Proveedores** desde el FRONT
 
 - Insertar algunas **Categorías** desde el FRONT
 
-- Insertar algunas **Rubros** desde el FRONT
-
-- Insertar algunas **Proveedores** desde el FRONT
-
-- Insertar algunas **Productos** desde el FRONT
+- Insertar algunos **Productos** desde el FRONT
 
 - Insertar algunas **Ordenes de Compra** desde el FRONT
-## Aclaraciones sobre algunas partes de su código *(opcional)*
-
-El método o función miMetodo lo hice para que pudiera chequear el estado de la respuesta del servidor ... 
-
-```javascript
-
-function miMetodo() {
-  return "Ok";
-}
-```
 
 
-## API Reference *(opcional)*
+## 🔨  API Reference
 
-#### Obtener todos los productos
+#### Productos:
+
+- Obtener los productos
 
 ```http
-  GET /api/productos
+  GET /products
 ```
-
-
-#### Obtener un producto
+- Obtener productos por proveedor activo o eliminado
 
 ```http
-  GET /api/producto/${id}
+  GET /products/byProv/{idProveedor}?status={status}
 ```
 
-| Parámetro | Tipo     | Descripción                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `Integer` | **Obligatorio**. ID del Producto a buscar |
+- Obtener productos por categoria
+
+```http
+  GET /products/byProv/{idCategoria}
+```
+
+- Crear Producto
+
+```http
+  POST /products
+```
+
+- Eliminar o Actualizar un producto
+
+```http
+  PUT/DELETE /products/{idProducto}
+```
 
 
-## Desarrollado por *(opcional)*
+#### Proveedores:
+
+- Obtener los proveedores
+
+```http
+  GET /providers
+```
+
+- Crear Proveedor
+
+```http
+  POST /providers
+```
+
+- Eliminar o Actualizar un Proveedor
+
+```http
+  PUT/DELETE /providers/{idProveedor}
+```
+
+#### Ordenes de compra:
+
+- Obtener los Ordenes de compra
+
+```http
+  GET /orders
+```
+- Obtener Ordenes de compra por proveedor activo o eliminado
+
+```http
+  GET /orders/byProv/{idProveedor}?status={status}
+```
+
+- Crear Producto
+
+```http
+  POST /orders
+```
+
+- Eliminar o Actualizar un producto
+
+```http
+  PUT/DELETE /orders/{idProducto}
+```
+
+## ✔ Tecnologías utilizadas
+
+- Angular
+
+- Spring Boot
+
+- Bootstrap
+
+## Desarrollado por
 
 Este proyecto fue desarrollado por: **Homero Simpson**
+
+[<img src="https://avatars.githubusercontent.com/u/107559652?v=4" width=115><br><sub>Manuel Santiago Figueroa</sub>](https://github.com/SantiFigueroa00)
