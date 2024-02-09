@@ -88,7 +88,11 @@ public class ProductService {
 			prod.setProvider(editProd.getProvider());
 			prod.setProdIsDeleted(editProd.isProdIsDeleted());
 			for (ProductImageModel img : editProd.getImages()) {
-				productImageService.updateProductImages(img.getImgId(),img);
+				if(img.getImgId()==0) {
+					productImageService.createImage(img);
+				}else {
+					productImageService.updateProductImages(img.getImgId(),img);
+				}
 			}
 			productRepository.save(prod);
 			return "Update Success";

@@ -21,6 +21,7 @@ import { EMPTY, catchError } from 'rxjs';
 export class ProductsAddComponent implements OnInit, OnDestroy{
 
 
+
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
   @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
   @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
@@ -120,10 +121,10 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
         })
       ).subscribe((res)=>{
         this.showSuccessToast(this.successTpl);
-        this.myFormReactivo.get('category')?.setValue('');
-        this.myFormReactivo.get('provider')?.setValue('');
         this.newProduct.images=[];
         this.myFormReactivo.reset();
+        this.myFormReactivo.get('category')?.setValue('');
+        this.myFormReactivo.get('provider')?.setValue('');
       });
     }else{
       this.showToastInfo(this.invalidTpl)
@@ -168,7 +169,7 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
   }
 
   addImg() {
-    this.images.push({
+    this.newProduct.images.push({
       imgUrl:this.myFormReactivo.get('imageP')?.value || '',
     })
     this.myFormReactivo.get('imageP')?.setValue('');
@@ -180,4 +181,13 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
       this.router.navigate(['categories', 'add']);
     }
   }
+
+
+  resetForm() {
+    this.newProduct.images=[];
+    this.myFormReactivo.reset();
+    this.myFormReactivo.get('category')?.setValue('');
+    this.myFormReactivo.get('provider')?.setValue('');
+  }
+
 }
