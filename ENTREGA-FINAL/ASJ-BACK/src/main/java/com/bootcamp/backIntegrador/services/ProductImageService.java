@@ -40,6 +40,24 @@ public class ProductImageService {
 		}
 		return "Error";
 	}
+
+
+	public String deleteImage(ProductImageModel img) {
+		productImageRepository.deleteById(img.getImgId());
+		return "Delete Success";
+	}
+
+
+	public String updateProductImages(int imgId, ProductImageModel img) {
+		ProductImageModel imgFound = productImageRepository.findById(imgId).get();
+		if (imgFound!=null) {
+			imgFound.setImgUrl(img.getImgUrl());
+			productImageRepository.save(imgFound);
+			return "Update Success";
+		}
+		return "Error";
+		
+	}
 	
 
 }

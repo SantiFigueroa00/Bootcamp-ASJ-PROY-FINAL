@@ -98,6 +98,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
     },
     images: [{}],
   };
+  auxImages:any[]=[]
 
   infoError:string='';
 
@@ -257,7 +258,8 @@ export class ProductsListComponent implements OnInit, OnDestroy{
       this.myFormReactivo.get('provider')?.setValue('');
     }
     this.productEdit.prodId = p.prodId;
-    this.productEdit.images = p.images;
+    this.productEdit.images = []; 
+    this.auxImages=p.images;
   }
 
   onSubmit() {
@@ -343,7 +345,12 @@ export class ProductsListComponent implements OnInit, OnDestroy{
     this.productEdit.prodDescription =
       this.myFormReactivo.get('description')?.value || '';
     this.productEdit.images.push({
+      imgId:0,
       imgUrl: this.myFormReactivo.get('imageP')?.value || '',
+    });
+    console.log(this.productEdit.images)
+    this.auxImages.forEach((img,index) => {
+      this.productEdit.images[index].imgId=img.imgId;
     });
   }
 

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './auth/components/login/login.component';
+import { RegisterComponent } from './auth/components/register/register.component';
 import { ProvidersListComponent } from './providers/components/providers-list/providers-list.component';
 import { HomeComponent } from './dashboard/components/home/home.component';
 import { ProvidersAddComponent } from './providers/components/providers-add/providers-add.component';
@@ -10,47 +12,50 @@ import { OrdersListComponent } from './purchase-orders/components/orders-list/or
 import { OrdersDetailComponent } from './purchase-orders/components/orders-detail/orders-detail.component';
 import { ProvidersDetailComponent } from './providers/components/providers-detail/providers-detail.component';
 import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
-import { AppComponent } from './app.component';
 import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
-import { LoginComponent } from './auth/components/login/login.component';
-import { RegisterComponent } from './auth/components/register/register.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'dashboard', component: HomeComponent },
-  {
-    path: 'providers', 
-    children: [
-      { path: 'add', component: ProvidersAddComponent },
-      { path: 'list', component: ProvidersListComponent },
-      { path: 'detail/:id', component: ProvidersDetailComponent }
-    ]
-  },
-  {
-    path: 'products', 
-    children: [
-      { path: 'add', component: ProductsAddComponent },
-      { path: 'list', component: ProductsListComponent },
-      { path: 'detail/:id', component: ProductsDetailComponent },
-      { path: 'categories', component: CategoryAddComponent }
-    ]
-  },
-  {
-    path: 'orders', 
-    children: [
-      { path: 'add', component: OrdersAddComponent },
-      { path: 'list', component: OrdersListComponent },
-      { path: 'detail/:id', component: OrdersDetailComponent }
-    ]
-  },
-  {
-    path: 'categories', 
-    children: [
-      { path: 'add', component: CategoryAddComponent }
-    ]
-  },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'main',  
+    children:[
+      { path: '', component: HomeComponent },
+      { path: 'dashboard', component: HomeComponent },
+      {
+        path: 'providers', 
+        children: [
+          { path: 'add', component: ProvidersAddComponent },
+          { path: 'list', component: ProvidersListComponent },
+          { path: 'detail/:id', component: ProvidersDetailComponent }
+        ]
+      },
+      {
+        path: 'products', 
+        children: [
+          { path: 'add', component: ProductsAddComponent },
+          { path: 'list', component: ProductsListComponent },
+          { path: 'detail/:id', component: ProductsDetailComponent },
+          { path: 'categories', component: CategoryAddComponent }
+        ]
+      },
+      {
+        path: 'orders', 
+        children: [
+          { path: 'add', component: OrdersAddComponent },
+          { path: 'list', component: OrdersListComponent },
+          { path: 'detail/:id', component: OrdersDetailComponent }
+        ]
+      },
+      {
+        path: 'categories', 
+        children: [
+          { path: 'add', component: CategoryAddComponent }
+        ]
+      },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent }
+    ]}, 
+  { path: '', redirectTo: '/main/dashboard', pathMatch: 'full' }, // Redirecciona al login por defecto
 ];
 
 @NgModule({
