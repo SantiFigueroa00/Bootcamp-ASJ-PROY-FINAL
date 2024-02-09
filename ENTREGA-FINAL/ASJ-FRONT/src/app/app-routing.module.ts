@@ -12,6 +12,8 @@ import { ProvidersDetailComponent } from './providers/components/providers-detai
 import { ProductsDetailComponent } from './products-services/components/products-detail/products-detail.component';
 import { AppComponent } from './app.component';
 import { CategoryAddComponent } from './categories/components/category-add/category-add.component';
+import { LoginComponent } from './auth/components/login/login.component';
+import { RegisterComponent } from './auth/components/register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,6 +49,8 @@ const routes: Routes = [
       { path: 'add', component: CategoryAddComponent }
     ]
   },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({

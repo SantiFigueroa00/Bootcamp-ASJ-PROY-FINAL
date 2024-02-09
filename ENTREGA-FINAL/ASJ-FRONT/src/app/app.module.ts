@@ -31,6 +31,8 @@ import { FilterByPricePipe } from './products-services/pipes/filter-by-price.pip
 import { FilterByNamePipe } from './products-services/pipes/filter-by-name.pipe';
 import { FilterOrderPipe } from './providers/pipes/filter-order.pipe';
 import { ToastDeleteComponent } from './shared/components/toast/toast-delete/toast-delete.component';
+import { LoginComponent } from './auth/components/login/login.component';
+import { RegisterComponent } from './auth/components/register/register.component';
 
 
 @NgModule({
@@ -58,6 +60,8 @@ import { ToastDeleteComponent } from './shared/components/toast/toast-delete/toa
     FilterByNamePipe,
     FilterOrderPipe,
     ToastDeleteComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
