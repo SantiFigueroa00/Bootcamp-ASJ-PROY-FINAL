@@ -4,8 +4,7 @@
 
 img {
     width: 70px; /* Ancho deseado */
-    height: 70px; /* Altura deseada */
-    object-fit: cover; /* Ajustar para cubrir el contenedor sin distorsiones */
+    height: 70px; /* Altura deseada */ 
   }
 
 .custom-input {

@@ -1,7 +1,6 @@
 .card img {
     width: 100%; /* Hace que todas las imágenes ocupen el 100% del ancho del contenedor */
     height: 300px; /* Mantiene la proporción original de la imagen */
-    object-fit: cover; /* Cubre el contenedor manteniendo la relación de aspecto */
     border-radius: 8px; /* Agrega bordes redondeados para un aspecto más estético */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra sutil */
     margin-bottom: 10px; /* Espaciado inferior entre las imágenes */

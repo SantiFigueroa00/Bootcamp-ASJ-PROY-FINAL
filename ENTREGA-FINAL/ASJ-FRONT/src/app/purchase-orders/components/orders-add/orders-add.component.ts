@@ -149,6 +149,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
             this.myFormReactivoOrd.get('provider')?.setValue('');
             this.myFormReactivoOrd.get('dateE')?.setValue(this.formatDate(new Date()));
             this.newOrder.details = [];
+            this.providerShow=undefined;
             this.total=0;
           });
         }else{
