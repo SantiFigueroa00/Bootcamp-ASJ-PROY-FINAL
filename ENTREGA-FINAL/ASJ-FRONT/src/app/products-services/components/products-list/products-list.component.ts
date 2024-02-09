@@ -32,6 +32,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   @ViewChild('editTpl') editTpl!: TemplateRef<any>;
   @ViewChild('deleteTpl') deleteTpl!: TemplateRef<any>;
   @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
   toastDeleteService = inject(AppToastDeleteService);
   toastService = inject(AppToastService);
 
@@ -133,6 +134,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.toastServ.clear();
     this.toastDeleteService.clear();
+    this.toastService.clear();
   }
 
   listProducts() {
@@ -277,6 +279,7 @@ export class ProductsListComponent implements OnInit, OnDestroy{
         this.myFormReactivo.reset();
       });
     } else {
+      this.showToastInfo(this.invalidTpl);
       console.log('form invalido:', this.myFormReactivo.value);
     }
   }

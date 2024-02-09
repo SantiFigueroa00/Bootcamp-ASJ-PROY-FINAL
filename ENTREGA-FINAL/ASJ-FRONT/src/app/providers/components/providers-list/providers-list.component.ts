@@ -24,6 +24,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   @ViewChild('deleteTpl') deleteTpl!: TemplateRef<any>;
   toastDeleteService = inject(AppToastDeleteService);
   @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
   toastService = inject(AppToastService);
 
   
@@ -155,6 +156,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.toastServ.clear();
     this.toastDeleteService.clear();
+    this.toastService.clear();
   }
 
   selectedCount() {
@@ -275,6 +277,7 @@ export class ProvidersListComponent implements OnInit, OnDestroy{
       });
       this.myFormReactivo.reset();
     }else{
+      this.showToastInfo(this.invalidTpl);
       console.log('form invalido:', this.myFormReactivo.value);
     }
   }

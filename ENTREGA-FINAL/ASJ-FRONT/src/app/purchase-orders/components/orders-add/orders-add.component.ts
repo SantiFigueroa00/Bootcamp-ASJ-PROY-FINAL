@@ -19,6 +19,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
   @ViewChild('infoTpl1') infoTpl1!: TemplateRef<any>;
+  @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
   toastService = inject(AppToastService);
 
 
@@ -155,6 +156,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
           this.showToastInfo(this.infoTpl1);
         }
       } else {
+        this.showToastInfo(this.invalidTpl);
         console.log('form invalido:', this.myFormReactivoOrd.value);
       }
     }

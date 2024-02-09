@@ -1,19 +1,21 @@
-import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastServiceSuccess } from '../../../shared/components/toast/toast-success/toast-service';
-import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { CategoryBack } from '../../../models/CategoryBack';
+import { AppToastService } from '../../../shared/components/toast/toast-info/toast-info-service';
 
 @Component({
   selector: 'app-category-add',
   templateUrl: './category-add.component.html',
   styleUrls: ['./category-add.component.css']
 })
-export class CategoryAddComponent implements OnInit {
+export class CategoryAddComponent implements OnInit, OnDestroy{
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
-
+  @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
+  toastService = inject(AppToastService);
+  
   categories:CategoryBack[] = [];
   newCategory:CategoryBack={
     catName:''
@@ -31,6 +33,10 @@ export class CategoryAddComponent implements OnInit {
     this.lisCategories();
   }
   
+  ngOnDestroy(): void {
+    this.toastServ.clear();
+    this.toastService.clear();
+  }
 
   lisCategories(){
     this.categoryServ.getCategories().subscribe((res)=>{
@@ -58,12 +64,17 @@ export class CategoryAddComponent implements OnInit {
       }
       this.myFormReactivo.reset();
     }else{
+      this.showToastInfo(this.invalidTpl)
       console.log('form invalido:', this.myFormReactivo.value);
     }
   }
 
   showSuccessToast(template : TemplateRef<any>) {
     this.toastServ.show({ template, classname: 'bg-success text-dark', delay: 1000 });
+  }
+
+  showToastInfo(template: TemplateRef<any>) {
+    this.toastService.show({ template, classname: 'bg-warning text-white', delay: 5000 });
   }
 
   // REACTIVE FORM

@@ -15,6 +15,7 @@ import { EMPTY, catchError } from 'rxjs';
 export class ProvidersAddComponent  implements OnInit, OnDestroy{
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
   @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
   toastService = inject(AppToastService);
 
   newProvider: ProviderBack={
@@ -75,6 +76,7 @@ export class ProvidersAddComponent  implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.toastServ.clear();
+    this.toastService.clear();
   }
 
   selectedCount() {
@@ -106,6 +108,7 @@ export class ProvidersAddComponent  implements OnInit, OnDestroy{
         this.myFormReactivo.reset();
       });
     }else{
+      this.showToastInfo(this.invalidTpl);
       console.log('form invalido:', this.myFormReactivo.value);
     }
   }

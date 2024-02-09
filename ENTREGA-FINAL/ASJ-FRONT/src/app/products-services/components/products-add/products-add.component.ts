@@ -23,6 +23,7 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
 
   @ViewChild('successTpl') successTpl!: TemplateRef<any>;
   @ViewChild('infoTpl') infoTpl!: TemplateRef<any>;
+  @ViewChild('invalidTpl') invalidTpl!: TemplateRef<any>;
   toastService = inject(AppToastService);
 
 
@@ -102,6 +103,7 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.toastServ.clear();    
+    this.toastService.clear();    
   }
 
   onSubmit() {
@@ -124,6 +126,7 @@ export class ProductsAddComponent implements OnInit, OnDestroy{
         this.myFormReactivo.reset();
       });
     }else{
+      this.showToastInfo(this.invalidTpl)
       console.log('form invalido:', this.myFormReactivo.value);
     }
   }
