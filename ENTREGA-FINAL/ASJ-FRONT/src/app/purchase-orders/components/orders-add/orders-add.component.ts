@@ -88,6 +88,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
   myFormReactivoProd: FormGroup;
   myFormReactivoOrd: FormGroup;
   imgProvSelected: string='';
+  providerShow: ProviderBack | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -187,7 +188,7 @@ export class OrdersAddComponent implements OnInit, OnDestroy {
       this.newOrder.details = [];
     this.total = 0;
     this.providerIdSelect = this.myFormReactivoOrd.get('provider')?.value || '';
-    console.log(this.providerIdSelect);
+    this.providerShow = this.providers.find(provider => provider.provId == this.providerIdSelect);
     this.productServ
       .getProductsByIdProviderActivated(this.providerIdSelect)
       .subscribe((res) => {
